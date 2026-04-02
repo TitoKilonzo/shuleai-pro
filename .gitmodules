@@ -1,0 +1,3 @@
+[submodule "public/cbc-games"]
+	path = public/cbc-games
+	url = https://github.com/TitoKilonzo/shuleai-pro.git
