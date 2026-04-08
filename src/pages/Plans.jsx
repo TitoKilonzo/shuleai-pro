@@ -8,7 +8,7 @@ const FAQ = [
   { q: 'Can I cancel my subscription anytime?', a: 'Yes. You can cancel at any time. You\'ll retain access until your current period ends.' },
   { q: 'How does the access code work?', a: 'When you subscribe, you receive a unique access code. Share it with your child to sign in and start playing.' },
   { q: 'Is the content truly aligned with CBC?', a: 'Absolutely. Every game maps to specific KICD strands and sub-strands for Grade 4–9.' },
-  { q: 'Can parents monitor their child\'s progress?', a: 'Yes. The parent dashboard gives full visibility into scores, time spent, subjects covered and badges earned.' },
+  { q: 'Can parents monitor their child\'s progress?', a: 'Yes. The parent dashboard gives full visibility into scores, time spent, learning areas covered and badges earned.' },
   { q: 'What payment methods are accepted?', a: 'We accept M-Pesa, credit/debit cards and bank transfers.' },
   { q: 'Can one subscription be used by multiple children?', a: 'Each subscription covers one learner. For multiple children, each needs their own plan.' },
 ]
@@ -80,7 +80,7 @@ export default function Plans() {
                   <tbody>
                     {[
                       { feature: 'Access to all 54+ games', weekly: true, monthly: true, termly: true },
-                      { feature: 'All subjects / learning areas', weekly: true, monthly: true, termly: true },
+                      { feature: 'All learning areas', weekly: true, monthly: true, termly: true },
                       { feature: 'Progress tracking', weekly: true, monthly: true, termly: true },
                       { feature: 'Achievement badges', weekly: true, monthly: true, termly: true },
                       { feature: 'Parent dashboard access', weekly: true, monthly: true, termly: true },

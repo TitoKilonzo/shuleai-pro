@@ -9,7 +9,7 @@ import ParentDashboard from './pages/ParentDashboard';
 import GamesPage from './pages/GamesPage';
 import GamePlay from './pages/GamePlay';
 import Features from './pages/Features';
-import Subjects from './pages/Subjects';
+import LearningArea from './pages/LearningArea';
 import Pricing from './pages/Pricing';
 
 /* =========================
@@ -77,7 +77,7 @@ function AppRoutes() {
       {/* Public Pages */}
       <Route path="/" element={<Landing />} />
       <Route path="/features" element={<Features />} />
-      <Route path="/subjects" element={<Subjects />} />
+      <Route path="/learning-areas" element={<LearningArea />} />
       <Route path="/pricing" element={<Pricing />} />
 
       {/* Auth */}

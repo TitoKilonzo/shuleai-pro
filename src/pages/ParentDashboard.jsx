@@ -194,7 +194,7 @@ export default function ParentDashboard() {
 
         {/* Main grid */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-          {/* Subject Progress */}
+          {/* Learning Area Progress */}
           <div style={{ background: 'var(--surface)', borderRadius: 'var(--radius-lg)', padding: '1.5rem', border: '1px solid var(--border)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
               <h4 style={{ margin: 0 }}>Learning Area Performance</h4>
@@ -293,7 +293,7 @@ export default function ParentDashboard() {
               {[
                 { icon: '🌟', text: `${selectedChild.name.split(' ')[0]} is performing excellently in Mathematics (${selectedChild.progress.find(p=>p.subject==='mathematics')?.score||'—'}%).` },
                 { icon: '📈', text: `${selectedChild.streak}-day learning streak! Consistent daily practice boosts retention significantly.` },
-                { icon: '💡', text: `Consider encouraging more Integrated Science games to boost that subject score.` },
+                { icon: '💡', text: `Consider encouraging more Integrated Science games to boost that learning area's score.` },
                 { icon: '🏆', text: `Top performer in class percentile based on current progress data.` },
               ].map(({ icon, text }, i) => (
                 <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>

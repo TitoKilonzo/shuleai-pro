@@ -3,7 +3,7 @@ import { Users, Gamepad2, BookOpen, Award } from 'lucide-react'
 const STATS = [
   { icon: Users,     label: 'Active Learners',  value: '28,400+' },
   { icon: Gamepad2,  label: 'Educational Games', value: '54+' },
-  { icon: BookOpen,  label: 'Subjects Covered',  value: '11' },
+  { icon: BookOpen,  label: 'Learning Areas Covered',  value: '7' },
   { icon: Award,     label: 'Certificates Issued',value: '5,200+' },
 ]
 

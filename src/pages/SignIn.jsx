@@ -165,7 +165,7 @@ export default function SignIn() {
             {[
               { value:'56+', label:'Educational Games' },
               { value:'10k+', label:'Active Learners' },
-              { value:'7', label:'CBC Subjects' },
+              { value:'7', label:'CBC Learning Areas' },
               { value:'4.8★', label:'User Rating' },
             ].map(({ value, label }) => (
               <div key={label} style={{ background:'rgba(255,255,255,0.1)', backdropFilter:'blur(8px)', borderRadius:'var(--radius)', padding:'1rem', border:'1px solid rgba(255,255,255,0.15)' }}>

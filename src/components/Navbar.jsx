@@ -18,7 +18,7 @@ export default function Navbar() {
 
   const navLinks = [
     { label: 'Features', to: '/features' },
-    { label: 'Learning Areas', to: '/subjects' },
+    { label: 'Learning Areas', to: '/learning-areas' },
     { label: 'Games', to: '/games' },
     { label: 'Pricing', to: '/pricing' },
   ];

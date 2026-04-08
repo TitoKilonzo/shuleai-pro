@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useMemo, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Search, SlidersHorizontal, X, BookOpen, LogOut, Gamepad2,
   Star, Filter, ArrowLeft,
@@ -14,8 +14,16 @@ const ALL_GRADES = [4, 5, 6, 7, 8, 9];
 export default function GamesPage() {
   const { user, logout, isSubscribed } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [search, setSearch] = useState('');
-  const [selectedSubject, setSelectedSubject] = useState('all');
+  const [selectedSubject, setSelectedSubject] = useState(searchParams.get('subject') || 'all');
+
+  useEffect(() => {
+    const subjectParam = searchParams.get('subject');
+    if (subjectParam) {
+      setSelectedSubject(subjectParam);
+    }
+  }, [searchParams]);
   const [selectedGrade, setSelectedGrade] = useState('all');
   const [selectedDiff, setSelectedDiff] = useState('all');
   const [showFilters, setShowFilters] = useState(false);

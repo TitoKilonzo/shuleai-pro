@@ -14,7 +14,7 @@ const SUBJECT_ICONS = {
   agriculture: Sprout
 };
 
-export default function Subjects() {
+export default function LearningArea() {
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
       <Navbar />
@@ -23,14 +23,14 @@ export default function Subjects() {
         {/* Hero Section */}
         <section className="section-pad" style={{ background: 'var(--grad-hero)', color: '#fff' }}>
           <div className="container" style={{ textAlign: 'center' }}>
-            <h1 style={{ color: '#fff', marginBottom: '1.5rem' }}>Our CBC Subjects</h1>
+            <h1 style={{ color: '#fff', marginBottom: '1.5rem' }}>Our CBC Learning Areas</h1>
             <p style={{ color: 'rgba(255,255,255,0.8)', maxWidth: 600, margin: '0 auto', fontSize: '1.2rem' }}>
-              Explore our wide range of educational games across different CBC subject areas.
+              Explore our wide range of educational games across different CBC learning areas.
             </p>
           </div>
         </section>
 
-        {/* Subjects Grid */}
+        {/* Learning Areas Grid */}
         <section className="section-pad">
           <div className="container">
             <div style={{ 
@@ -87,7 +87,7 @@ export default function Subjects() {
         {/* Call to Action */}
         <section style={{ background: 'var(--surface-alt)', padding: '5rem 0' }}>
           <div className="container" style={{ textAlign: 'center' }}>
-            <h2 style={{ marginBottom: '1.5rem' }}>Missing A Subject?</h2>
+            <h2 style={{ marginBottom: '1.5rem' }}>Missing A Learning Area?</h2>
             <p style={{ color: 'var(--muted)', maxWidth: 500, margin: '0 auto 2.5rem' }}>
               We are constantly adding new content. If there's a specific CBC topic you'd like to see, let us know!
             </p>

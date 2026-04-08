@@ -25,8 +25,9 @@ const SUBJECT_PREVIEW = [
 ];
 
 const TESTIMONIALS = [
-  { name:'Grace Mwangi', role:'Parent, Nairobi', quote:'My daughter\'s Mathematics grade improved from C to A- in one term. The games make learning feel like play!', initials:'GM', color:'#EC4899', stars:5 },
-  { name:'Mr. Otieno', role:'Class Teacher, Kisumu', quote:'ShuleAI Pro is the best edtech tool I\'ve seen for CBC. It covers all learning areas and the progress tracking is incredible.', initials:'MO', color:'#3B82F6', stars:5 },
+  { name:'Grace Mwangi', role:'Parent, Nairobi', quote:'My daughter\'s Mathematics grade improved from C to A- in one term. The games make learning feel like play!', initials:'GM', color:'#EC4899', image:'https://images.unsplash.com/photo-1531123897727-8f129e1bfa8ea?w=100&q=80', stars:5, span: 'md:col-span-2 lg:col-span-1 border-t-4' },
+  { name:'Mr. Otieno', role:'Class Teacher, Kisumu', quote:'ShuleAI Pro is the best edtech tool I\'ve seen for CBC. It covers all learning areas and the progress tracking is incredible. My entire class is more engaged.', initials:'MO', color:'#3B82F6', image:'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=100&q=80', stars:5, span: 'border-t-4' },
+  { name:'Sarah K.', role:'Student, Grade 6', quote:'I used to hate math, but now I love the Number Quest game! It\'s so much fun and helps me remember what my teacher teaches in class.', initials:'SK', color:'#10B981', image:'https://images.unsplash.com/photo-1544717305-2782549b5136?w=100&q=80', stars:5, span: 'md:col-span-2 lg:col-span-1 border-t-4' }
 ];
 
 export default function Landing() {
@@ -76,8 +77,8 @@ export default function Landing() {
               {/* Social Proof */}
               <div style={{ display:'flex', alignItems:'center', gap:'1rem', marginTop:'3rem' }}>
                 <div style={{ display:'flex' }}>
-                  {[1,2,3].map((_, i) => (
-                    <img key={i} src={`https://i.pravatar.cc/100?u=${i}`} alt="" style={{
+                  {[...Array(3)].map((_, i) => (
+                    <img key={i} src={`https://i.pravatar.cc/100?u=${i + 5}`} alt="User" style={{
                       width:36, height:36, borderRadius:'50%', border:'2px solid #fff',
                       marginLeft: i > 0 ? -12 : 0
                     }} />
@@ -95,23 +96,23 @@ export default function Landing() {
             </div>
 
             {/* Right Interactive Image */}
-            <div style={{ flex: 1, position:'relative' }} className="hidden lg:block">
-              <div style={{ position: 'relative', zIndex: 2 }}>
+            <div style={{ flex: 1, position:'relative', width: '100%', marginTop: '3rem' }} className="lg:mt-0 xl:mr-8 xl:ml-8">
+              <div style={{ position: 'relative', zIndex: 2, display: 'flex', justifyContent: 'center' }}>
                 <SafeImage 
                   src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80" 
                   alt="Learning Hero"
-                  style={{ borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-xl)', height: 480 }}
+                  style={{ borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-xl)', height: '100%', maxHeight: 480, objectFit: 'cover', width: '100%' }}
                 />
               </div>
               {/* Floating Cards */}
-              <div className="animate-float" style={{ position: 'absolute', top: 40, left: -40, zIndex: 3, background: '#fff', padding: '1rem', borderRadius: 'var(--radius)', boxShadow: 'var(--shadow-lg)' }}>
+              <div className="animate-float hidden sm:block" style={{ position: 'absolute', top: 30, left: -20, zIndex: 3, background: '#fff', padding: '1rem', borderRadius: 'var(--radius)', boxShadow: 'var(--shadow-lg)' }}>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center">
                     <Trophy className="text-emerald-600" size={20} />
                   </div>
                   <div>
                     <p className="text-xs text-slate-500 m-0">Daily Goal</p>
-                    <p className="font-bold text-sm m-0">85% Complete</p>
+                    <p className="font-bold text-sm m-0 text-slate-800">85% Complete</p>
                   </div>
                 </div>
               </div>
@@ -148,14 +149,14 @@ export default function Landing() {
               <h2>Comprehensive CBC Coverage</h2>
               <p className="text-muted mt-2">Discover interactive games across all core CBC categories from Grade 4 to 9.</p>
             </div>
-            <Link to="/subjects" className="btn btn-outline">View All Learning Areas <ChevronRight size={18} /></Link>
+            <Link to="/learning-areas" className="btn btn-outline">View All Learning Areas <ChevronRight size={18} /></Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {SUBJECT_PREVIEW.map(({ key, icon: Icon, color, image }) => {
               const sub = Object.values(SUBJECTS).find(s=>s.id===key);
               return (
-                <Link to="/subjects" key={key} className="card group overflow-hidden" style={{ textDecoration: 'none' }}>
+                <Link to="/learning-areas" key={key} className="card group overflow-hidden" style={{ textDecoration: 'none' }}>
                   <div className="h-40 relative">
                     <SafeImage src={image} alt={key} className="group-hover:scale-110 transition-transform duration-500" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -217,39 +218,44 @@ export default function Landing() {
       </section>
 
       {/* ── TESTIMONIALS ──────────────────────────────────── */}
-      <section className="section-pad" style={{ background: 'var(--surface-alt)' }}>
-        <div className="container">
-           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
-              <div>
-                <div className="section-label">Testimonials</div>
-                <h2 className="mb-6">What Parents & Teachers Say</h2>
-                <p className="text-muted mb-8">Join the growing community of educators and parents empowering the next generation of Kenyan leaders.</p>
-                <div className="flex items-center gap-4">
-                  <div className="flex -space-x-3">
-                    {[1,2,3,4].map(i => <img key={i} className="w-10 h-10 rounded-full border-2 border-white" src={`https://i.pravatar.cc/100?u=${i+10}`} alt=""/>)}
+      <section className="section-pad relative overflow-hidden" style={{ background: 'var(--surface-alt)' }}>
+        {/* Background blobs for advanced aesthetics */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-200/40 rounded-full blur-3xl -z-0 translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-200/30 rounded-full blur-3xl -z-0 -translate-x-1/2 translate-y-1/2"></div>
+
+        <div className="container relative z-10">
+           <div className="text-center max-w-2xl mx-auto mb-14">
+              <div className="section-label justify-center">Testimonials</div>
+              <h2 className="mb-4">What Parents & Teachers Say</h2>
+              <p className="text-muted">Join the growing community of educators and parents empowering the next generation of Kenyan leaders through gamified CBC learning.</p>
+           </div>
+           
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {TESTIMONIALS.map((t, idx) => (
+                <div key={idx} className={`card p-8 bg-white/80 backdrop-blur-md shadow-sm hover:shadow-lg transition-all duration-300 relative border-0 ${t.span}`} style={{ borderTopColor: t.color }}>
+                  {/* Decorative quote icon */}
+                  <div className="absolute top-6 right-6 opacity-10">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M14.017 21L16.09 16H12V8H20V15.277L17.273 21H14.017ZM3.017 21L5.09 16H1V8H9V15.277L6.273 21H3.017Z" />
+                    </svg>
                   </div>
-                  <span className="text-sm font-semibold">4.9/5 Average Rating</span>
+
+                  <div className="flex gap-1 mb-5">
+                    {[...Array(t.stars)].map((_, s) => <Star key={s} size={15} fill="#F59E0B" color="#F59E0B" />)}
+                  </div>
+                  <p className="text-slate-700 italic mb-8 leading-relaxed relative z-10 font-medium">"{t.quote}"</p>
+                  
+                  <div className="flex items-center gap-4 mt-auto">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2" style={{ borderColor: t.color }}>
+                      <img src={t.image} alt={t.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-900 text-sm m-0">{t.name}</p>
+                      <p className="text-xs text-slate-500 font-medium m-0">{t.role}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-                {TESTIMONIALS.map(t => (
-                  <div key={t.name} className="card p-8 bg-white border-0 shadow-sm">
-                    <div className="flex gap-1 mb-4">
-                      {[1,2,3,4,5].map(s => <Star key={s} size={14} fill="#F59E0B" color="#F59E0B" />)}
-                    </div>
-                    <p className="text-slate-600 italic mb-6 leading-relaxed">"{t.quote}"</p>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ background: t.color }}>
-                        {t.initials}
-                      </div>
-                      <div>
-                        <p className="font-bold text-sm m-0">{t.name}</p>
-                        <p className="text-xs text-muted m-0">{t.role}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              ))}
            </div>
         </div>
       </section>

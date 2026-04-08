@@ -3,12 +3,14 @@ import { Check, Zap, Star } from 'lucide-react'
 
 const PLANS = [
   {
-    id: 'weekly',
-    name: 'Weekly Access',
+    id: 'bronze',
+    name: 'Bronze Plan',
     price: '200',
     period: '/ week',
     duration: '7 days full access',
-    color: 'border-gray-200',
+    color: 'border-orange-800/30',
+    bgBadge: 'bg-orange-800 text-white',
+    bgBtn: 'border-2 border-orange-200 text-orange-900 hover:border-orange-300 hover:bg-orange-50',
     highlight: false,
     features: [
       'Access all 54+ games',
@@ -16,44 +18,48 @@ const PLANS = [
       '7 days full access',
       'Progress tracking',
     ],
-    cta: 'Start Weekly',
+    cta: 'Start Bronze',
     badge: null,
   },
   {
-    id: 'monthly',
-    name: 'Monthly Access',
+    id: 'silver',
+    name: 'Silver Plan',
     price: '600',
     period: '/ month',
     duration: '30 days full access',
-    color: 'border-forest-500',
+    color: 'border-slate-400',
+    bgBadge: 'bg-slate-700 text-white',
+    bgBtn: 'bg-slate-800 text-white hover:bg-slate-700 shadow-lg shadow-slate-900/25',
     highlight: true,
     features: [
       'Access all 54+ games',
-      'All Subjects included',
+      'All Learning Areas included',
       '30 days full access',
       'Progress tracking',
       'Priority Support',
     ],
-    cta: 'Start Monthly',
+    cta: 'Start Silver',
     badge: 'Most Popular',
   },
   {
-    id: 'termly',
-    name: 'Termly Access',
+    id: 'gold',
+    name: 'Gold Plan',
     price: '1,650',
     period: '/ term',
     duration: '90 days full access',
-    color: 'border-gold-500',
+    color: 'border-amber-500',
+    bgBadge: 'bg-amber-500 text-amber-950',
+    bgBtn: 'bg-amber-500 text-amber-950 hover:bg-amber-400 shadow-md',
     highlight: false,
     features: [
       'Access all 54+ games',
-      'All Subjects included',
+      'All Learning Areas included',
       '90 days full access',
       'Progress tracking',
       'Priority Support',
       'Achievement Certificates',
     ],
-    cta: 'Start Termly',
+    cta: 'Start Gold',
     badge: 'Best Value',
   },
 ]
@@ -88,8 +94,7 @@ export default function PricingCards({ showTitle = true }) {
             >
               {/* Badge */}
               {plan.badge && (
-                <div className={`absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-sm font-bold shadow-lg whitespace-nowrap
-                  ${plan.highlight ? 'bg-forest-700 text-white' : 'bg-gold-500 text-forest-900'}`}>
+                <div className={`absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-sm font-bold shadow-lg whitespace-nowrap ${plan.bgBadge}`}>
                   <Star className="w-3.5 h-3.5 inline mr-1.5 fill-current" />{plan.badge}
                 </div>
               )}
@@ -129,13 +134,7 @@ export default function PricingCards({ showTitle = true }) {
               {/* CTA */}
               <button
                 onClick={() => navigate('/signup')}
-                className={`w-full py-3.5 rounded-2xl font-bold text-sm transition-all duration-200 active:scale-95 btn-shine
-                  ${plan.highlight
-                    ? 'bg-forest-800 text-white hover:bg-forest-700 shadow-lg shadow-forest-900/25'
-                    : plan.id === 'termly'
-                    ? 'bg-gold-500 text-forest-900 hover:bg-gold-400 shadow-md'
-                    : 'border-2 border-gray-200 text-gray-700 hover:border-forest-300 hover:bg-forest-50'
-                  }`}
+                className={`w-full py-3.5 rounded-2xl font-bold text-sm transition-all duration-200 active:scale-95 btn-shine ${plan.bgBtn}`}
                 style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}
               >
                 {plan.cta}
