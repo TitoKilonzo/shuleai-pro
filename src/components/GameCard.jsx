@@ -1,117 +1,164 @@
-import { useNavigate } from 'react-router-dom'
-import { Play, Star, Clock, Users, Zap } from 'lucide-react'
-import { SUBJECTS, DIFFICULTIES, GAME_TYPES } from '../lib/games'
-import SafeImage from './SafeImage'
+import { Play, Star, Clock, Users, Zap, Lock } from 'lucide-react';
+import { SUBJECTS, DIFFICULTIES, GAME_TYPES } from '../lib/games';
+import SafeImage from './SafeImage';
 
-export default function GameCard({ game, compact = false }) {
-  const navigate = useNavigate()
-  const subject = SUBJECTS[game.subject.toUpperCase()] || SUBJECTS[Object.keys(SUBJECTS).find(k => SUBJECTS[k].id === game.subject)]
-  const difficulty = DIFFICULTIES[game.difficulty]
-  const gameType = GAME_TYPES[game.type]
+export default function GameCard({ game, compact = false, onPlay, locked = false }) {
+  const subject = Object.values(SUBJECTS).find(s => s.id === game.subject);
+  const difficulty = DIFFICULTIES[game.difficulty] || DIFFICULTIES.Medium;
+  const gameType = game.type ? GAME_TYPES[game.type] : null;
 
-  // Use game.image as primary, game.thumbnail as fallback if somehow defined
-  const imageSrc = game.image || game.thumbnail
+  const handleClick = () => {
+    if (onPlay) onPlay();
+  };
 
   if (compact) {
     return (
-      <div
-        onClick={() => navigate(`/games/${game.id}`)}
-        className="game-card card cursor-pointer group"
-      >
-        <div className="relative h-32 overflow-hidden">
-          <SafeImage
-            src={imageSrc}
-            alt={game.title}
-            className="w-full h-full group-hover:scale-110 transition-transform duration-500"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-          <span className={`absolute top-2 right-2 badge ${difficulty.color}`}>{difficulty.label}</span>
+      <div onClick={handleClick} className="card" style={{ overflow: 'hidden', cursor: 'pointer' }}>
+        <div style={{ position: 'relative', height: 120, overflow: 'hidden' }}>
+          <SafeImage src={game.image} alt={game.title} style={{ width: '100%', height: '100%' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6), transparent)' }} />
+          <span className="badge" style={{
+            position: 'absolute', top: 8, right: 8,
+            background: difficulty.colorHex + '18', color: difficulty.colorHex,
+            fontSize: '0.7rem',
+          }}>{difficulty.label}</span>
         </div>
-        <div className="p-3">
-          <h3 className="font-bold text-sm text-gray-900 line-clamp-1">{game.title}</h3>
-          <div className="flex items-center gap-2 mt-1">
-            <span className="text-xs text-gray-500">{game.duration} min</span>
-            <span className="text-xs text-gold-600 font-semibold">{game.points} pts</span>
+        <div style={{ padding: '0.65rem' }}>
+          <h4 style={{ fontSize: '0.82rem', margin: '0 0 0.2rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{game.title}</h4>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontSize: '0.72rem', color: 'var(--muted)' }}>{game.duration}</span>
+            <span style={{ fontSize: '0.72rem', color: 'var(--amber-dark)', fontWeight: 600 }}>{game.points} pts</span>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
-    <div
-      className="game-card card cursor-pointer group"
-      onClick={() => navigate(`/games/${game.id}`)}
-    >
+    <div className="card" style={{ overflow: 'hidden', cursor: 'pointer', position: 'relative' }} onClick={handleClick}>
       {/* Thumbnail */}
-      <div className="relative h-44 overflow-hidden">
+      <div style={{ position: 'relative', height: 170, overflow: 'hidden' }}>
         <SafeImage
-          src={imageSrc}
+          src={game.image}
           alt={game.title}
-          className="w-full h-full group-hover:scale-110 transition-transform duration-500"
+          style={{ width: '100%', height: '100%', transition: 'transform 0.4s ease' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)' }} />
 
         {/* Overlays */}
-        <div className="absolute top-3 left-3 flex gap-2">
-          <span className={`badge ${difficulty.color}`}>{difficulty.label}</span>
-          {game.type && (
-            <span className="badge bg-white/20 text-white backdrop-blur-sm">{gameType?.label}</span>
+        <div style={{ position: 'absolute', top: 10, left: 10, display: 'flex', gap: 6 }}>
+          <span className="badge" style={{
+            background: difficulty.colorHex + '20', color: difficulty.colorHex,
+            backdropFilter: 'blur(6px)',
+          }}>{difficulty.label}</span>
+          {gameType && (
+            <span className="badge" style={{ background: 'rgba(255,255,255,0.18)', color: '#fff', backdropFilter: 'blur(6px)' }}>
+              {gameType.label}
+            </span>
           )}
         </div>
 
-        {/* Play button */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-          <div className="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center shadow-xl">
-            <Play className="w-6 h-6 text-forest-800 fill-forest-800 ml-1" />
+        {/* Play / Lock overlay */}
+        {locked ? (
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'rgba(0,0,0,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <div style={{
+              background: 'var(--amber)', color: 'var(--ink)',
+              padding: '5px 14px', borderRadius: 'var(--radius-pill)', fontSize: '0.75rem', fontWeight: 700,
+              display: 'flex', alignItems: 'center', gap: '0.3rem',
+            }}>
+              <Lock size={12} /> SUBSCRIBE
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="game-card-play" style={{
+            position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            opacity: 0, transition: 'opacity 0.2s ease',
+          }}>
+            <div style={{
+              width: 50, height: 50, borderRadius: '50%', background: 'rgba(255,255,255,0.9)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-lg)',
+            }}>
+              <Play size={22} color="var(--forest)" fill="var(--forest)" style={{ marginLeft: 2 }} />
+            </div>
+          </div>
+        )}
 
         {/* Grade badges */}
-        <div className="absolute bottom-3 right-3 flex gap-1">
+        <div style={{ position: 'absolute', bottom: 10, right: 10, display: 'flex', gap: 4 }}>
           {game.grade && game.grade.slice(0, 3).map(g => (
-            <span key={g} className="badge bg-forest-700/80 text-white text-xs backdrop-blur-sm">
+            <span key={g} className="badge" style={{
+              background: 'rgba(11,79,60,0.75)', color: '#fff', fontSize: '0.68rem',
+              backdropFilter: 'blur(4px)', padding: '2px 8px',
+            }}>
               G{g}
             </span>
           ))}
           {game.grade && game.grade.length > 3 && (
-            <span className="badge bg-forest-700/80 text-white text-xs">+{game.grade.length - 3}</span>
+            <span className="badge" style={{ background: 'rgba(11,79,60,0.75)', color: '#fff', fontSize: '0.68rem', padding: '2px 8px' }}>
+              +{game.grade.length - 3}
+            </span>
           )}
         </div>
       </div>
 
       {/* Content */}
-      <div className="p-4">
+      <div style={{ padding: '0.85rem 1rem' }}>
         {/* Subject */}
-        <div className="flex items-center gap-2 mb-2">
-          <div className="w-5 h-5 rounded-full flex-shrink-0" style={{ backgroundColor: subject?.color + '20', border: `1px solid ${subject?.color}40` }}>
-            <div className="w-2 h-2 rounded-full mx-auto mt-1.5" style={{ backgroundColor: subject?.color }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.35rem' }}>
+          <div style={{
+            width: 16, height: 16, borderRadius: '50%', flexShrink: 0,
+            background: (subject?.color || '#888') + '18',
+            border: `1.5px solid ${(subject?.color || '#888')}40`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <div style={{ width: 6, height: 6, borderRadius: '50%', background: subject?.color || '#888' }} />
           </div>
-          <span className="text-xs font-medium" style={{ color: subject?.color }}>
-            {subject?.label}
+          <span style={{ fontSize: '0.72rem', fontWeight: 600, color: subject?.color || 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            {subject?.label || game.subject}
           </span>
         </div>
 
-        <h3 className="font-bold text-gray-900 leading-snug line-clamp-2 mb-1.5" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+        <h4 style={{
+          fontFamily: 'var(--font-head)', fontSize: '0.95rem', margin: '0 0 0.25rem', fontWeight: 700,
+          lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis',
+          display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+        }}>
           {game.title}
-        </h3>
-        <p className="text-xs text-gray-500 line-clamp-2 mb-3">{game.description}</p>
+        </h4>
+        <p style={{
+          fontSize: '0.78rem', color: 'var(--muted)', margin: '0 0 0.65rem', lineHeight: 1.5,
+          overflow: 'hidden', textOverflow: 'ellipsis',
+          display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+        }}>
+          {game.description}
+        </p>
 
         {/* Stats row */}
-        <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-          <div className="flex items-center gap-3 text-xs text-gray-500">
-            <span className="flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5" />{game.duration} min
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          paddingTop: '0.6rem', borderTop: '1px solid var(--border)',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.75rem', color: 'var(--muted)' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+              <Clock size={13} />{game.duration}
             </span>
-            <span className="flex items-center gap-1">
-              <Users className="w-3.5 h-3.5" />{(game.plays || 0).toLocaleString()}
+            <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+              <Users size={13} />{(game.plays || 0).toLocaleString()}
             </span>
           </div>
-          <span className="flex items-center gap-1 text-xs font-bold text-gold-600">
-            <Zap className="w-3.5 h-3.5" />{game.points} pts
+          <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.78rem', fontWeight: 700, color: 'var(--amber-dark)' }}>
+            <Zap size={13} />{game.points} pts
           </span>
         </div>
       </div>
+
+      <style>{`
+        .card:hover .game-card-play { opacity: 1 !important; }
+        .card:hover img { transform: scale(1.08); }
+      `}</style>
     </div>
-  )
+  );
 }

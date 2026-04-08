@@ -7,7 +7,7 @@ import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import ParentDashboard from './pages/ParentDashboard';
 import GamesPage from './pages/GamesPage';
-import GamePlayer from './pages/GamePlayer';
+import GamePlay from './pages/GamePlay';
 import Features from './pages/Features';
 import Subjects from './pages/Subjects';
 import Pricing from './pages/Pricing';
@@ -129,7 +129,7 @@ function AppRoutes() {
         path="/games/:id"
         element={
           <PrivateRoute>
-            <GamePlayer />
+            <GamePlay />
           </PrivateRoute>
         }
       />

@@ -23,7 +23,7 @@ export default function Footer() {
           {[
             { heading: 'Platform', links: [
               { label: 'Features', to: '/features' },
-              { label: 'Subjects', to: '/subjects' },
+              { label: 'Learning Areas', to: '/subjects' },
               { label: 'Games', to: '/games' },
               { label: 'Pricing', to: '/pricing' }
             ] },

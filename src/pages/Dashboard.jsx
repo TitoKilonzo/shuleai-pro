@@ -34,7 +34,9 @@ export default function Dashboard() {
       setStats({ totalGames:37, avgScore:88, subjects:5, totalMinutes:184 });
       return;
     }
-    progressService.getProgressStats(user.$id).then(setStats).catch(()=>{});
+    if (user?.$id) {
+      progressService.getProgressStats(user.$id).then(setStats).catch(()=>{});
+    }
   }, [user]);
 
   const timeUntilExpiry = () => {
@@ -53,7 +55,7 @@ export default function Dashboard() {
             <div style={{ width:34, height:34, borderRadius:8, background:'var(--grad-forest)', display:'flex', alignItems:'center', justifyContent:'center' }}>
               <BookOpen size={17} color="#fff" />
             </div>
-            <span style={{ fontFamily:'var(--font-head)', fontWeight:800, fontSize:'1.1rem', color:'var(--forest)' }}>
+            <span className="dash-logo-text" style={{ fontFamily:'var(--font-head)', fontWeight:800, fontSize:'1.1rem', color:'var(--forest)' }}>
               ShuleAI <span style={{ color:'var(--amber)' }}>Pro</span>
             </span>
           </Link>
@@ -64,14 +66,14 @@ export default function Dashboard() {
               <Bell size={20} />
               <span style={{ position:'absolute', top:4, right:4, width:8, height:8, background:'var(--coral)', borderRadius:'50%', border:'2px solid var(--surface)' }} />
             </button>
-            <div style={{ display:'flex', alignItems:'center', gap:'0.6rem', padding:'0.4rem 0.75rem', background:'var(--bg)', borderRadius:'100px' }}>
+            <div className="dash-user-pill" style={{ display:'flex', alignItems:'center', gap:'0.6rem', padding:'0.4rem 0.75rem', background:'var(--bg)', borderRadius:'100px' }}>
               <div style={{ width:30, height:30, borderRadius:'50%', background:'var(--forest-pale)', display:'flex', alignItems:'center', justifyContent:'center' }}>
                 <span style={{ fontWeight:700, fontSize:'0.85rem', color:'var(--forest)' }}>{user?.name?.[0]?.toUpperCase()}</span>
               </div>
-              <span style={{ fontWeight:600, fontSize:'0.88rem', color:'var(--ink)' }}>{user?.name?.split(' ')[0]}</span>
+              <span className="dash-user-name" style={{ fontWeight:600, fontSize:'0.88rem', color:'var(--ink)' }}>{user?.name?.split(' ')[0]}</span>
             </div>
             <button className="btn btn-ghost btn-sm" onClick={logout} style={{ gap:'0.3rem', color:'var(--muted)' }}>
-              <LogOut size={15} /> Out
+              <LogOut size={15} /> <span className="dash-logout-text">Out</span>
             </button>
           </nav>
         </div>
@@ -79,7 +81,7 @@ export default function Dashboard() {
 
       <div className="container" style={{ padding:'2rem 1.5rem' }}>
         {/* Welcome + Subscription */}
-        <div style={{ display:'grid', gridTemplateColumns:'1fr auto', gap:'1.5rem', alignItems:'start', marginBottom:'2rem' }}>
+        <div className="dash-welcome" style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', gap:'1.5rem', marginBottom:'2rem', flexWrap:'wrap' }}>
           <div>
             <h2 style={{ marginBottom:'0.25rem' }}>
               Welcome back, {user?.name?.split(' ')[0]}! 👋
@@ -91,7 +93,7 @@ export default function Dashboard() {
             <div style={{
               background:'var(--grad-forest)', color:'#fff',
               padding:'0.85rem 1.25rem', borderRadius:'var(--radius)',
-              textAlign:'center', minWidth:160,
+              textAlign:'center', minWidth:160, flexShrink: 0,
             }}>
               <p style={{ fontSize:'0.75rem', margin:'0 0 0.2rem', opacity:0.8, fontWeight:600, textTransform:'uppercase', letterSpacing:'0.06em' }}>
                 {subscription?.plan?.toUpperCase()} PLAN
@@ -109,11 +111,11 @@ export default function Dashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(180px, 1fr))', gap:'1rem', marginBottom:'2rem' }}>
+        <div className="dash-stats" style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:'1rem', marginBottom:'2rem' }}>
           {[
             { icon: Play, label:'Games Played', value: stats.totalGames, color:'var(--forest)', bg:'var(--forest-pale)' },
             { icon: Star, label:'Avg. Score', value:`${stats.avgScore}%`, color:'#F59E0B', bg:'#FFFBEB' },
-            { icon: BookOpen, label:'Subjects Active', value: stats.subjects, color:'#8B5CF6', bg:'#F5F3FF' },
+            { icon: BookOpen, label:'Learning Areas Active', value: stats.subjects, color:'#8B5CF6', bg:'#F5F3FF' },
             { icon: Clock, label:'Minutes Learned', value: stats.totalMinutes, color:'var(--coral)', bg:'var(--coral-light)' },
           ].map(({ icon: Icon, label, value, color, bg }) => (
             <div key={label} style={{ background:'var(--surface)', borderRadius:'var(--radius)', padding:'1.25rem', border:'1px solid var(--border)', boxShadow:'var(--shadow-sm)' }}>
@@ -129,7 +131,7 @@ export default function Dashboard() {
         </div>
 
         {/* Main grid */}
-        <div style={{ display:'grid', gridTemplateColumns:'2fr 1fr', gap:'1.5rem' }}>
+        <div className="dash-main" style={{ display:'grid', gridTemplateColumns:'2fr 1fr', gap:'1.5rem' }}>
           {/* Games grid */}
           <div>
             <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'1.25rem' }}>
@@ -138,7 +140,7 @@ export default function Dashboard() {
                 View All <ChevronRight size={15} />
               </Link>
             </div>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(200px, 1fr))', gap:'1rem' }}>
+            <div className="dash-games-grid" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(200px, 1fr))', gap:'1rem' }}>
               {featured.slice(0,6).map(game => {
                 const sub = Object.values(SUBJECTS).find(s=>s.id===game.subject);
                 return (
@@ -160,7 +162,7 @@ export default function Dashboard() {
                       <h4 style={{ fontSize:'0.88rem', margin:'0 0 0.3rem', lineHeight:1.3 }}>{game.title}</h4>
                       <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
                         <span style={{ fontSize:'0.75rem', color:'var(--muted)' }}>{game.duration}</span>
-                        <span style={{ color:'var(--amber)', fontSize:'0.78rem' }}>★ {game.rating}</span>
+                        <span style={{ color:'var(--amber)', fontSize:'0.78rem' }}>★ {game.rating || '4.7'}</span>
                       </div>
                     </div>
                   </div>
@@ -196,7 +198,7 @@ export default function Dashboard() {
 
             {/* Subject progress */}
             <div style={{ background:'var(--surface)', borderRadius:'var(--radius-lg)', padding:'1.25rem', border:'1px solid var(--border)' }}>
-              <h4 style={{ marginBottom:'1rem', fontSize:'1rem' }}>Subject Progress</h4>
+              <h4 style={{ marginBottom:'1rem', fontSize:'1rem' }}>Learning Area Progress</h4>
               <div style={{ display:'flex', flexDirection:'column', gap:'0.85rem' }}>
                 {DEMO_PROGRESS.map(({ subject, score }) => {
                   const sub = Object.values(SUBJECTS).find(s=>s.id===subject);
@@ -212,6 +214,36 @@ export default function Dashboard() {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+
+            {/* CBC Performance Levels Explained */}
+            <div style={{ background:'var(--surface)', borderRadius:'var(--radius-lg)', padding:'1.25rem', border:'1px solid var(--border)' }}>
+              <h4 style={{ marginBottom:'1rem', fontSize:'1rem' }}>CBC Grading Explained</h4>
+              <div style={{ display:'flex', flexDirection:'column', gap:'0.85rem' }}>
+                {[
+                  { lbl: 'Exceeding Expectation (EE)', range: '80%-100%', desc: 'Performance is well above the expected standard.', color: 'var(--success)' },
+                  { lbl: 'Meeting Expectation (ME)', range: '50%-79%', desc: 'Performance is at the expected standard.', color: 'var(--amber)' },
+                  { lbl: 'Approaching Expectation (AE)', range: '40%-49%', desc: 'Performance is on track but needs some support.', color: 'var(--warning)' },
+                  { lbl: 'Below Expectation (BE)', range: '0%-39%', desc: 'Performance is below standard and requires significant support.', color: 'var(--error)' },
+                ].map(({ lbl, range, desc, color }) => (
+                  <div key={lbl} style={{ paddingBottom:'0.5rem', borderBottom:'1px solid var(--border)' }}>
+                    <div style={{ display:'flex', justifyContent:'space-between', marginBottom:'0.2rem' }}>
+                      <span style={{ fontSize:'0.78rem', fontWeight:700, color }}>{lbl}</span>
+                      <span style={{ fontSize:'0.75rem', fontWeight:600, color:'var(--muted)' }}>{range}</span>
+                    </div>
+                    <p style={{ margin:0, fontSize:'0.75rem', color:'var(--muted)', lineHeight:1.4 }}>{desc}</p>
+                  </div>
+                ))}
+                <div style={{ marginTop:'0.25rem' }}>
+                    <p style={{ margin:0, fontSize:'0.75rem', fontWeight:600, color:'var(--ink)' }}>Grading and Assessment Structure</p>
+                    <p style={{ margin:'0.25rem 0', fontSize:'0.72rem', color:'var(--muted)', lineHeight:1.4 }}>
+                      <strong>Rubric Bands:</strong> Performance is broken down into specific bands like EE1, EE2, ME1, ME2, etc., corresponding to percentage ranges.
+                    </p>
+                    <p style={{ margin:0, fontSize:'0.72rem', color:'var(--muted)', lineHeight:1.4 }}>
+                      <strong>School-Based Assessment (SBA):</strong> Teachers assess learners through projects, portfolios, and presentations.
+                    </p>
+                </div>
               </div>
             </div>
 
@@ -242,10 +274,18 @@ export default function Dashboard() {
 
       <style>{`
         @media (max-width: 900px) {
-          div[style*="grid-template-columns: 2fr 1fr"] { grid-template-columns: 1fr !important; }
+          .dash-main { grid-template-columns: 1fr !important; }
         }
-        @media (max-width: 600px) {
-          div[style*="grid-template-columns: repeat(auto-fit, minmax(180px"] { grid-template-columns: repeat(2, 1fr) !important; }
+        @media (max-width: 768px) {
+          .dash-stats { grid-template-columns: repeat(2, 1fr) !important; }
+          .dash-user-name { display: none; }
+          .dash-logout-text { display: none; }
+          .dash-logo-text { display: none; }
+        }
+        @media (max-width: 480px) {
+          .dash-stats { grid-template-columns: 1fr 1fr !important; }
+          .dash-games-grid { grid-template-columns: 1fr 1fr !important; }
+          .dash-welcome { flex-direction: column; }
         }
       `}</style>
     </div>

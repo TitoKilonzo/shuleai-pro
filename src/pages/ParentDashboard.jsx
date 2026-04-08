@@ -197,7 +197,7 @@ export default function ParentDashboard() {
           {/* Subject Progress */}
           <div style={{ background: 'var(--surface)', borderRadius: 'var(--radius-lg)', padding: '1.5rem', border: '1px solid var(--border)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
-              <h4 style={{ margin: 0 }}>Subject Performance</h4>
+              <h4 style={{ margin: 0 }}>Learning Area Performance</h4>
               <span style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>{selectedChild.name}</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

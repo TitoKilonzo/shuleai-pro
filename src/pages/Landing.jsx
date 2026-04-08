@@ -12,7 +12,7 @@ import { GAMES, SUBJECTS, getFeaturedGames } from '../lib/games';
 
 const STATS = [
   { value: '56+', label: 'Educational Games', icon: Play },
-  { value: '7', label: 'CBC Subjects', icon: BookOpen },
+  { value: '7', label: 'CBC Learning Areas', icon: BookOpen },
   { value: '10k+', label: 'Active Learners', icon: Users },
   { value: '4.8', label: 'Average Rating', icon: Star },
 ];
@@ -25,8 +25,8 @@ const SUBJECT_PREVIEW = [
 ];
 
 const TESTIMONIALS = [
-  { name:'Grace Mwangi', role:'Parent, Nairobi', quote:'My daughter\'s Mathematics grade improved from C to A- in one term. The games make learning feel like play!', avatar:'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&q=80', stars:5 },
-  { name:'Mr. Otieno', role:'Class Teacher, Kisumu', quote:'ShuleAI Pro is the best edtech tool I\'ve seen for CBC. It covers all subjects and the progress tracking is incredible.', avatar:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80', stars:5 },
+  { name:'Grace Mwangi', role:'Parent, Nairobi', quote:'My daughter\'s Mathematics grade improved from C to A- in one term. The games make learning feel like play!', initials:'GM', color:'#EC4899', stars:5 },
+  { name:'Mr. Otieno', role:'Class Teacher, Kisumu', quote:'ShuleAI Pro is the best edtech tool I\'ve seen for CBC. It covers all learning areas and the progress tracking is incredible.', initials:'MO', color:'#3B82F6', stars:5 },
 ];
 
 export default function Landing() {
@@ -144,11 +144,11 @@ export default function Landing() {
         <div className="container">
           <div className="flex flex-col md:flex-row items-end justify-between mb-12 gap-6">
             <div className="max-w-xl">
-              <div className="section-label">Explore Subjects</div>
+              <div className="section-label">Explore Learning Areas</div>
               <h2>Comprehensive CBC Coverage</h2>
               <p className="text-muted mt-2">Discover interactive games across all core CBC categories from Grade 4 to 9.</p>
             </div>
-            <Link to="/subjects" className="btn btn-outline">View All Subjects <ChevronRight size={18} /></Link>
+            <Link to="/subjects" className="btn btn-outline">View All Learning Areas <ChevronRight size={18} /></Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -239,7 +239,9 @@ export default function Landing() {
                     </div>
                     <p className="text-slate-600 italic mb-6 leading-relaxed">"{t.quote}"</p>
                     <div className="flex items-center gap-4">
-                      <img src={t.avatar} alt={t.name} className="w-12 h-12 rounded-full object-cover" />
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ background: t.color }}>
+                        {t.initials}
+                      </div>
                       <div>
                         <p className="font-bold text-sm m-0">{t.name}</p>
                         <p className="text-xs text-muted m-0">{t.role}</p>
