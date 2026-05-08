@@ -20,8 +20,16 @@ export default function PaymentModal({ isOpen, onClose, defaultPlan = 'monthly' 
 
   useEffect(() => {
     if (!isOpen) return;
-    setStep('form'); setErrors({}); setMpesaRef(''); setAccessCode(''); setCodeError('');
-  }, [isOpen]);
+    setStep('form');
+    setErrors({});
+    setMpesaRef('');
+    setAccessCode('');
+    setCodeError('');
+    setSelectedPlan(defaultPlan);
+    setName(user?.name || '');
+    setEmail(user?.email || '');
+    setPhone(user?.phone || '');
+  }, [isOpen, user, defaultPlan]);
 
   // Listen for M-Pesa payment complete event
   useEffect(() => {

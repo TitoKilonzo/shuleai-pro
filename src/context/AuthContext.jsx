@@ -57,11 +57,15 @@ export function AuthProvider({ children }) {
       // Check demo session
       const demoSession = sessionStorage.getItem('shuleai_demo_session');
       if (demoSession) {
-        const parsed = JSON.parse(demoSession);
-        setUser(parsed);
-        await fetchSubscription(parsed.$id, true);
-        setLoading(false);
-        return;
+        try {
+          const parsed = JSON.parse(demoSession);
+          setUser(parsed);
+          await fetchSubscription(parsed.$id, true);
+          setLoading(false);
+          return;
+        } catch {
+          sessionStorage.removeItem('shuleai_demo_session');
+        }
       }
 
       try {
