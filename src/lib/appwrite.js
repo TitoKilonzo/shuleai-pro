@@ -9,6 +9,7 @@ export const account = new Account(client);
 export const databases = new Databases(client);
 export const storage = new Storage(client);
 export const functions = new Functions(client);
+export { client };
 
 // ─── Constants ───────────────────────────────────────────────────
 export const DB_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID || '69c61a7b001484e05a91';
