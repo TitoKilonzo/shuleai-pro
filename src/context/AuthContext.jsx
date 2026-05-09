@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { authService, subscriptionService } from '../lib/appwrite';
+import { authService, subscriptionService, functions, client } from '../lib/appwrite';
 
 const AuthContext = createContext(null);
 
@@ -54,20 +54,6 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const init = async () => {
-      // Check demo session
-      const demoSession = sessionStorage.getItem('shuleai_demo_session');
-      if (demoSession) {
-        try {
-          const parsed = JSON.parse(demoSession);
-          setUser(parsed);
-          await fetchSubscription(parsed.$id, true);
-          setLoading(false);
-          return;
-        } catch {
-          sessionStorage.removeItem('shuleai_demo_session');
-        }
-      }
-
       try {
         const currentUser = await authService.getCurrentUser();
         if (currentUser) {
@@ -85,12 +71,18 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     // Demo mode check
-    if (DEMO_ACCOUNTS[email] && DEMO_ACCOUNTS[email].password === password) {
-      const demoUser = email.includes('parent') ? DEMO_PARENT : DEMO_USER;
-      sessionStorage.setItem('shuleai_demo_session', JSON.stringify(demoUser));
-      setUser(demoUser);
-      setSubscription(DEMO_SUBSCRIPTION);
-      return demoUser;
+    if (email === 'demo@shuleaipro.co.ke' && password === 'Demo@2026') {
+      try {
+        const result = await functions.createExecution('demo-login');
+        const data = JSON.parse(result.responseBody);
+        // Set the JWT in client
+        client.setJWT(data.jwt);
+        setUser(data.user);
+        setSubscription(DEMO_SUBSCRIPTION);
+        return data.user;
+      } catch (error) {
+        throw new Error('Demo login failed');
+      }
     }
 
     const session = await authService.login(email, password);
@@ -110,7 +102,6 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    sessionStorage.removeItem('shuleai_demo_session');
     if (!user?.isDemo) {
       try { await authService.logout(); } catch { /* ignore */ }
     }

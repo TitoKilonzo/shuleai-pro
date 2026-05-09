@@ -37,6 +37,17 @@ module.exports = async ({ req, res, log, error }) => {
 
     log('Payment successful:', JSON.stringify(meta));
 
+    // Check if already processed (idempotency)
+    const existing = await databases.listDocuments(DB_ID, SUBS_COLLECTION, [
+      Query.equal('mpesaRef', meta.MpesaReceiptNumber || CheckoutRequestID),
+      Query.limit(1),
+    ]);
+
+    if (existing.documents.length > 0) {
+      log('Payment already processed:', existing.documents[0].$id);
+      return res.json({ success: true, message: 'Already processed' });
+    }
+
     // Update subscription status in Appwrite
     const subs = await databases.listDocuments(DB_ID, SUBS_COLLECTION, [
       Query.equal('mpesaRef', `PENDING-${CheckoutRequestID}`),

@@ -1,4 +1,6 @@
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 import Landing from './pages/Landing';
@@ -7,10 +9,11 @@ import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import ParentDashboard from './pages/ParentDashboard';
 import GamesPage from './pages/GamesPage';
-import GamePlay from './pages/GamePlay';
+const GamePlay = lazy(() => import('./pages/GamePlay'));
 import Features from './pages/Features';
 import LearningArea from './pages/LearningArea';
 import Pricing from './pages/Pricing';
+import ErrorBoundary from './components/ErrorBoundary';
 
 /* =========================
    PROTECTED ROUTES
@@ -129,7 +132,9 @@ function AppRoutes() {
         path="/games/:id"
         element={
           <PrivateRoute>
-            <GamePlay />
+            <ErrorBoundary>
+              <GamePlay />
+            </ErrorBoundary>
           </PrivateRoute>
         }
       />
@@ -145,10 +150,14 @@ function AppRoutes() {
 ========================= */
 export default function App() {
   return (
-    <HashRouter>
-      <AuthProvider>
-        <AppRoutes />
-      </AuthProvider>
-    </HashRouter>
+    <HelmetProvider>
+      <HashRouter>
+        <AuthProvider>
+          <Suspense fallback={<div className="page-loader"><div className="loader" /></div>}>
+            <AppRoutes />
+          </Suspense>
+        </AuthProvider>
+      </HashRouter>
+    </HelmetProvider>
   );
 }

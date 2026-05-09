@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import {
   BookOpen, Trophy, Users, Star, Play, ChevronRight, ArrowRight,
   BarChart3, Shield, Smartphone, Award, Target,
@@ -47,6 +48,20 @@ const BENEFITS = [
 
 export default function Landing() {
   const featured = getFeaturedGames(4);
+
+  return (
+    <>
+      <Helmet>
+        <title>ShuleAI Pro - Interactive CBC Games for Kenyan Students | Grades 4-9</title>
+        <meta name="description" content="Master CBC curriculum with 56+ interactive games covering Mathematics, Science, Agriculture & more. Perfect for Kenyan students in Grades 4-9. Try free demo!" />
+        <meta name="keywords" content="CBC games, Kenyan education, interactive learning, Mathematics games, Science games, Agriculture games, Grade 4-9" />
+        <meta property="og:title" content="ShuleAI Pro - Interactive CBC Games for Kenyan Students" />
+        <meta property="og:description" content="56+ educational games aligned with Kenyan CBC curriculum. Learn Mathematics, Science, Agriculture & more through fun interactive games." />
+        <meta property="og:image" content="https://shuleaipro.co.ke/og-image.jpg" />
+        <meta property="og:url" content="https://shuleaipro.co.ke" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://shuleaipro.co.ke" />
+      </Helmet>
   const navigate = useNavigate();
 
   return (
