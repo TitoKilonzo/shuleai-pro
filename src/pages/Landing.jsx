@@ -50,60 +50,69 @@ export default function Landing() {
   const navigate = useNavigate();
 
   return (
-    <div style={{ minHeight:'100vh', background: 'var(--bg)' }}>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 relative overflow-hidden">
+      {/* Animated Background Images */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 right-10 w-64 h-64 bg-gradient-to-br from-emerald-200/20 to-teal-200/20 rounded-full animate-pulse"></div>
+        <div className="absolute bottom-20 left-10 w-48 h-48 bg-gradient-to-br from-amber-200/20 to-orange-200/20 rounded-full animate-bounce" style={{ animationDuration: '3s' }}></div>
+        <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-gradient-to-br from-blue-200/20 to-indigo-200/20 rounded-full animate-ping" style={{ animationDuration: '4s' }}></div>
+        {/* Floating educational icons */}
+        <div className="absolute top-32 left-20 animate-float">
+          <Calculator className="w-8 h-8 text-emerald-400 opacity-30" />
+        </div>
+        <div className="absolute bottom-40 right-32 animate-float" style={{ animationDelay: '1s' }}>
+          <BookOpen className="w-10 h-10 text-amber-400 opacity-30" />
+        </div>
+        <div className="absolute top-3/4 right-20 animate-float" style={{ animationDelay: '2s' }}>
+          <Trophy className="w-6 h-6 text-blue-400 opacity-30" />
+        </div>
+      </div>
       <Navbar />
 
       {/* ── HERO ─────────────────────────────────────────── */}
-      <section style={{
-        background:'var(--grad-hero)', minHeight:'90vh', paddingTop:'70px',
-        display:'flex', flexDirection:'column', justifyContent:'center',
-        position:'relative', overflow:'hidden',
-      }}>
+      <section className="bg-gradient-to-br from-emerald-600 via-teal-600 to-blue-700 min-h-[90vh] pt-16 flex flex-col justify-center relative overflow-hidden">
         {/* Background Decor */}
-        <div style={{ position:'absolute', top:'10%', right:'-5%', width:500, height:500, borderRadius:'50%', background:'rgba(82,183,136,0.12)', pointerEvents:'none' }} />
-        <div style={{ position:'absolute', bottom:'-10%', left:'-8%', width:400, height:400, borderRadius:'50%', background:'rgba(245,158,11,0.10)', pointerEvents:'none' }} />
+        <div className="absolute top-10 right-0 w-[500px] h-[500px] bg-emerald-400/10 rounded-full pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-amber-400/10 rounded-full pointer-events-none"></div>
 
-        <div className="container" style={{ padding: '4rem 1.5rem', position:'relative', zIndex:1 }}>
+        <div className="container px-6 py-16 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             {/* Left Content */}
-            <div style={{ flex: 1, animation:'fadeUp 0.7s ease both' }}>
-              <div style={{ display:'flex', alignItems:'center', gap:'0.5rem', marginBottom:'1.5rem' }}>
-                <span className="badge badge-amber">CBC-Aligned</span>
-                <span className="badge" style={{ background:'rgba(255,255,255,0.12)', color:'rgba(255,255,255,0.85)' }}>Grade 4–9</span>
+            <div className="flex-1 animate-fadeInUp">
+              <div className="flex items-center gap-2 mb-6">
+                <span className="bg-amber-500 text-amber-900 px-3 py-1 rounded-full text-xs font-semibold">CBC-Aligned</span>
+                <span className="bg-white/20 text-white px-3 py-1 rounded-full text-xs font-semibold">Grade 4–9</span>
               </div>
-              <h1 style={{ color:'#fff', marginBottom:'1.5rem', lineHeight:1.1 }}>
+              <h1 className="text-white mb-6 leading-tight">
                 Kenya's Premier<br />
-                <span style={{ color:'var(--amber)' }}>Educational</span><br />
+                <span className="text-amber-400">Educational</span><br />
                 Gaming Hub
               </h1>
-              <p style={{ color:'rgba(255,255,255,0.8)', fontSize:'1.15rem', marginBottom:'2.5rem', maxWidth:540 }}>
+              <p className="text-white/80 text-lg mb-10 max-w-lg">
                 Interactive CBC learning platform with 56+ games. Designed to make every subject your child's favorite.
               </p>
 
-              <div style={{ display:'flex', gap:'1rem', flexWrap:'wrap' }}>
-                <Link to="/signup" className="btn btn-amber btn-lg">
+              <div className="flex gap-4 flex-wrap">
+                <Link to="/signup" className="bg-amber-500 hover:bg-amber-600 text-amber-900 font-semibold px-8 py-4 rounded-xl transition-colors flex items-center gap-2">
                   Get Started Free <ArrowRight size={18} />
                 </Link>
-                <Link to="/games" className="btn btn-lg" style={{ background:'rgba(255,255,255,0.1)', color:'#fff', border:'1px solid rgba(255,255,255,0.2)' }}>
+                <Link to="/games" className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-8 py-4 rounded-xl transition-colors">
                   Explore 56 Games
                 </Link>
               </div>
 
               {/* Social Proof */}
-              <div style={{ display:'flex', alignItems:'center', gap:'1rem', marginTop:'3rem' }}>
-                <div style={{ display:'flex' }}>
+              <div className="flex items-center gap-4 mt-12">
+                <div className="flex">
                   {[...Array(3)].map((_, i) => (
-                    <img key={i} src={`https://i.pravatar.cc/100?u=${i + 5}`} alt="User" style={{
-                      width:36, height:36, borderRadius:'50%', border:'2px solid #fff',
-                      marginLeft: i > 0 ? -12 : 0
-                    }} />
+                    <img key={i} src={`https://i.pravatar.cc/100?u=${i + 5}`} alt="User" className="w-9 h-9 rounded-full border-2 border-white -ml-3 first:ml-0" />
                   ))}
                 </div>
                 <div>
-                  <div style={{ display:'flex', gap:2 }}>
-                    {[1,2,3,4,5].map(s=><Star key={s} size={12} fill="var(--amber)" color="var(--amber)" />)}
+                  <div className="flex gap-1">
+                    {[1,2,3,4,5].map(s => <Star key={s} size={12} fill="#F59E0B" color="#F59E0B" />)}
                   </div>
-                  <p style={{ color:'rgba(255,255,255,0.6)', fontSize:'0.85rem', margin:0 }}>
+                  <p className="text-white/60 text-sm">
                     Trusted by 10,000+ Families
                   </p>
                 </div>
@@ -111,16 +120,16 @@ export default function Landing() {
             </div>
 
             {/* Right Interactive Image */}
-            <div style={{ flex: 1, position:'relative', width: '100%', marginTop: '3rem' }} className="lg:mt-0 xl:mr-8 xl:ml-8">
-              <div style={{ position: 'relative', zIndex: 2, display: 'flex', justifyContent: 'center' }}>
+            <div className="flex-1 relative w-full mt-12 lg:mt-0">
+              <div className="relative z-10 flex justify-center">
                 <SafeImage 
                   src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80" 
                   alt="Learning Hero"
-                  style={{ borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-xl)', height: '100%', maxHeight: 480, objectFit: 'cover', width: '100%' }}
+                  className="rounded-3xl shadow-2xl max-h-96 object-cover w-full"
                 />
               </div>
               {/* Floating Cards */}
-              <div className="animate-float hidden sm:block" style={{ position: 'absolute', top: 30, left: -20, zIndex: 3, background: '#fff', padding: '1rem', borderRadius: 'var(--radius)', boxShadow: 'var(--shadow-lg)' }}>
+              <div className="animate-bounce hidden sm:block absolute top-8 -left-5 bg-white p-4 rounded-xl shadow-lg z-20">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center">
                     <Trophy className="text-emerald-600" size={20} />
@@ -136,13 +145,13 @@ export default function Landing() {
         </div>
 
         {/* Stats Strip */}
-        <div style={{ background:'rgba(0,0,0,0.2)', backdropFilter:'blur(10px)', borderTop:'1px solid rgba(255,255,255,0.1)' }}>
+        <div className="bg-black/20 backdrop-blur-md border-t border-white/10">
           <div className="container">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6">
               {STATS.map(({ value, label, icon: Icon }) => (
                 <div key={label} className="flex items-center gap-4 px-4">
                   <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-                    <Icon size={18} color="var(--amber)" />
+                    <Icon size={18} color="#F59E0B" />
                   </div>
                   <div>
                     <p className="text-white font-bold text-xl m-0 leading-none">{value}</p>
@@ -233,7 +242,7 @@ export default function Landing() {
       </section>
 
       {/* ── BENEFITS ─────────────────────────────────────── */}
-      <section className="section-pad relative overflow-hidden" style={{ background: 'var(--surface-alt)' }}>
+      <section className="py-20 relative overflow-hidden bg-slate-50">
         <div className="container relative z-10">
            <div className="text-center max-w-2xl mx-auto mb-14">
               <div className="section-label justify-center">Why ShuleAI Pro</div>
@@ -245,7 +254,7 @@ export default function Landing() {
               {BENEFITS.map((benefit, idx) => {
                 const Icon = benefit.icon;
                 return (
-                  <div key={idx} className="card p-8 bg-white/90 shadow-sm hover:shadow-lg transition-all duration-300 border-0">
+                  <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border-0">
                     <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style={{ background: `${benefit.color}20` }}>
                       <Icon size={22} color={benefit.color} />
                     </div>
@@ -259,12 +268,12 @@ export default function Landing() {
       </section>
 
       {/* ── FINAL CTA ────────────────────────────────────── */}
-      <section className="section-pad" style={{ background: 'var(--amber)' }}>
+      <section className="py-20 bg-amber-500">
         <div className="container text-center">
-          <h2 className="mb-4">Ready to boost your child's grades?</h2>
+          <h2 className="mb-4 text-slate-800">Ready to boost your child's grades?</h2>
           <p className="text-slate-800/70 mb-8 max-w-lg mx-auto">Access the full CBC curriculum through immersive gaming today.</p>
           <div className="flex justify-center gap-4">
-             <Link to="/signup" className="btn btn-primary btn-lg px-12">Join ShuleAI Pro</Link>
+             <Link to="/signup" className="bg-slate-800 hover:bg-slate-900 text-white font-semibold px-12 py-4 rounded-xl transition-colors">Join ShuleAI Pro</Link>
           </div>
         </div>
       </section>

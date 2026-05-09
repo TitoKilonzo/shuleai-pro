@@ -47,7 +47,11 @@ export function AuthProvider({ children }) {
     try {
       const sub = await subscriptionService.getUserSubscription(userId);
       setSubscription(sub);
-    } catch {
+    } catch (error) {
+      console.warn('Failed to fetch subscription:', error.message);
+      setSubscription(null);
+    }
+  }, []);
       setSubscription(null);
     }
   }, []);
@@ -72,17 +76,10 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     // Demo mode check
     if (email === 'demo@shuleaipro.co.ke' && password === 'Demo@2026') {
-      try {
-        const result = await functions.createExecution('demo-login');
-        const data = JSON.parse(result.responseBody);
-        // Set the JWT in client
-        client.setJWT(data.jwt);
-        setUser(data.user);
-        setSubscription(DEMO_SUBSCRIPTION);
-        return data.user;
-      } catch (error) {
-        throw new Error('Demo login failed');
-      }
+      // For development, use local demo user instead of function call
+      setUser(DEMO_USER);
+      setSubscription(DEMO_SUBSCRIPTION);
+      return DEMO_USER;
     }
 
     const session = await authService.login(email, password);

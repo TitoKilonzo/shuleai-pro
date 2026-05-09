@@ -25,18 +25,23 @@ export const COLLECTIONS = {
 export const authService = {
   async register({ name, email, password, role = 'student', phone = '' }) {
     try {
+      console.log('Starting registration for:', email);
       const user = await account.create(ID.unique(), email, password, name);
+      console.log('User account created:', user.$id);
       await account.createEmailPasswordSession(email, password);
-      try {
-        await databases.createDocument(DB_ID, COLLECTIONS.USERS, user.$id, {
-          name, email, phone, role,
-          createdAt: new Date().toISOString(),
-          avatar: '',
-        });
-      } catch (dbError) {
-        console.error('Failed to create user profile document:', dbError.message);
-        // We don't throw here so the user is still logged in even if the profile document fails
-      }
+      console.log('Session created for user');
+      // Skip profile creation for now due to permission issues
+      // try {
+      //   await databases.createDocument(DB_ID, COLLECTIONS.USERS, user.$id, {
+      //     name, email, phone, role,
+      //     createdAt: new Date().toISOString(),
+      //     avatar: '',
+      //   });
+      //   console.log('User profile created');
+      // } catch (dbError) {
+      //   console.error('Failed to create user profile document:', dbError.message);
+      //   // We don't throw here so the user is still logged in even if the profile document fails
+      // }
       return user;
     } catch (authError) {
       console.error('Registration failed:', authError.message);
@@ -46,7 +51,10 @@ export const authService = {
 
   async login(email, password) {
     try {
-      return await account.createEmailPasswordSession(email, password);
+      console.log('Starting login for:', email);
+      const session = await account.createEmailPasswordSession(email, password);
+      console.log('Login session created');
+      return session;
     } catch (error) {
       console.error('Login failed:', error);
       throw error;
@@ -60,14 +68,8 @@ export const authService = {
   async getCurrentUser() {
     try {
       const user = await account.get();
-      try {
-        const profile = await databases.getDocument(DB_ID, COLLECTIONS.USERS, user.$id);
-        return { ...user, ...profile };
-      } catch (dbError) {
-        console.warn('Profile fetch failed, returning base user:', dbError.message);
-        // Fallback: Return base user with default student role if profile is missing or inaccessible
-        return { ...user, role: 'student', isProfileIncomplete: true };
-      }
+      // Return base user with default role since profile collection may not be accessible
+      return { ...user, role: 'student', isProfileIncomplete: true };
     } catch (error) {
       console.error('Get current user failed:', error.message);
       return null;

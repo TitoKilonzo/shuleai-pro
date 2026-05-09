@@ -192,11 +192,13 @@ input, select, textarea { font-family: var(--font-body); }
   animation: spin 0.8s linear infinite;
   margin: 0 auto;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
 
-.page-loader {
-  min-height: 100vh; display: flex; align-items: center; justify-content: center;
-  background: var(--bg);
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }
 
 /* ─── Animations ────────────────────────────────────────────────── */
