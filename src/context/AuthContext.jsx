@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { authService, subscriptionService, functions, client } from '../lib/appwrite';
+import { authService, subscriptionService, functions, client, account } from '../lib/appwrite';
 
 const AuthContext = createContext(null);
 
@@ -52,13 +52,21 @@ export function AuthProvider({ children }) {
       setSubscription(null);
     }
   }, []);
-      setSubscription(null);
-    }
-  }, []);
 
   useEffect(() => {
     const init = async () => {
       try {
+        // Check for demo user in sessionStorage first
+        const demoUserData = sessionStorage.getItem('shuleai_demo_user');
+        if (demoUserData) {
+          const demoUser = JSON.parse(demoUserData);
+          setUser(demoUser);
+          setSubscription(DEMO_SUBSCRIPTION);
+          setLoading(false);
+          return;
+        }
+
+        // Check for regular Appwrite user
         const currentUser = await authService.getCurrentUser();
         if (currentUser) {
           setUser(currentUser);
@@ -74,14 +82,22 @@ export function AuthProvider({ children }) {
   }, [fetchSubscription]);
 
   const login = async (email, password) => {
-    // Demo mode check
+    // Demo mode check - handle demo accounts locally
     if (email === 'demo@shuleaipro.co.ke' && password === 'Demo@2026') {
-      // For development, use local demo user instead of function call
+      sessionStorage.setItem('shuleai_demo_user', JSON.stringify(DEMO_USER));
       setUser(DEMO_USER);
       setSubscription(DEMO_SUBSCRIPTION);
       return DEMO_USER;
     }
 
+    if (email === 'parent@shuleaipro.co.ke' && password === 'Demo@2026') {
+      sessionStorage.setItem('shuleai_demo_user', JSON.stringify(DEMO_PARENT));
+      setUser(DEMO_PARENT);
+      setSubscription(DEMO_SUBSCRIPTION);
+      return DEMO_PARENT;
+    }
+
+    // Regular login flow
     const session = await authService.login(email, password);
     const currentUser = await authService.getCurrentUser();
     setUser(currentUser);
@@ -99,8 +115,16 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    if (!user?.isDemo) {
-      try { await authService.logout(); } catch { /* ignore */ }
+    // Clear demo user from sessionStorage
+    sessionStorage.removeItem('shuleai_demo_user');
+
+    // Only call Appwrite logout for non-demo users
+    if (user && !user.isDemo) {
+      try {
+        await authService.logout();
+      } catch (error) {
+        console.warn('Logout error:', error);
+      }
     }
     setUser(null);
     setSubscription(null);

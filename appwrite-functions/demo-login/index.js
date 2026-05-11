@@ -18,20 +18,46 @@ module.exports = async ({ req, res, log, error }) => {
     const account = new Account(client);
     const databases = new Databases(client);
 
+    // Check if demo user exists, create if not
+    let demoUser;
+    try {
+      const demoUsers = await databases.listDocuments(
+        process.env.APPWRITE_DATABASE_ID,
+        process.env.APPWRITE_USERS_COLLECTION,
+        [Query.equal('email', 'demo@shuleaipro.co.ke'), Query.limit(1)]
+      );
+      demoUser = demoUsers.documents[0];
+    } catch (err) {
+      log('Demo user not found, creating...');
+      // Create demo user account if it doesn't exist
+      try {
+        const user = await account.create(ID.unique(), 'demo@shuleaipro.co.ke', 'Demo@2026', 'Demo User');
+        // Create profile
+        await databases.createDocument(
+          process.env.APPWRITE_DATABASE_ID,
+          process.env.APPWRITE_USERS_COLLECTION,
+          user.$id,
+          {
+            name: 'Demo User',
+            email: 'demo@shuleaipro.co.ke',
+            phone: '',
+            role: 'student',
+            createdAt: new Date().toISOString(),
+            avatar: '',
+          }
+        );
+        demoUser = { $id: user.$id, name: 'Demo User', email: 'demo@shuleaipro.co.ke', role: 'student' };
+      } catch (createErr) {
+        error(`Failed to create demo user: ${createErr.message}`);
+        return res.json({ error: 'Failed to create demo user' }, 500);
+      }
+    }
+
     // Login as demo user
     await account.createEmailPasswordSession('demo@shuleaipro.co.ke', 'Demo@2026');
 
     // Create JWT
     const jwt = await account.createJWT();
-
-    // Get demo user
-    const demoUsers = await databases.listDocuments(
-      process.env.APPWRITE_DATABASE_ID,
-      process.env.APPWRITE_USERS_COLLECTION,
-      [Query.equal('email', 'demo@shuleaipro.co.ke'), Query.limit(1)]
-    );
-
-    const demoUser = demoUsers.documents[0];
 
     return res.json({
       jwt: jwt.jwt,

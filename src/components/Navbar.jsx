@@ -52,6 +52,19 @@ export default function Navbar() {
             }}>
               ShuleAI <span style={{ color:'var(--amber)' }}>Pro</span>
             </span>
+            {/* Trust Badge */}
+            <div style={{
+              background: (scrolled || !isLanding) ? 'var(--forest-pale)' : 'rgba(255,255,255,0.15)',
+              color: (scrolled || !isLanding) ? 'var(--forest)' : '#fff',
+              padding: '0.2rem 0.6rem',
+              borderRadius: 'var(--radius-pill)',
+              fontSize: '0.7rem',
+              fontWeight: 600,
+              marginLeft: '0.5rem',
+              backdropFilter: 'blur(4px)',
+            }}>
+              ⭐ 4.9/5
+            </div>
           </Link>
 
           {/* Desktop Links */}
