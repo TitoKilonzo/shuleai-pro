@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { BookOpen, Users, Clock, Award, Star, ArrowRight, ChevronRight, Menu, Shield, Smartphone } from 'lucide-react';
+import { BookOpen, Users, Clock, Award, ArrowRight, ChevronRight, Menu, Shield, Smartphone } from 'lucide-react';
 import { SUBJECTS, getFeaturedGames } from '../lib/games';
 import SafeImage from '../components/SafeImage';
 import Footer from '../components/Footer';
@@ -9,31 +9,31 @@ export default function Landing() {
 
   // Define subject preview data
   const SUBJECT_PREVIEW = [
-    { key: 'mathematics', icon: BookOpen, color: '#3B82F6', image: 'https://images.unsplash.com/photo-1596495578221-81765c92842e?w=800&q=80' },
-    { key: 'integrated_science', icon: Award, color: '#10B981', image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&q=80' },
-    { key: 'agriculture', icon: Users, color: '#84CC16', image: 'https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=800&q=80' },
-    { key: 'caas', icon: Star, color: '#F59E0B', image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&q=80' },
+    { key: 'mathematics', icon: BookOpen, color: '#1E76B8', image: 'https://images.unsplash.com/photo-1519459522028-67f480d7c005?w=800&q=80' },
+    { key: 'integrated_science', icon: Award, color: '#0F8B8D', image: 'https://images.unsplash.com/photo-1581093448796-0a7feb0fb06f?w=800&q=80' },
+    { key: 'agriculture', icon: Users, color: '#3F8C3C', image: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=800&q=80' },
+    { key: 'caas', icon: Award, color: '#F59E0B', image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&q=80' },
   ];
 
   // Define benefits data
   const BENEFITS = [
     {
       icon: BookOpen,
-      color: '#3B82F6',
-      title: 'Comprehensive CBC Coverage',
-      description: 'Complete curriculum alignment from Grade 4 to 9 across all core subjects with regular updates based on KICD guidelines.'
+      color: '#1E76B8',
+      title: 'Complete PP1 to Grade 9 Coverage',
+      description: 'Curriculum-aligned content covering PP1 through Grade 9 for all CBC/CBE subjects and learning pathways.'
     },
     {
       icon: Award,
-      color: '#10B981',
-      title: 'AI-Powered Personalization',
-      description: 'Advanced algorithms adapt to each student\'s learning pace, identifying strengths and areas needing improvement.'
+      color: '#0F8B8D',
+      title: 'Personalized Learning Paths',
+      description: 'AI adapts lessons to each learner’s pace, helping students build confidence at every stage.'
     },
     {
-      icon: Star,
+      icon: Users,
       color: '#F59E0B',
-      title: 'Gamified Learning Experience',
-      description: 'Transform complex concepts into engaging games and interactive simulations that make learning enjoyable and memorable.'
+      title: 'Meaningful Practice & Feedback',
+      description: 'Interactive exercises and clear explanations that make core concepts easy to understand and retain.'
     }
   ];
 
@@ -44,18 +44,18 @@ export default function Landing() {
       {/* Navigation - Modern */}
       <nav className="nav-modern fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link to="/" className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-forest to-forest-mid flex items-center justify-center shadow-lg">
-                  <BookOpen className="h-6 w-6 text-white" />
+          <div className="flex justify-between items-center h-14">
+            <div className="flex items-center gap-3">
+              <Link to="/" className="flex items-center space-x-2">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-forest to-forest-mid flex items-center justify-center shadow-lg">
+                  <BookOpen className="h-5 w-5 text-white" />
                 </div>
-                <span className="text-xl font-bold bg-gradient-to-r from-forest to-forest-mid bg-clip-text text-transparent">
+                <span className="text-lg font-bold bg-gradient-to-r from-forest to-forest-mid bg-clip-text text-transparent">
                   ShuleAI Pro
                 </span>
               </Link>
             </div>
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6 text-sm">
               <Link to="/features" className="text-muted hover:text-forest transition-colors font-medium">
                 Features
               </Link>
@@ -65,7 +65,7 @@ export default function Landing() {
               <Link to="/pricing" className="text-muted hover:text-forest transition-colors font-medium">
                 Pricing
               </Link>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3">
                 <Link to="/signin" className="text-muted hover:text-forest font-medium transition-colors">
                   Sign In
                 </Link>
@@ -83,59 +83,33 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section - Modern */}
-      <section className="hero-modern py-24 relative">
+      <section
+        className="hero-modern py-24 relative"
+        style={{
+          background: "linear-gradient(rgba(6,24,50,0.78), rgba(6,24,50,0.58)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1400&q=80') center/cover no-repeat",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
             <div className="mb-8">
               <span className="badge-modern badge-primary inline-flex items-center px-4 py-2 text-sm font-semibold">
-                🚀 AI-Powered Education Platform
+                🚀 AI-Powered CBC/CBE Learning
               </span>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-              Learn Smarter with<br />
-              <span className="gradient-text bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">AI Assistance</span>
+              Learn Smarter with AI Support<br />
+              for PP1 through Grade 9
             </h1>
             <p className="text-xl text-white/90 mb-10 max-w-3xl mx-auto leading-relaxed">
-              Transform your learning experience with personalized AI tutoring, interactive games, and comprehensive CBC curriculum coverage designed specifically for Kenyan students.
+              A clean, focused learning platform for every stage of the CBC/CBE journey — from early primary foundations all the way to secondary mastery.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+            <div className="flex justify-center mb-16">
               <Link to="/signup" className="btn btn-lg bg-white text-forest hover:bg-white/90 shadow-xl">
-                Start Learning Free
+                Start Learning Now
                 <ArrowRight className="h-5 w-5" />
               </Link>
-              <Link to="/features" className="btn btn-outline btn-lg border-white/30 text-white hover:bg-white/10 hover:border-white/50">
-                Explore Features
-              </Link>
-            </div>
-
-            {/* Trust Indicators */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-white/80">
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-2">
-                  <img className="w-10 h-10 rounded-full border-2 border-white/30" src="https://i.pravatar.cc/40?u=1" alt="Student" />
-                  <img className="w-10 h-10 rounded-full border-2 border-white/30" src="https://i.pravatar.cc/40?u=2" alt="Student" />
-                  <img className="w-10 h-10 rounded-full border-2 border-white/30" src="https://i.pravatar.cc/40?u=3" alt="Student" />
-                  <img className="w-10 h-10 rounded-full border-2 border-white/30" src="https://i.pravatar.cc/40?u=4" alt="Student" />
-                </div>
-                <span className="text-lg font-semibold">15,000+ Students Learning</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                <span className="text-lg font-semibold ml-2">4.9/5 Rating</span>
-              </div>
             </div>
           </div>
-        </div>
-
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-white/20 rounded-full blur-xl"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 bg-yellow-300/20 rounded-full blur-xl"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-orange-300/20 rounded-full blur-xl"></div>
         </div>
       </section>
 
@@ -147,10 +121,10 @@ export default function Landing() {
               <span>Explore Learning Areas</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-ink mb-6">
-              Comprehensive CBC Coverage
+              CBC/CBE coverage from PP1 to Grade 9
             </h2>
             <p className="text-xl text-muted max-w-3xl mx-auto leading-relaxed">
-              Discover interactive games across all core CBC categories from Grade 4 to 9, designed to make learning engaging and effective.
+              Discover every core subject, learning objective, and activity designed for the full CBC/CBE pathway — from early foundations through junior secondary.
             </p>
           </div>
 
@@ -215,14 +189,9 @@ export default function Landing() {
                     <div className="absolute top-4 left-4">
                        <span className="badge-modern badge-primary">{game.difficulty}</span>
                     </div>
-                    <div className="absolute top-4 right-4">
-                      <div className="bg-white/90 backdrop-blur-sm rounded-full p-2">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      </div>
-                    </div>
                   </div>
                   <div className="p-6">
-                    <span className="text-sm font-semibold mb-2 block" style={{ color: subData?.color }}>{subData?.label}</span>
+                            <span className="text-sm font-semibold mb-2 block" style={{ color: subData?.color }}>{subData?.label}</span>
                     <h4 className="text-lg font-bold mb-3 text-ink">{game.title}</h4>
                     <div className="flex items-center justify-between text-sm text-muted">
                       <div className="flex items-center gap-2">
@@ -249,67 +218,37 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ── TESTIMONIALS - Modern ─────────────────────────────────── */}
-      <section className="py-24 bg-gradient-to-br from-slate-50 via-white to-slate-50">
+      {/* ── CBE Coverage ─────────────────────────────────────────── */}
+      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="section-label justify-center mb-4">
-              <span>Success Stories</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-ink mb-6">
-              Real Results from Real Students
-            </h2>
-            <p className="text-xl text-muted max-w-3xl mx-auto leading-relaxed">
-              See how ShuleAI Pro is transforming learning outcomes across Kenya with personalized AI-powered education.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="testimonial-modern">
-              <div className="flex gap-1 mb-6">
-                {[1,2,3,4,5].map(s => <Star key={s} size={18} fill="#F59E0B" color="#F59E0B" />)}
+          <div className="grid gap-12 lg:grid-cols-2 items-center">
+            <div>
+              <div className="section-label mb-4">
+                <span>Full Spectrum Learning</span>
               </div>
-              <p className="quote">
-                "ShuleAI Pro helped me improve my math grade from C to A-. The AI explanations are so clear and the games make learning fun!"
+              <h2 className="text-4xl md:text-5xl font-bold text-ink mb-6">
+                Everything for CBC/CBE learners from PP1 to Grade 9
+              </h2>
+              <p className="text-xl text-muted max-w-2xl leading-relaxed">
+                ShuleAI Pro brings together early primary literacy, numeracy and skills building, plus upper primary and junior secondary support — all in one clean, easy-to-follow platform.
               </p>
-              <div className="flex items-center gap-4 mt-6">
-                <img src="https://i.pravatar.cc/60?u=student1" alt="Student" className="w-14 h-14 rounded-full border-2 border-forest-pale" />
-                <div>
-                  <p className="font-bold text-ink">Sarah Wanjiku</p>
-                  <p className="text-muted text-sm">Grade 8, Nairobi</p>
-                </div>
-              </div>
             </div>
-
-            <div className="testimonial-modern">
-              <div className="flex gap-1 mb-6">
-                {[1,2,3,4,5].map(s => <Star key={s} size={18} fill="#F59E0B" color="#F59E0B" />)}
+            <div className="grid gap-6 sm:grid-cols-2">
+              <div className="card-modern p-6">
+                <h3 className="text-xl font-bold mb-3 text-ink">PP1 - Class 3 Foundations</h3>
+                <p className="text-muted leading-relaxed">Build confident reading, counting and classroom skills with simple daily lessons and vibrant early learning activities.</p>
               </div>
-              <p className="quote">
-                "As a parent, I love seeing my son's progress reports. The AI identifies exactly what he needs to work on. Amazing platform!"
-              </p>
-              <div className="flex items-center gap-4 mt-6">
-                <img src="https://i.pravatar.cc/60?u=parent1" alt="Parent" className="w-14 h-14 rounded-full border-2 border-forest-pale" />
-                <div>
-                  <p className="font-bold text-ink">David Kiprop</p>
-                  <p className="text-muted text-sm">Parent of 2, Eldoret</p>
-                </div>
+              <div className="card-modern p-6">
+                <h3 className="text-xl font-bold mb-3 text-ink">Class 4 - Class 6 Growth</h3>
+                <p className="text-muted leading-relaxed">Strengthen CBC subjects with fun games, science experiments and practice problems that reinforce each topic.</p>
               </div>
-            </div>
-
-            <div className="testimonial-modern">
-              <div className="flex gap-1 mb-6">
-                {[1,2,3,4,5].map(s => <Star key={s} size={18} fill="#F59E0B" color="#F59E0B" />)}
+              <div className="card-modern p-6">
+                <h3 className="text-xl font-bold mb-3 text-ink">Class 7 - Class 9 Mastery</h3>
+                <p className="text-muted leading-relaxed">Prepare for junior secondary success with advanced concepts, exam-style exercises and guided revision paths.</p>
               </div>
-              <p className="quote">
-                "The science simulations are incredible! I finally understand complex concepts that were confusing in class. Highly recommend!"
-              </p>
-              <div className="flex items-center gap-4 mt-6">
-                <img src="https://i.pravatar.cc/60?u=student2" alt="Student" className="w-14 h-14 rounded-full border-2 border-forest-pale" />
-                <div>
-                  <p className="font-bold text-ink">Michael Oduya</p>
-                  <p className="text-muted text-sm">Grade 9, Kisumu</p>
-                </div>
+              <div className="card-modern p-6">
+                <h3 className="text-xl font-bold mb-3 text-ink">All CBC/CBE subjects</h3>
+                <p className="text-muted leading-relaxed">Complete curriculum coverage for languages, maths, sciences, agriculture, arts and technical subjects.</p>
               </div>
             </div>
           </div>
@@ -324,11 +263,10 @@ export default function Landing() {
               <span>Why ShuleAI Pro</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-ink mb-6">
-              Built for deeper understanding and faster mastery
+              Clear, focused learning for every CBC/CBE stage
             </h2>
             <p className="text-xl text-muted max-w-3xl mx-auto leading-relaxed">
-              Engaging math, science and language games that help students progress confidently through CBC learning goals.
-            </p>
+              Practical learning tools and meaningful practice designed to keep learners engaged, confident, and ready for school success.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

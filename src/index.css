@@ -16,11 +16,11 @@
 
 :root {
   /* Primary Palette - Enhanced */
-  --forest: #0B4F3C;
-  --forest-mid: #1A7A5E;
-  --forest-light: #52B788;
-  --forest-pale: #D8F3DC;
-  --forest-glass: rgba(11,79,60,0.08);
+  --forest: #125A9F;
+  --forest-mid: #1E76B8;
+  --forest-light: #4F9EE5;
+  --forest-pale: #D8E9F8;
+  --forest-glass: rgba(18,90,159,0.12);
 
   /* Accent - Enhanced */
   --amber: #F59E0B;
@@ -33,13 +33,13 @@
   --coral-light: #FFF0EB;
 
   /* Neutrals - Enhanced */
-  --ink: #0F1C16;
-  --ink-mid: #1E3A2F;
-  --muted: #607B70;
-  --border: #D4E9DF;
-  --bg: #F4FBF7;
+  --ink: #102A40;
+  --ink-mid: #23465D;
+  --muted: #5B7B93;
+  --border: #D2E1EE;
+  --bg: #F7FAFC;
   --surface: #FFFFFF;
-  --surface-alt: #EFF9F3;
+  --surface-alt: #EEF4FA;
 
   /* Status - Enhanced */
   --success: #16A34A;
@@ -69,11 +69,11 @@
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* Gradients - Enhanced */
-  --grad-forest: linear-gradient(135deg, #0B4F3C 0%, #1A7A5E 100%);
+  --grad-forest: linear-gradient(135deg, #125A9F 0%, #1E76B8 100%);
   --grad-amber: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);
   --grad-coral: linear-gradient(135deg, #FF6B35 0%, #FF9A6C 100%);
-  --grad-hero: linear-gradient(160deg, #0B4F3C 0%, #1A7A5E 50%, #0B4F3C 100%);
-  --grad-surface: linear-gradient(180deg, #F4FBF7 0%, #FFFFFF 100%);
+  --grad-hero: linear-gradient(160deg, rgba(6,24,50,0.96) 0%, rgba(6,24,50,0.75) 50%, rgba(6,24,50,0.95) 100%);
+  --grad-surface: linear-gradient(180deg, #F7FAFC 0%, #FFFFFF 100%);
 }
 
 /* ─── Base ──────────────────────────────────────────────────────── */
