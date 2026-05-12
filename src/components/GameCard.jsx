@@ -1,8 +1,9 @@
+import { memo } from 'react';
 import { Play, Clock, Users, Zap, Lock } from 'lucide-react';
 import { SUBJECTS, DIFFICULTIES, GAME_TYPES } from '../lib/games';
 import SafeImage from './SafeImage';
 
-export default function GameCard({ game, compact = false, onPlay, locked = false }) {
+const GameCard = memo(function GameCard({ game, compact = false, onPlay, locked = false }) {
   const subject    = Object.values(SUBJECTS).find(s => s.id === game.subject);
   const difficulty = DIFFICULTIES[game.difficulty] || DIFFICULTIES.Medium;
   const gameType   = game.type ? GAME_TYPES[game.type] : null;
@@ -105,21 +106,6 @@ export default function GameCard({ game, compact = false, onPlay, locked = false
         <p style={{ fontSize: '0.78rem', color: 'var(--muted)', margin: '0 0 0.7rem', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
           {game.description}
         </p>
-
-        {/* Stats */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '0.6rem', borderTop: '1px solid var(--border)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.74rem', color: 'var(--muted)' }}>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.22rem' }}>
-              <Clock size={12} /> {game.duration}
-            </span>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.22rem' }}>
-              <Users size={12} /> {(game.plays || 0).toLocaleString()}
-            </span>
-          </div>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '0.22rem', fontSize: '0.78rem', fontWeight: 700, color: 'var(--amber-dark)' }}>
-            <Zap size={12} /> {game.points} pts
-          </span>
-        </div>
       </div>
 
       <style>{`
@@ -129,4 +115,7 @@ export default function GameCard({ game, compact = false, onPlay, locked = false
       `}</style>
     </div>
   );
-}
+});
+
+export default GameCard;
+

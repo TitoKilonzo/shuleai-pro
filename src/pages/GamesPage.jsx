@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Search, SlidersHorizontal, X, BookOpen, LogOut, Gamepad2,
@@ -30,6 +30,23 @@ export default function GamesPage() {
   const [sortBy, setSortBy] = useState('popular');
   const [payModal, setPayModal] = useState(false);
 
+  const subjectList = useMemo(() => [{ id: 'all', label: 'All Learning Areas' }, ...Object.values(SUBJECTS)], []);
+
+  const clearFilters = useCallback(() => {
+    setSearch('');
+    setSelectedSubject('all');
+    setSelectedGrade('all');
+    setSelectedDiff('all');
+  }, []);
+
+  const handleGameClick = useCallback((gameId) => {
+    if (!isSubscribed()) {
+      setPayModal(true);
+      return;
+    }
+    navigate(`/games/${gameId}`);
+  }, [isSubscribed, navigate]);
+
   const filtered = useMemo(() => {
     let g = [...GAMES];
     if (search) {
@@ -52,23 +69,7 @@ export default function GamesPage() {
     return g;
   }, [search, selectedSubject, selectedGrade, selectedDiff, sortBy]);
 
-  const subjectList = [{ id: 'all', label: 'All Learning Areas' }, ...Object.values(SUBJECTS)];
-
-  const clearFilters = () => {
-    setSearch('');
-    setSelectedSubject('all');
-    setSelectedGrade('all');
-    setSelectedDiff('all');
-  };
   const hasFilters = search || selectedSubject !== 'all' || selectedGrade !== 'all' || selectedDiff !== 'all';
-
-  const handleGameClick = (gameId) => {
-    if (!isSubscribed()) {
-      setPayModal(true);
-      return;
-    }
-    navigate(`/games/${gameId}`);
-  };
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
@@ -78,7 +79,7 @@ export default function GamesPage() {
         position: 'sticky', top: 0, zIndex: 100, boxShadow: 'var(--shadow-sm)',
       }}>
         <div className="container" style={{ padding: '0.85rem 1.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
             {/* Logo */}
             <Link to="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', flexShrink: 0 }}>
               <div style={{ width: 34, height: 34, borderRadius: 8, background: 'var(--grad-forest)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -127,28 +128,36 @@ export default function GamesPage() {
           {showFilters && (
             <div className="games-filter-panel" style={{
               marginTop: '0.85rem', paddingTop: '0.85rem', borderTop: '1px solid var(--border)',
-              display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.75rem',
+              display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem',
             }}>
-              <select className="form-input" value={selectedSubject} onChange={e => setSelectedSubject(e.target.value)}
-                style={{ height: 40, fontSize: '0.85rem', borderRadius: 'var(--radius)' }}>
-                {subjectList.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
-              </select>
-              <select className="form-input" value={selectedGrade} onChange={e => setSelectedGrade(e.target.value)}
-                style={{ height: 40, fontSize: '0.85rem', borderRadius: 'var(--radius)' }}>
-                <option value="all">All Grades</option>
-                {ALL_GRADES.map(g => <option key={g} value={g}>{typeof g === 'number' ? `Grade ${g}` : g}</option>)}
-              </select>
-              <select className="form-input" value={selectedDiff} onChange={e => setSelectedDiff(e.target.value)}
-                style={{ height: 40, fontSize: '0.85rem', borderRadius: 'var(--radius)' }}>
-                <option value="all">All Difficulties</option>
-                {Object.entries(DIFFICULTIES).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
-              </select>
-              <select className="form-input" value={sortBy} onChange={e => setSortBy(e.target.value)}
-                style={{ height: 40, fontSize: '0.85rem', borderRadius: 'var(--radius)' }}>
-                <option value="popular">Most Popular</option>
-                <option value="newest">Newest</option>
-                <option value="points">Most Points</option>
-              </select>
+              <div className="filter-item">
+                <label>Learning Area</label>
+                <select className="form-input" value={selectedSubject} onChange={e => setSelectedSubject(e.target.value)}>
+                  {subjectList.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
+                </select>
+              </div>
+              <div className="filter-item">
+                <label>Grade Level</label>
+                <select className="form-input" value={selectedGrade} onChange={e => setSelectedGrade(e.target.value)}>
+                  <option value="all">All Grades</option>
+                  {ALL_GRADES.map(g => <option key={g} value={g}>{typeof g === 'number' ? `Grade ${g}` : g}</option>)}
+                </select>
+              </div>
+              <div className="filter-item">
+                <label>Difficulty</label>
+                <select className="form-input" value={selectedDiff} onChange={e => setSelectedDiff(e.target.value)}>
+                  <option value="all">All Difficulties</option>
+                  {Object.entries(DIFFICULTIES).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
+                </select>
+              </div>
+              <div className="filter-item">
+                <label>Sort By</label>
+                <select className="form-input" value={sortBy} onChange={e => setSortBy(e.target.value)}>
+                  <option value="popular">Most Popular</option>
+                  <option value="newest">Newest</option>
+                  <option value="points">Most Points</option>
+                </select>
+              </div>
             </div>
           )}
         </div>

@@ -615,6 +615,198 @@ export const DEMO_QUESTIONS = {
       explanation: 'Gravity is the force that attracts objects towards Earth\'s centre.',
     },
   ],
+  early_math: [
+    {
+      question: 'How many sides does a triangle have?',
+      options: ['2', '3', '4', '5'],
+      answer: 1,
+      explanation: 'A triangle has 3 sides.',
+    },
+    {
+      question: 'What comes after the number 5?',
+      options: ['4', '6', '7', '3'],
+      answer: 1,
+      explanation: 'After 5 comes 6.',
+    },
+    {
+      question: 'Which shape has 4 equal sides?',
+      options: ['Triangle', 'Circle', 'Square', 'Rectangle'],
+      answer: 2,
+      explanation: 'A square has 4 equal sides.',
+    },
+    {
+      question: 'How many fingers do you have on one hand?',
+      options: ['3', '4', '5', '6'],
+      answer: 2,
+      explanation: 'You have 5 fingers on one hand.',
+    },
+    {
+      question: 'What is 2 + 2?',
+      options: ['3', '4', '5', '6'],
+      answer: 1,
+      explanation: '2 + 2 = 4.',
+    },
+  ],
+  literacy: [
+    {
+      question: 'Which letter comes after B?',
+      options: ['A', 'C', 'D', 'E'],
+      answer: 1,
+      explanation: 'After B comes C.',
+    },
+    {
+      question: 'What sound does the letter A make?',
+      options: ['/b/', '/a/', '/c/', '/d/'],
+      answer: 1,
+      explanation: 'The letter A makes the /a/ sound.',
+    },
+    {
+      question: 'Which word starts with the letter C?',
+      options: ['Apple', 'Ball', 'Cat', 'Dog'],
+      answer: 2,
+      explanation: 'Cat starts with the letter C.',
+    },
+    {
+      question: 'How many letters are in the word "DOG"?',
+      options: ['2', '3', '4', '5'],
+      answer: 1,
+      explanation: 'D-O-G has 3 letters.',
+    },
+    {
+      question: 'Which is a vowel?',
+      options: ['B', 'C', 'A', 'D'],
+      answer: 2,
+      explanation: 'A is a vowel.',
+    },
+  ],
+  science_technology: [
+    {
+      question: 'What do plants need to grow?',
+      options: ['Water only', 'Sunlight only', 'Soil only', 'Water, sunlight, and soil'],
+      answer: 3,
+      explanation: 'Plants need water, sunlight, and soil to grow.',
+    },
+    {
+      question: 'Which of these is a source of light?',
+      options: ['Table', 'Chair', 'Sun', 'Book'],
+      answer: 2,
+      explanation: 'The sun is a source of light.',
+    },
+    {
+      question: 'What do we use to see ourselves?',
+      options: ['Window', 'Door', 'Mirror', 'Wall'],
+      answer: 2,
+      explanation: 'We use a mirror to see ourselves.',
+    },
+    {
+      question: 'Which material floats on water?',
+      options: ['Stone', 'Wood', 'Metal', 'Rock'],
+      answer: 1,
+      explanation: 'Wood floats on water.',
+    },
+    {
+      question: 'What do bees make?',
+      options: ['Milk', 'Honey', 'Bread', 'Cheese'],
+      answer: 1,
+      explanation: 'Bees make honey.',
+    },
+  ],
+  pre_technical: [
+    {
+      question: 'What tool do we use to measure length?',
+      options: ['Thermometer', 'Ruler', 'Scale', 'Clock'],
+      answer: 1,
+      explanation: 'We use a ruler to measure length.',
+    },
+    {
+      question: 'Which material is used to make wires?',
+      options: ['Wood', 'Plastic', 'Metal', 'Paper'],
+      answer: 2,
+      explanation: 'Metal is used to make wires.',
+    },
+    {
+      question: 'What do we call a machine that helps us lift heavy objects?',
+      options: ['Wheel', 'Lever', 'Pulley', 'Inclined plane'],
+      answer: 1,
+      explanation: 'A lever helps us lift heavy objects.',
+    },
+    {
+      question: 'Which of these is a simple machine?',
+      options: ['Car', 'Bicycle', 'Wheelbarrow', 'Motorcycle'],
+      answer: 2,
+      explanation: 'A wheelbarrow is a simple machine.',
+    },
+    {
+      question: 'What do we use to join two pieces of wood?',
+      options: ['Glue', 'Tape', 'Nails', 'String'],
+      answer: 2,
+      explanation: 'We use nails to join two pieces of wood.',
+    },
+  ],
+  cre: [
+    {
+      question: 'Who created the world according to Christian belief?',
+      options: ['Angels', 'Jesus', 'God', 'Humans'],
+      answer: 2,
+      explanation: 'According to Christian belief, God created the world.',
+    },
+    {
+      question: 'What is the holy book of Christianity?',
+      options: ['Quran', 'Torah', 'Bible', 'Vedas'],
+      answer: 2,
+      explanation: 'The Bible is the holy book of Christianity.',
+    },
+    {
+      question: 'Who is the son of God in Christianity?',
+      options: ['Moses', 'Abraham', 'Jesus', 'David'],
+      answer: 2,
+      explanation: 'Jesus is the son of God in Christianity.',
+    },
+    {
+      question: 'What do Christians do on Sunday?',
+      options: ['Sleep', 'Work', 'Go to church', 'Play games'],
+      answer: 2,
+      explanation: 'Christians go to church on Sunday.',
+    },
+    {
+      question: 'What is the first book of the Bible?',
+      options: ['Exodus', 'Genesis', 'Leviticus', 'Numbers'],
+      answer: 1,
+      explanation: 'Genesis is the first book of the Bible.',
+    },
+  ],
+  caas: [
+    {
+      question: 'Which of these is a musical instrument?',
+      options: ['Chair', 'Piano', 'Table', 'Book'],
+      answer: 1,
+      explanation: 'A piano is a musical instrument.',
+    },
+    {
+      question: 'What do we use to draw pictures?',
+      options: ['Spoon', 'Pencil', 'Plate', 'Cup'],
+      answer: 1,
+      explanation: 'We use a pencil to draw pictures.',
+    },
+    {
+      question: 'Which color do we get by mixing red and yellow?',
+      options: ['Blue', 'Green', 'Orange', 'Purple'],
+      answer: 2,
+      explanation: 'Mixing red and yellow gives orange.',
+    },
+    {
+      question: 'What do actors do on stage?',
+      options: ['Sing', 'Dance', 'Act in plays', 'Paint'],
+      answer: 2,
+      explanation: 'Actors act in plays on stage.',
+    },
+    {
+      question: 'Which sport uses a ball and a net?',
+      options: ['Football', 'Basketball', 'Volleyball', 'Tennis'],
+      answer: 2,
+      explanation: 'Volleyball uses a ball and a net.',
+    },
+  ],
   agriculture: [
     {
       question: 'Which soil type retains the most water?',
@@ -661,8 +853,23 @@ export const DEMO_QUESTIONS = {
 
 // ─── Helper function to get questions for a game ──────────────────
 export const getQuestionsForGame = (game) => {
-  if (!game) return DEMO_QUESTIONS.default;
-  return DEMO_QUESTIONS[game.subject] || DEMO_QUESTIONS.default;
+  if (!game) return DEMO_QUESTIONS.default || [];
+  
+  // Shuffle questions for variety on daily updates
+  const questions = DEMO_QUESTIONS[game.subject] || DEMO_QUESTIONS.default || [];
+  
+  // Create a shuffled copy each time to ensure variety
+  return questions.length > 0 ? shuffleArray([...questions]) : [];
+};
+
+// ─── Utility: Shuffle array ──────────────────────────────────────
+const shuffleArray = (array) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
 };
 
 // ─── Utility Exports ─────────────────────────────────────────────

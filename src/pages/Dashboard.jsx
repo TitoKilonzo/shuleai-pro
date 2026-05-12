@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   BookOpen, Trophy, Clock, Star, Play, BarChart3,
-  LogOut, Bell, ChevronRight, Award, Flame, Zap,
+  LogOut, ChevronRight, Award, Flame, Zap,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { getFeaturedGames, SUBJECTS, GAMES } from '../lib/games';
 import { progressService } from '../lib/appwrite';
 import PaymentModal from '../components/PaymentModal';
+import NotificationDropdown from '../components/NotificationDropdown';
 
 const DEMO_PROGRESS = [
   { subject: 'mathematics',       score: 88, gamesPlayed: 12, timeSpent: 3600 },
@@ -73,10 +74,7 @@ export default function Dashboard() {
 
           <nav style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <Link to="/games" className="btn btn-ghost btn-sm" style={{ color: 'var(--ink)' }}>Games</Link>
-            <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted)', padding: '0.4rem', position: 'relative' }}>
-              <Bell size={20} />
-              <span style={{ position: 'absolute', top: 4, right: 4, width: 7, height: 7, background: 'var(--coral)', borderRadius: '50%', border: '2px solid var(--surface)' }} />
-            </button>
+            <NotificationDropdown />
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 0.65rem', background: 'var(--bg)', borderRadius: '100px' }}>
               <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--forest-pale)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <span style={{ fontWeight: 700, fontSize: '0.82rem', color: 'var(--forest)' }}>{user?.name?.[0]?.toUpperCase()}</span>

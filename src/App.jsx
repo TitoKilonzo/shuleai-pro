@@ -2,6 +2,7 @@ import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { NotificationProvider } from './context/NotificationContext';
 
 import Landing from './pages/Landing';
 import SignIn from './pages/SignIn';
@@ -154,10 +155,12 @@ export default function App() {
     <HelmetProvider>
       <HashRouter>
         <AuthProvider>
-          <Suspense fallback={<div className="page-loader"><div className="loader" /></div>}>
-            <AppRoutes />
-            <WhatsAppButton />
-          </Suspense>
+          <NotificationProvider>
+            <Suspense fallback={<div className="page-loader"><div className="loader" /></div>}>
+              <AppRoutes />
+              <WhatsAppButton />
+            </Suspense>
+          </NotificationProvider>
         </AuthProvider>
       </HashRouter>
     </HelmetProvider>

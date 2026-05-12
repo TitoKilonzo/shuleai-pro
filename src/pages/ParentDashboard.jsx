@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   BookOpen, Users, BarChart3, Trophy, Clock, Star,
-  LogOut, Bell, ChevronRight, TrendingUp, Award, Play,
+  LogOut, ChevronRight, TrendingUp, Award, Play,
   Calendar, ShieldCheck, AlertCircle
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { SUBJECTS } from '../lib/games';
 import PaymentModal from '../components/PaymentModal';
+import NotificationDropdown from '../components/NotificationDropdown';
 
 // Demo children data
 const DEMO_CHILDREN = [
@@ -95,10 +96,7 @@ export default function ParentDashboard() {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <span className="badge badge-amber" style={{ fontSize: '0.72rem' }}>Parent View</span>
-            <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted)', padding: '0.4rem', position: 'relative' }}>
-              <Bell size={20} />
-              <span style={{ position: 'absolute', top: 4, right: 4, width: 8, height: 8, background: 'var(--coral)', borderRadius: '50%', border: '2px solid var(--surface)' }} />
-            </button>
+            <NotificationDropdown />
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.4rem 0.75rem', background: 'var(--bg)', borderRadius: '100px' }}>
               <div style={{ width: 30, height: 30, borderRadius: '50%', background: 'var(--amber-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <span style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--amber-dark)' }}>{user?.name?.[0]?.toUpperCase()}</span>

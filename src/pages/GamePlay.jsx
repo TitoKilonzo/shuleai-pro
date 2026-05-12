@@ -5,17 +5,26 @@ import {
   ChevronRight, RotateCcw, Home, Play, Pause, Target,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useNotifications } from '../context/NotificationContext';
 import { progressService } from '../lib/appwrite';
 import { GAMES, SUBJECTS, DIFFICULTIES, getQuestionsForGame } from '../lib/games';
+import gameUpdateService from '../lib/gameUpdateService';
 
 export default function GamePlay() {
   const { id: gameId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { addGameCompletionNotification } = useNotifications();
 
   const game = GAMES.find(g => g.id === gameId);
   const subject = game ? Object.values(SUBJECTS).find(s => s.id === game.subject) : null;
   const difficulty = game ? DIFFICULTIES[game.difficulty] : null;
+  
+  // Initialize daily updates and get personalized questions
+  useEffect(() => {
+    gameUpdateService.initializeDailyUpdates();
+  }, []);
+
   const QUESTIONS = game ? getQuestionsForGame(game) : [];
 
   const [phase, setPhase] = useState('intro'); // intro | playing | result
@@ -48,6 +57,14 @@ export default function GamePlay() {
     return () => clearInterval(timerRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, qIndex, paused, answered]);
+
+  // Trigger notification when game completes
+  useEffect(() => {
+    if (phase === 'result' && game && subject) {
+      const percentage = Math.round((score / QUESTIONS.length) * 100);
+      addGameCompletionNotification(game.title, subject.name, percentage, score, QUESTIONS.length);
+    }
+  }, [phase, game, subject, score, QUESTIONS.length, addGameCompletionNotification]);
 
   const handleTimeout = () => {
     setAnswered(true);
@@ -92,6 +109,7 @@ export default function GamePlay() {
   const saveAndExit = async () => {
     if (user?.$id && !user?.isDemo) {
       try {
+        // Save progress
         await progressService.saveProgress({
           userId: user.$id,
           gameId,
@@ -100,6 +118,15 @@ export default function GamePlay() {
           timeSpent: totalTime,
           completedAt: new Date().toISOString(),
         });
+
+        // Update user performance for adaptive learning
+        gameUpdateService.updateUserPerformance(
+          user.$id,
+          game?.subject || 'mathematics',
+          score,
+          QUESTIONS.length,
+          totalTime
+        );
       } catch (err) {
         console.error('Failed to save progress:', err);
       }

@@ -8,7 +8,7 @@ export default function SafeImage({
   src, 
   alt, 
   className = '', 
-  fallback = 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=800&q=80',
+  fallback = '/favicon.svg',
   style = {},
   ...props 
 }) {
