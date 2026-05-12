@@ -102,15 +102,6 @@ export default function SignIn() {
             Don&apos;t have an account?{' '}
             <Link to="/signup" style={{ color: 'var(--forest)', fontWeight: 700 }}>Create one free</Link>
           </p>
-
-          {/* Demo hint */}
-          <div style={{ marginTop: '1.75rem', padding: '1rem', borderRadius: 'var(--radius)', background: 'var(--forest-pale)', border: '1px solid var(--forest-glass)' }}>
-            <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--forest)', margin: '0 0 0.35rem' }}>🧪 Demo Access</p>
-            <p style={{ fontSize: '0.78rem', color: 'var(--ink-mid)', margin: 0, lineHeight: 1.6 }}>
-              Student: <code style={{ background: 'rgba(18,90,159,0.1)', padding: '1px 5px', borderRadius: 4 }}>demo@shuleaipro.co.ke</code><br />
-              Password: <code style={{ background: 'rgba(18,90,159,0.1)', padding: '1px 5px', borderRadius: 4 }}>Demo@2026</code>
-            </p>
-          </div>
         </div>
       </div>
 
