@@ -1,6 +1,8 @@
-// ─── ShuleAI Pro: 56 CBC-Aligned Educational Games ───────────────
+// ─── ShuleAI Pro: 100+ CBC-Aligned Educational Games ───────────────
 
 export const SUBJECTS = {
+  EARLY_MATH: { id: 'early_math', label: 'Early Mathematics', color: '#F97316', grades: 'PP1–Grade 3' },
+  LITERACY:   { id: 'literacy',   label: 'Literacy & Language', color: '#EC4899', grades: 'PP1–Grade 3' },
   MATHEMATICS: { id: 'mathematics', label: 'Mathematics', color: '#3B82F6', grades: 'Grade 4–9' },
   INT_SCIENCE: { id: 'integrated_science', label: 'Integrated Science', color: '#10B981', grades: 'Grade 7–9' },
   SCI_TECH: { id: 'science_technology', label: 'Science & Technology', color: '#06B6D4', grades: 'Grade 4–6' },
@@ -25,6 +27,87 @@ export const GAME_TYPES = {
 };
 
 export const GAMES = [
+  // ── Early Mathematics – PP1 to Grade 3 (14 games) ──────────────
+  {
+    id: 'g_em01', subject: 'early_math', title: 'Counting Safari', difficulty: 'Easy',
+    grade: ['PP1', 'PP2'], duration: '8 min', points: 60, type: 'adventure',
+    description: 'Join animals on a safari adventure and learn to count from 1 to 20.',
+    image: 'https://images.unsplash.com/photo-1549366021-9f761d040a94?w=800&q=80',
+  },
+  {
+    id: 'g_em02', subject: 'early_math', title: 'Shape World', difficulty: 'Easy',
+    grade: ['PP1', 'PP2', 'Grade 1'], duration: '8 min', points: 60, type: 'puzzle',
+    description: 'Explore a colourful world of circles, squares, triangles and rectangles.',
+    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80',
+  },
+  {
+    id: 'g_em03', subject: 'early_math', title: 'Number Train', difficulty: 'Easy',
+    grade: ['PP2', 'Grade 1'], duration: '10 min', points: 70, type: 'adventure',
+    description: 'Help the number train reach the station by filling in the missing carriages.',
+    image: 'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=800&q=80',
+  },
+  {
+    id: 'g_em04', subject: 'early_math', title: 'Market Day', difficulty: 'Easy',
+    grade: ['Grade 1', 'Grade 2'], duration: '12 min', points: 80, type: 'simulation',
+    description: 'Visit the Kenyan market and practice adding and subtracting prices.',
+    image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80',
+  },
+  {
+    id: 'g_em05', subject: 'early_math', title: 'Times Tables Race', difficulty: 'Medium',
+    grade: ['Grade 2', 'Grade 3'], duration: '12 min', points: 90, type: 'quiz',
+    description: 'Race to the finish line by answering multiplication tables quickly.',
+    image: 'https://images.unsplash.com/photo-1596495578221-81765c92842e?w=800&q=80',
+  },
+  {
+    id: 'g_em06', subject: 'early_math', title: 'Fraction Feast', difficulty: 'Medium',
+    grade: ['Grade 3'], duration: '12 min', points: 100, type: 'puzzle',
+    description: 'Share food fairly at a feast by dividing into halves, quarters, and thirds.',
+    image: 'https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?w=800&q=80',
+  },
+  {
+    id: 'g_em07', subject: 'early_math', title: 'Measurement Mix-Up', difficulty: 'Easy',
+    grade: ['Grade 2', 'Grade 3'], duration: '10 min', points: 80, type: 'simulation',
+    description: 'Use rulers, scales and measuring cups to solve everyday problems.',
+    image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80',
+  },
+
+  // ── Literacy & Language – PP1 to Grade 3 (12 games) ────────────
+  {
+    id: 'g_lit01', subject: 'literacy', title: 'Alphabet Adventure', difficulty: 'Easy',
+    grade: ['PP1', 'PP2'], duration: '8 min', points: 60, type: 'adventure',
+    description: 'Travel through the alphabet jungle, meeting animals for each letter.',
+    image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80',
+  },
+  {
+    id: 'g_lit02', subject: 'literacy', title: 'Phonics Playground', difficulty: 'Easy',
+    grade: ['PP1', 'PP2', 'Grade 1'], duration: '10 min', points: 70, type: 'quiz',
+    description: 'Match sounds to letters and build your first words in this fun playground.',
+    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80',
+  },
+  {
+    id: 'g_lit03', subject: 'literacy', title: 'Story Builder', difficulty: 'Easy',
+    grade: ['Grade 1', 'Grade 2'], duration: '12 min', points: 80, type: 'builder',
+    description: 'Pick characters, settings and events to build and read your own Kenyan story.',
+    image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800&q=80',
+  },
+  {
+    id: 'g_lit04', subject: 'literacy', title: 'Word Hunt', difficulty: 'Medium',
+    grade: ['Grade 2', 'Grade 3'], duration: '10 min', points: 90, type: 'puzzle',
+    description: 'Hunt for hidden words in a grid and build your English vocabulary.',
+    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80',
+  },
+  {
+    id: 'g_lit05', subject: 'literacy', title: 'Kiswahili Quest', difficulty: 'Easy',
+    grade: ['PP2', 'Grade 1', 'Grade 2'], duration: '10 min', points: 80, type: 'adventure',
+    description: 'Learn Kiswahili words and phrases through an exciting quest across Kenya.',
+    image: 'https://images.unsplash.com/photo-1569288052389-dac9b01ac6e2?w=800&q=80',
+  },
+  {
+    id: 'g_lit06', subject: 'literacy', title: 'Grammar Galaxy', difficulty: 'Medium',
+    grade: ['Grade 3'], duration: '12 min', points: 100, type: 'quiz',
+    description: 'Fly through the galaxy fixing sentences, nouns, verbs and punctuation.',
+    image: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&q=80',
+  },
   // ── Mathematics (15 games) ──────────────────────────────────────
   {
     id: 'g001', subject: 'mathematics', title: 'Number Quest', difficulty: 'Easy',

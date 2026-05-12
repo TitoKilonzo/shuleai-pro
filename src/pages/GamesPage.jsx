@@ -9,7 +9,7 @@ import GameCard from '../components/GameCard';
 import { GAMES, SUBJECTS, DIFFICULTIES } from '../lib/games';
 import PaymentModal from '../components/PaymentModal';
 
-const ALL_GRADES = [4, 5, 6, 7, 8, 9];
+const ALL_GRADES = ['PP1', 'PP2', 'Grade 1', 'Grade 2', 'Grade 3', 4, 5, 6, 7, 8, 9];
 
 export default function GamesPage() {
   const { user, logout, isSubscribed } = useAuth();
@@ -41,7 +41,10 @@ export default function GamesPage() {
       );
     }
     if (selectedSubject !== 'all') g = g.filter(game => game.subject === selectedSubject);
-    if (selectedGrade !== 'all') g = g.filter(game => game.grade.includes(parseInt(selectedGrade)));
+    if (selectedGrade !== 'all') g = g.filter(game => {
+      const gradeVal = isNaN(selectedGrade) ? selectedGrade : parseInt(selectedGrade);
+      return Array.isArray(game.grade) ? game.grade.includes(gradeVal) : game.grade === gradeVal;
+    });
     if (selectedDiff !== 'all') g = g.filter(game => game.difficulty === selectedDiff);
     if (sortBy === 'popular') g.sort((a, b) => (b.plays || 0) - (a.plays || 0));
     else if (sortBy === 'newest') g.reverse();
@@ -133,7 +136,7 @@ export default function GamesPage() {
               <select className="form-input" value={selectedGrade} onChange={e => setSelectedGrade(e.target.value)}
                 style={{ height: 40, fontSize: '0.85rem', borderRadius: 'var(--radius)' }}>
                 <option value="all">All Grades</option>
-                {ALL_GRADES.map(g => <option key={g} value={g}>Grade {g}</option>)}
+                {ALL_GRADES.map(g => <option key={g} value={g}>{typeof g === 'number' ? `Grade ${g}` : g}</option>)}
               </select>
               <select className="form-input" value={selectedDiff} onChange={e => setSelectedDiff(e.target.value)}
                 style={{ height: 40, fontSize: '0.85rem', borderRadius: 'var(--radius)' }}>

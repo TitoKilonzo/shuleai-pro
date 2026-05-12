@@ -19,27 +19,15 @@ export default function Footer() {
               Kenya's most advanced AI-powered educational platform. Transforming learning through personalized, gamified education for CBC curriculum.
             </p>
 
-            {/* Certifications */}
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.1)', padding: '0.5rem 0.8rem', borderRadius: 'var(--radius)', fontSize: '0.8rem' }}>
-                <Shield size={14} color="#10B981" />
-                <span style={{ color: '#10B981', fontWeight: 600 }}>KICD Certified</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.1)', padding: '0.5rem 0.8rem', borderRadius: 'var(--radius)', fontSize: '0.8rem' }}>
-                <Award size={14} color="#F59E0B" />
-                <span style={{ color: '#F59E0B', fontWeight: 600 }}>ISO 27001</span>
-              </div>
-            </div>
-
             {/* Contact */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' }}>
                 <Mail size={14} />
                 <span>support@shuleaipro.co.ke</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' }}>
                 <Phone size={14} />
-                <span>+254 700 123 456</span>
+                <span>+254741563880</span>
               </div>
             </div>
           </div>

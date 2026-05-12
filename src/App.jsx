@@ -14,6 +14,7 @@ import Features from './pages/Features';
 import LearningArea from './pages/LearningArea';
 import Pricing from './pages/Pricing';
 import ErrorBoundary from './components/ErrorBoundary';
+import WhatsAppButton from './components/WhatsAppButton';
 
 /* =========================
    PROTECTED ROUTES
@@ -155,6 +156,7 @@ export default function App() {
         <AuthProvider>
           <Suspense fallback={<div className="page-loader"><div className="loader" /></div>}>
             <AppRoutes />
+            <WhatsAppButton />
           </Suspense>
         </AuthProvider>
       </HashRouter>
