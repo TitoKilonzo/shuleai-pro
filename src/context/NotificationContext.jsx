@@ -3,6 +3,7 @@ import { useNotificationStore } from '../store/notificationStore';
 
 const NotificationContext = createContext();
 
+// Re-export for convenience
 export const useNotifications = () => {
   const context = useContext(NotificationContext);
   if (!context) {

@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Play, Clock, Users, Zap, Lock } from 'lucide-react';
+import { Play, Lock } from 'lucide-react';
 import { SUBJECTS, DIFFICULTIES, GAME_TYPES } from '../lib/games';
 import SafeImage from './SafeImage';
 
