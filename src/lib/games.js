@@ -855,21 +855,9 @@ export const DEMO_QUESTIONS = {
 export const getQuestionsForGame = (game) => {
   if (!game) return DEMO_QUESTIONS.default || [];
   
-  // Shuffle questions for variety on daily updates
+  // Return questions in sequential order without shuffling
   const questions = DEMO_QUESTIONS[game.subject] || DEMO_QUESTIONS.default || [];
-  
-  // Create a shuffled copy each time to ensure variety
-  return questions.length > 0 ? shuffleArray([...questions]) : [];
-};
-
-// ─── Utility: Shuffle array ──────────────────────────────────────
-const shuffleArray = (array) => {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
+  return questions.length > 0 ? [...questions] : [];
 };
 
 // ─── Utility Exports ─────────────────────────────────────────────
