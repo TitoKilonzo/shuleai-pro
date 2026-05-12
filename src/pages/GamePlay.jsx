@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft, Clock, Star, CheckCircle2, XCircle, Trophy, Zap,
@@ -72,13 +72,15 @@ export default function GamePlay() {
     };
   }, [phase, qIndex, paused, answered]);
 
-  // Trigger notification when game completes
+  // Trigger notification when game completes (only once when result phase is reached)
   useEffect(() => {
-    if (phase === 'result' && game && subject) {
+    if (phase === 'result' && game) {
       const percentage = Math.round((score / QUESTIONS.length) * 100);
-      addGameCompletionNotification(game.title, subject.name, percentage, score, QUESTIONS.length);
+      const pointsEarned = Math.round((game.points || 100) * (percentage / 100));
+      // Only show notification, don't add to dependency array to avoid infinite loop
+      addGameCompletionNotification(game, score, QUESTIONS.length, pointsEarned);
     }
-  }, [phase, game, subject, score, QUESTIONS.length, addGameCompletionNotification]);
+  }, [phase]); // Only depend on phase to avoid infinite loops
 
   const handleTimeout = () => {
     setAnswered(true);
