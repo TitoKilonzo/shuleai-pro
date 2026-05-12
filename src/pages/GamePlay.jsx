@@ -33,29 +33,43 @@ export default function GamePlay() {
   const [answered, setAnswered] = useState(false);
   const [score, setScore] = useState(0);
   const [answers, setAnswers] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [timeLeft, setTimeLeft] = useState(45);
   const [totalTime, setTotalTime] = useState(0);
   const [paused, setPaused] = useState(false);
   const timerRef = useRef(null);
+  const timeoutRef = useRef(null);
 
   const q = QUESTIONS[qIndex];
+  const QUESTION_TIME = 45; // Increased from 20 to 45 seconds
 
-  // Timer
+  // Timer - Improved stability
   useEffect(() => {
-    if (phase !== 'playing' || paused || answered) return;
+    if (phase !== 'playing' || paused || answered) {
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
+    }
+
     timerRef.current = setInterval(() => {
-      setTimeLeft(t => {
-        if (t <= 1) {
+      setTimeLeft(prevTime => {
+        const newTime = prevTime - 1;
+        setTotalTime(t => t + 1);
+        
+        if (newTime <= 0) {
           clearInterval(timerRef.current);
-          handleTimeout();
+          // Use ref to avoid stale closure
+          timeoutRef.current = setTimeout(() => {
+            handleTimeout();
+          }, 0);
           return 0;
         }
-        return t - 1;
+        return newTime;
       });
-      setTotalTime(t => t + 1);
     }, 1000);
-    return () => clearInterval(timerRef.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, [phase, qIndex, paused, answered]);
 
   // Trigger notification when game completes
@@ -91,7 +105,7 @@ export default function GamePlay() {
       setQIndex(i => i + 1);
       setSelected(null);
       setAnswered(false);
-      setTimeLeft(20);
+      setTimeLeft(QUESTION_TIME);
     }
   };
 
@@ -102,7 +116,7 @@ export default function GamePlay() {
     setAnswered(false);
     setScore(0);
     setAnswers([]);
-    setTimeLeft(20);
+    setTimeLeft(QUESTION_TIME);
     setTotalTime(0);
   };
 
@@ -135,8 +149,8 @@ export default function GamePlay() {
   };
 
   const pct = Math.round((score / QUESTIONS.length) * 100);
-  const timerPct = (timeLeft / 20) * 100;
-  const timerColor = timeLeft > 10 ? 'var(--forest)' : timeLeft > 5 ? 'var(--warning)' : 'var(--error)';
+  const timerPct = (timeLeft / QUESTION_TIME) * 100;
+  const timerColor = timeLeft > QUESTION_TIME * 0.5 ? 'var(--forest)' : timeLeft > QUESTION_TIME * 0.25 ? 'var(--warning)' : 'var(--error)';
 
   if (!game) {
     return (
