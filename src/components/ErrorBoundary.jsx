@@ -27,7 +27,7 @@ class ErrorBoundary extends Component {
             </div>
             <h2 className="text-xl font-bold text-gray-900 mb-2">Oops! Something went wrong</h2>
             <p className="text-gray-600 mb-6">
-              This game encountered an unexpected error. Don't worry, your progress is safe.
+              This game encountered an unexpected error. Don&apos;t worry, your progress is safe.
             </p>
             <div className="space-y-3">
               <button

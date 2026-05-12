@@ -89,7 +89,7 @@ export default function LearningArea() {
           <div className="container" style={{ textAlign: 'center' }}>
             <h2 style={{ marginBottom: '1.5rem' }}>Missing A Learning Area?</h2>
             <p style={{ color: 'var(--muted)', maxWidth: 500, margin: '0 auto 2.5rem' }}>
-              We are constantly adding new content. If there's a specific CBC topic you'd like to see, let us know!
+              We are constantly adding new content. If there&apos;s a specific CBC topic you&apos;d like to see, let us know!
             </p>
             <Link to="/signup" className="btn btn-primary btn-lg">Start Learning Today</Link>
           </div>

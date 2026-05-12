@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, BookOpen, ChevronDown } from 'lucide-react';
+import { Menu, X, BookOpen } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const NAV_LINKS = [

@@ -99,7 +99,7 @@ export default function SignIn() {
           </form>
 
           <p style={{ textAlign: 'center', marginTop: '1.5rem', color: 'var(--muted)', fontSize: '0.9rem' }}>
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link to="/signup" style={{ color: 'var(--forest)', fontWeight: 700 }}>Create one free</Link>
           </p>
 
@@ -124,7 +124,7 @@ export default function SignIn() {
               {[1,2,3,4,5].map(s => <span key={s} style={{ color: 'var(--amber)', fontSize: '1.2rem' }}>★</span>)}
             </div>
             <blockquote style={{ color: '#fff', fontSize: '1.12rem', lineHeight: 1.7, fontStyle: 'italic', marginBottom: '1rem', fontFamily: 'var(--font-head)' }}>
-              "ShuleAI Pro transformed how my children approach learning. Their CBC exam results are now outstanding!"
+              &quot;ShuleAI Pro transformed how my children approach learning. Their CBC exam results are now outstanding!&quot;
             </blockquote>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--grad-forest)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#fff', fontFamily: 'var(--font-head)', border: '2px solid rgba(255,255,255,0.35)' }}>GM</div>

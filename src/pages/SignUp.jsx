@@ -159,7 +159,7 @@ export default function SignUp() {
             Start Learning with 56+ Interactive Games
           </h3>
           <p style={{ color:'rgba(255,255,255,0.75)', fontSize:'0.95rem', lineHeight:1.7, marginBottom:'2rem' }}>
-            Mathematics, Science, Agriculture, CRE, CAAS and more — all aligned to Kenya's CBC curriculum for PP1–Grade 9.
+            Mathematics, Science, Agriculture, CRE, CAAS and more — all aligned to Kenya&apos;s CBC curriculum for PP1–Grade 9.
           </p>
           <div style={{ display:'flex', flexWrap:'wrap', gap:'0.5rem' }}>
             {['Mathematics','Integrated Science','Agriculture','CRE','CAAS','Pre-Technical'].map(s=>(

@@ -117,7 +117,7 @@ export default function ParentDashboard() {
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h2 style={{ marginBottom: '0.25rem' }}>Parent Dashboard</h2>
-            <p style={{ color: 'var(--muted)' }}>Monitor your children's CBC learning progress.</p>
+            <p style={{ color: 'var(--muted)' }}>Monitor your children&apos;s CBC learning progress.</p>
           </div>
 
           {isSubscribed() ? (

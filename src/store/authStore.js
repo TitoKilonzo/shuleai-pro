@@ -59,7 +59,7 @@ const useAuthStore = create(
       },
 
       logout: async () => {
-        try { await authService.logout() } catch {}
+        try { await authService.logout() } catch (err) { console.error('Logout error', err) }
         set({ user: null, profile: null, subscription: null, isAuthenticated: false, accessCodeSession: null })
       },
 

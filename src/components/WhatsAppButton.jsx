@@ -81,7 +81,7 @@ export default function WhatsAppButton() {
             lineHeight: 1.5,
             color: '#333',
           }}>
-            👋 Hi there! Need help with ShuleAI Pro? We're here for you — reach us on WhatsApp now!
+            👋 Hi there! Need help with ShuleAI Pro? We&apos;re here for you — reach us on WhatsApp now!
           </div>
 
           {/* CTA */}

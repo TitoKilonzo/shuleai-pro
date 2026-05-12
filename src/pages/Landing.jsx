@@ -1,44 +1,145 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { BookOpen, Users, Clock, Award, ArrowRight, ChevronRight, Menu, Shield, Smartphone } from 'lucide-react';
-import { SUBJECTS, getFeaturedGames } from '../lib/games';
-import SafeImage from '../components/SafeImage';
+import { Link } from 'react-router-dom';
+import {
+  ArrowRight, Play, Zap, Trophy, Users,
+  CheckCircle2, ChevronRight, Smartphone, BarChart3, Shield, Star,
+  Flame, Award, BookOpen, Target, TrendingUp, GraduationCap,
+} from 'lucide-react';
+import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { SUBJECTS } from '../lib/games';
+
+const STATS = [
+  { value: '100+', label: 'CBC Games' },
+  { value: '10K+', label: 'Active Learners' },
+  { value: '7', label: 'Learning Areas' },
+  { value: 'PP1–9', label: 'All Grades Covered' },
+];
+
+const HOW_IT_WORKS = [
+  {
+    step: '01', title: 'Create Your Account',
+    desc: 'Sign up in seconds. Choose student or parent — we tailor the experience to your role.',
+    icon: Users, color: 'var(--forest)',
+  },
+  {
+    step: '02', title: 'Pay via M-Pesa',
+    desc: 'Instant STK push — weekly, monthly, or termly plans built for Kenyan families.',
+    icon: Smartphone, color: 'var(--amber-dark)',
+  },
+  {
+    step: '03', title: 'Play, Learn & Excel',
+    desc: 'Unlock 56+ interactive CBC games. Earn badges, track scores, and rise through performance bands.',
+    icon: Trophy, color: 'var(--coral)',
+  },
+];
+
+const FEATURES = [
+  { icon: Play, title: '100+ Interactive CBC Games', color: 'var(--forest)', bg: 'var(--forest-pale)', desc: 'Every game maps directly to CBC competency — from Alphabet Adventure in PP1 to Algebra Arena in Grade 9.' },
+  { icon: BarChart3, title: 'Real-Time Progress Analytics', color: 'var(--amber-dark)', bg: 'var(--amber-light)', desc: 'See subject-level scores, streaks, and CBC performance bands (EE, ME, AE, BE) at a glance.' },
+  { icon: Trophy, title: 'Gamified Achievements', color: 'var(--coral)', bg: 'var(--coral-light)', desc: 'Badges, streaks, leaderboards, and points keep learners motivated every single day.' },
+  { icon: Smartphone, title: 'M-Pesa Native Payments', color: '#8B5CF6', bg: '#F5F3FF', desc: 'No credit cards. Subscribe instantly via M-Pesa STK push — built for Kenyan families.' },
+  { icon: Users, title: 'Parent Dashboard', color: '#10B981', bg: '#ECFDF5', desc: 'Monitor up to 5 children\'s progress, weekly activity charts, and subject mastery — all in one view.' },
+  { icon: Shield, title: 'Safe & Curriculum-Aligned', color: '#0EA5E9', bg: '#F0F9FF', desc: 'Content reviewed against KICD guidelines. No ads, no external links — fully focused learning.' },
+];
+
+const ACHIEVEMENTS = [
+  {
+    icon: Flame,
+    title: 'Daily Streaks',
+    desc: 'Earn streak badges for logging in and playing every day. Students with 7+ day streaks score 40% higher on average.',
+    stat: '21-day',
+    statLabel: 'Longest Streak',
+    color: '#F97316',
+    bg: '#FFF7ED',
+  },
+  {
+    icon: Award,
+    title: 'Performance Bands',
+    desc: 'Rise from BE → AE → ME → EE, mirroring real CBC report card bands. Every game session maps to your band progress.',
+    stat: 'EE',
+    statLabel: 'Top Band',
+    color: '#8B5CF6',
+    bg: '#F5F3FF',
+  },
+  {
+    icon: Trophy,
+    title: 'Subject Badges',
+    desc: 'Collect badges for mastering each of the 7 CBC learning areas. Badges unlock at 75%, 90% and 100% mastery.',
+    stat: '21+',
+    statLabel: 'Unique Badges',
+    color: '#F59E0B',
+    bg: '#FFFBEB',
+  },
+  {
+    icon: TrendingUp,
+    title: 'Leaderboards',
+    desc: 'Weekly leaderboards rank students by score across each subject — healthy competition that keeps learners coming back.',
+    stat: 'Top 10',
+    statLabel: 'Weekly Ranks',
+    color: '#10B981',
+    bg: '#ECFDF5',
+  },
+  {
+    icon: GraduationCap,
+    title: 'Achievement Certificates',
+    desc: 'Termly subscribers unlock printable certificates for each subject mastered — great for school portfolios.',
+    stat: '7',
+    statLabel: 'Subjects to Master',
+    color: '#0EA5E9',
+    bg: '#F0F9FF',
+  },
+  {
+    icon: Target,
+    title: 'Competency Goals',
+    desc: 'Set weekly learning targets per subject. The AI tracks your pace and suggests which games to play next.',
+    stat: 'AI',
+    statLabel: 'Powered Goals',
+    color: 'var(--forest)',
+    bg: 'var(--forest-pale)',
+  },
+];
+
+const PLANS = [
+  {
+    name: 'Bronze',
+    price: 'KES 200',
+    period: '7 days',
+    accent: '#CD7F32',
+    bg: 'linear-gradient(135deg, #3D1F00 0%, #6B3A1F 100%)',
+    badgeBg: 'rgba(205,127,50,0.25)',
+    badgeColor: '#F0A050',
+    features: ['All 56+ games', 'Progress tracking', 'Parent dashboard'],
+    highlight: false,
+  },
+  {
+    name: 'Silver',
+    price: 'KES 600',
+    period: '30 days',
+    accent: '#94A3B8',
+    bg: 'linear-gradient(135deg, #1E293B 0%, #334155 100%)',
+    badgeBg: 'rgba(148,163,184,0.25)',
+    badgeColor: '#CBD5E1',
+    features: ['All 56+ games', 'Progress tracking', 'Parent dashboard'],
+    highlight: true,
+    badge: 'Most Popular',
+  },
+  {
+    name: 'Gold',
+    price: 'KES 1,650',
+    period: '90 days',
+    accent: '#FBBF24',
+    bg: 'linear-gradient(135deg, #78350F 0%, #B45309 100%)',
+    badgeBg: 'rgba(251,191,36,0.25)',
+    badgeColor: '#FCD34D',
+    features: ['All 56+ games', 'Progress tracking', 'Parent dashboard'],
+    highlight: false,
+    badge: 'Best Value',
+  },
+];
+
+const SUBJECT_LIST = Object.values(SUBJECTS);
 
 export default function Landing() {
-  const navigate = useNavigate();
-
-  // Define subject preview data
-  const SUBJECT_PREVIEW = [
-    { key: 'mathematics', icon: BookOpen, color: '#1E76B8', image: 'https://images.unsplash.com/photo-1519459522028-67f480d7c005?w=800&q=80' },
-    { key: 'integrated_science', icon: Award, color: '#0F8B8D', image: 'https://images.unsplash.com/photo-1581093448796-0a7feb0fb06f?w=800&q=80' },
-    { key: 'agriculture', icon: Users, color: '#3F8C3C', image: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=800&q=80' },
-    { key: 'caas', icon: Award, color: '#F59E0B', image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&q=80' },
-  ];
-
-  // Define benefits data
-  const BENEFITS = [
-    {
-      icon: BookOpen,
-      color: '#1E76B8',
-      title: 'Complete PP1 to Grade 9 Coverage',
-      description: 'Curriculum-aligned content covering PP1 through Grade 9 for all CBC/CBE subjects and learning pathways.'
-    },
-    {
-      icon: Award,
-      color: '#0F8B8D',
-      title: 'Personalized Learning Paths',
-      description: 'AI adapts lessons to each learner’s pace, helping students build confidence at every stage.'
-    },
-    {
-      icon: Users,
-      color: '#F59E0B',
-      title: 'Meaningful Practice & Feedback',
-      description: 'Interactive exercises and clear explanations that make core concepts easy to understand and retain.'
-    }
-  ];
-
-  const featured = getFeaturedGames(8);
-
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)', overflowX: 'hidden' }}>
       <Navbar />
@@ -60,7 +161,7 @@ export default function Landing() {
           <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
 
             <h1 style={{ color: '#fff', marginBottom: '1.25rem', lineHeight: 1.08, fontFamily: 'var(--font-head)', fontWeight: 900 }}>
-              Kenya's Most Advanced{' '}
+              Kenya&apos;s Most Advanced{' '}
               <span style={{ color: 'var(--amber)' }}>CBC Learning</span>{' '}
               Platform
             </h1>
@@ -124,144 +225,132 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ── SUBJECT HUB - Modern ─────────────────────────────────── */}
-      <section className="py-24 bg-gradient-to-br from-bg via-surface-alt to-bg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="section-label justify-center mb-4">
-              <span>Explore Learning Areas</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-ink mb-6">
-              CBC/CBE coverage from PP1 to Grade 9
-            </h2>
-            <p className="text-xl text-muted max-w-3xl mx-auto leading-relaxed">
-              Discover every core subject, learning objective, and activity designed for the full CBC/CBE pathway — from early foundations through junior secondary.
-            </p>
+      {/* ── How It Works ─────────────────────────────────────────── */}
+      <section className="section-pad" style={{ background: 'var(--surface-alt)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="section-eyebrow">Simple Setup</span>
+            <h2>Ready in 3 Simple Steps</h2>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-            {SUBJECT_PREVIEW.map(({ key, icon: Icon, color, image }) => {
-              const sub = Object.values(SUBJECTS).find(s=>s.id===key);
-              return (
-                <Link to="/learning-areas" key={key} className="card-modern group block overflow-hidden">
-                  <div className="h-48 relative">
-                    <SafeImage src={image} alt={key} className="group-hover:scale-110 transition-transform duration-500" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                    <div className="absolute bottom-6 left-6 text-white">
-                       <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-3" style={{ background: `${color}20`, backdropFilter: 'blur(10px)' }}>
-                         <Icon size={20} color={color} />
-                       </div>
-                       <span className="text-lg font-bold block">{sub?.label || key}</span>
-                       <span className="text-sm opacity-90">{sub?.grades || 'Grade 4-9'}</span>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center justify-between">
-                      <span className="text-forest font-semibold">Explore Subject</span>
-                      <ChevronRight size={18} className="text-muted group-hover:translate-x-1 transition-transform group-hover:text-forest" />
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-
-          <div className="text-center">
-            <Link to="/learning-areas" className="btn btn-outline btn-lg">
-              View All Learning Areas
-              <ChevronRight size={18} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── GAMES HIGHLIGHT - Modern ──────────────────────────────── */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="section-label justify-center mb-4">
-              <span>Interactive Learning</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-ink mb-6">
-              80+ Engaging Activities & Games
-            </h2>
-            <p className="text-xl text-muted max-w-3xl mx-auto leading-relaxed">
-              From math puzzles to science experiments, our gamified learning platform makes every subject an adventure with AI-powered personalization.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-            {featured.slice(0, 4).map(game => {
-              const subData = Object.values(SUBJECTS).find(s=>s.id===game.subject);
-              return (
-                <div key={game.id} className="card-modern overflow-hidden cursor-pointer group" onClick={() => navigate('/signup')}>
-                  <div className="h-48 relative">
-                    <SafeImage src={game.image} alt={game.title} className="group-hover:scale-105 transition-transform duration-300" />
-                    <div className="absolute top-4 left-4">
-                       <span className="badge-modern badge-primary">{game.difficulty}</span>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                            <span className="text-sm font-semibold mb-2 block" style={{ color: subData?.color }}>{subData?.label}</span>
-                    <h4 className="text-lg font-bold mb-3 text-ink">{game.title}</h4>
-                    <div className="flex items-center justify-between text-sm text-muted">
-                      <div className="flex items-center gap-2">
-                        <Clock size={14}/>
-                        <span>{game.duration}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Users size={14}/>
-                        <span>{(game.plays/1000).toFixed(1)}k plays</span>
-                      </div>
-                    </div>
-                  </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2rem' }}>
+            {HOW_IT_WORKS.map(({ step, title, desc, icon: Icon, color }) => (
+              <div key={step} style={{ background: 'var(--surface)', borderRadius: 'var(--radius-xl)', padding: '2rem', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)', position: 'relative' }}>
+                <span style={{ position: 'absolute', top: '1.25rem', right: '1.5rem', fontFamily: 'var(--font-head)', fontSize: '2.8rem', fontWeight: 900, color, opacity: 0.1, lineHeight: 1 }}>{step}</span>
+                <div style={{ width: 50, height: 50, borderRadius: 14, background: color + '15', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+                  <Icon size={24} color={color} />
                 </div>
-              );
-            })}
-          </div>
-
-          <div className="text-center">
-            <Link to="/games" className="btn btn-primary btn-lg">
-              Browse All Activities
-              <ChevronRight size={18} />
-            </Link>
+                <h3 style={{ marginBottom: '0.65rem', fontSize: '1.1rem' }}>{title}</h3>
+                <p style={{ color: 'var(--muted)', lineHeight: 1.7, margin: 0, fontSize: '0.92rem' }}>{desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ── CBE Coverage ─────────────────────────────────────────── */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-2 items-center">
-            <div>
-              <div className="section-label mb-4">
-                <span>Full Spectrum Learning</span>
+      {/* ── Features ─────────────────────────────────────────────── */}
+      <section className="section-pad">
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="section-eyebrow">Everything You Need</span>
+            <h2>Built for Kenyan Learners</h2>
+            <p style={{ color: 'var(--muted)', maxWidth: 520, margin: '0.75rem auto 0', lineHeight: 1.7 }}>
+              Every feature is purpose-built for the CBC curriculum and the realities of Kenyan families.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
+            {FEATURES.map(({ icon: Icon, title, desc, color, bg }) => (
+              <div key={title} className="card-modern" style={{ padding: '1.75rem' }}>
+                <div style={{ width: 48, height: 48, borderRadius: 12, background: bg, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
+                  <Icon size={22} color={color} />
+                </div>
+                <h4 style={{ marginBottom: '0.5rem', fontSize: '1rem' }}>{title}</h4>
+                <p style={{ color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.7, margin: 0 }}>{desc}</p>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-ink mb-6">
-                Everything for CBC/CBE learners from PP1 to Grade 9
-              </h2>
-              <p className="text-xl text-muted max-w-2xl leading-relaxed">
-                ShuleAI Pro brings together early primary literacy, numeracy and skills building, plus upper primary and junior secondary support — all in one clean, easy-to-follow platform.
-              </p>
-            </div>
-            <div className="grid gap-6 sm:grid-cols-2">
-              <div className="card-modern p-6">
-                <h3 className="text-xl font-bold mb-3 text-ink">PP1 - Class 3 Foundations</h3>
-                <p className="text-muted leading-relaxed">Build confident reading, counting and classroom skills with simple daily lessons and vibrant early learning activities.</p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Pricing Preview ──────────────────────────────────────── */}
+      <section className="section-pad" style={{ background: 'var(--surface-alt)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="section-eyebrow">Flexible Plans</span>
+            <h2>Simple, Transparent Pricing</h2>
+            <p style={{ color: 'var(--muted)', maxWidth: 480, margin: '0.75rem auto 0', lineHeight: 1.7 }}>
+              All plans include unlimited access to all 56+ games. Pay via M-Pesa — no credit card needed.
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'stretch' }}>
+            {PLANS.map(({ name, price, period, accent, bg, badgeBg, badgeColor, features, highlight, badge }) => (
+              <div
+                key={name}
+                style={{
+                  background: bg,
+                  borderRadius: 'var(--radius-xl)',
+                  padding: '2.25rem 2rem',
+                  minWidth: 220,
+                  maxWidth: 280,
+                  flex: '1 1 220px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'relative',
+                  boxShadow: highlight ? '0 20px 60px rgba(0,0,0,0.35)' : '0 8px 30px rgba(0,0,0,0.2)',
+                  transform: highlight ? 'scale(1.04)' : 'scale(1)',
+                  transition: 'transform 0.22s var(--ease)',
+                  border: highlight ? `1.5px solid ${accent}55` : '1px solid rgba(255,255,255,0.08)',
+                }}
+              >
+                {/* Badge */}
+                {badge && (
+                  <span style={{
+                    position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)',
+                    background: accent, color: name === 'Silver' ? '#1E293B' : '#1a0a00',
+                    padding: '0.28rem 1rem', borderRadius: 'var(--radius-pill)',
+                    fontSize: '0.7rem', fontWeight: 800, letterSpacing: '0.07em',
+                    textTransform: 'uppercase', whiteSpace: 'nowrap',
+                    boxShadow: `0 3px 12px ${accent}66`,
+                  }}>{badge}</span>
+                )}
+
+                {/* Tier icon circle */}
+                <div style={{
+                  width: 52, height: 52, borderRadius: '50%',
+                  background: badgeBg,
+                  border: `2px solid ${accent}55`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: '1.25rem', fontSize: '1.5rem',
+                }}>
+                  {name === 'Bronze' ? '🥉' : name === 'Silver' ? '🥈' : '🥇'}
+                </div>
+
+                <p style={{ fontFamily: 'var(--font-head)', fontWeight: 700, fontSize: '0.9rem', color: badgeColor, textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 0.3rem' }}>{name}</p>
+                <p style={{ fontFamily: 'var(--font-head)', fontSize: '2rem', fontWeight: 900, color: '#fff', margin: '0 0 0.2rem' }}>{price}</p>
+                <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.5)', margin: '0 0 1.75rem' }}>{period}</p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem', marginBottom: '1.75rem', flex: 1 }}>
+                  {features.map(feat => (
+                    <div key={feat} style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.82rem', color: 'rgba(255,255,255,0.82)' }}>
+                      <CheckCircle2 size={14} color={accent} />
+                      {feat}
+                    </div>
+                  ))}
+                </div>
+
+                <Link to="/signup" style={{
+                  display: 'flex', justifyContent: 'center', alignItems: 'center',
+                  padding: '0.7rem 1.25rem', borderRadius: 'var(--radius)',
+                  background: `${accent}22`,
+                  border: `1.5px solid ${accent}66`,
+                  color: accent,
+                  fontWeight: 700, fontSize: '0.88rem',
+                  textDecoration: 'none',
+                  transition: 'background 0.18s',
+                }}>
+                  Get Started
+                </Link>
               </div>
-              <div className="card-modern p-6">
-                <h3 className="text-xl font-bold mb-3 text-ink">Class 4 - Class 6 Growth</h3>
-                <p className="text-muted leading-relaxed">Strengthen CBC subjects with fun games, science experiments and practice problems that reinforce each topic.</p>
-              </div>
-              <div className="card-modern p-6">
-                <h3 className="text-xl font-bold mb-3 text-ink">Class 7 - Class 9 Mastery</h3>
-                <p className="text-muted leading-relaxed">Prepare for junior secondary success with advanced concepts, exam-style exercises and guided revision paths.</p>
-              </div>
-              <div className="card-modern p-6">
-                <h3 className="text-xl font-bold mb-3 text-ink">All CBC/CBE subjects</h3>
-                <p className="text-muted leading-relaxed">Complete curriculum coverage for languages, maths, sciences, agriculture, arts and technical subjects.</p>
-              </div>
-            </div>
+            ))}
           </div>
           <p style={{ textAlign: 'center', marginTop: '1.75rem', color: 'var(--muted)', fontSize: '0.85rem' }}>
             All payments via <strong style={{ color: 'var(--ink)' }}>M-Pesa</strong> · No recurring charges ·{' '}
@@ -270,76 +359,55 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ── BENEFITS - Modern ─────────────────────────────────────── */}
-      <section className="py-24 bg-gradient-to-br from-bg via-surface-alt to-bg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="section-label justify-center mb-4">
-              <span>Why ShuleAI Pro</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-ink mb-6">
-              Clear, focused learning for every CBC/CBE stage
-            </h2>
-            <p className="text-xl text-muted max-w-3xl mx-auto leading-relaxed">
-              Practical learning tools and meaningful practice designed to keep learners engaged, confident, and ready for school success.</p>
+      {/* ── Achievements & Rewards ───────────────────────────────── */}
+      <section className="section-pad">
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="section-eyebrow">Gamified Learning</span>
+            <h2>Rewards That Keep Learners Coming Back</h2>
+            <p style={{ color: 'var(--muted)', maxWidth: 520, margin: '0.75rem auto 0', lineHeight: 1.7 }}>
+              ShuleAI Pro turns every study session into a game. Students earn real rewards tied directly to CBC competency progress.
+            </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {BENEFITS.map((benefit, idx) => {
-              const Icon = benefit.icon;
-              return (
-                <div key={idx} className="card-modern p-8 text-center group">
-                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto" style={{ background: `${benefit.color}20` }}>
-                    <Icon size={28} color={benefit.color} />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))', gap: '1.5rem' }}>
+            {ACHIEVEMENTS.map(({ icon: Icon, title, desc, stat, statLabel, color, bg }) => (
+              <div key={title} className="card-modern" style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                  <div style={{ width: 48, height: 48, borderRadius: 12, background: bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Icon size={22} color={color} />
                   </div>
-                  <h3 className="text-xl font-bold mb-4 text-ink">{benefit.title}</h3>
-                  <p className="text-muted leading-relaxed">{benefit.description}</p>
+                  <div style={{ textAlign: 'right' }}>
+                    <p style={{ fontFamily: 'var(--font-head)', fontSize: '1.6rem', fontWeight: 900, color, margin: 0, lineHeight: 1 }}>{stat}</p>
+                    <p style={{ fontSize: '0.7rem', color: 'var(--muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{statLabel}</p>
+                  </div>
                 </div>
-              );
-            })}
+                <div>
+                  <h4 style={{ marginBottom: '0.4rem', fontSize: '1rem' }}>{title}</h4>
+                  <p style={{ color: 'var(--muted)', fontSize: '0.87rem', lineHeight: 1.7, margin: 0 }}>{desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ── FINAL CTA - Modern ────────────────────────────────────── */}
-      <section className="cta-modern py-24 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-              Transform Your Child's Learning Journey Today
-            </h2>
-            <p className="text-white/90 mb-12 text-xl max-w-2xl mx-auto leading-relaxed">
-              Join 50,000+ Kenyan students who are achieving academic excellence with AI-powered personalized learning.
-            </p>
-
-            <div className="flex flex-col sm:flex-row justify-center gap-6 mb-16">
-              <Link to="/signup" className="btn btn-lg bg-white text-forest hover:bg-white/90 shadow-2xl transform hover:scale-105 transition-all duration-300">
-                🚀 Start Free Trial
-              </Link>
-              <Link to="/pricing" className="btn btn-outline btn-lg border-white/30 text-white hover:bg-white/10 hover:border-white/50">
-                View Pricing
-              </Link>
-            </div>
-
-            {/* Trust Signals */}
-            <div className="flex flex-wrap justify-center items-center gap-8 text-white/80">
-              <div className="flex items-center gap-2">
-                <Shield size={20} />
-                <span className="text-sm font-medium">100% Secure & Private</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Award size={20} />
-                <span className="text-sm font-medium">CBC Certified Content</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Smartphone size={20} />
-                <span className="text-sm font-medium">Mobile Optimized</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <BookOpen size={20} />
-                <span className="text-sm font-medium">24/7 AI Support</span>
-              </div>
-            </div>
+      {/* ── CTA ──────────────────────────────────────────────────── */}
+      <section className="cta-modern section-pad">
+        <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.9)', padding: '0.4rem 1rem', borderRadius: 'var(--radius-pill)', fontSize: '0.8rem', fontWeight: 600, marginBottom: '1.5rem' }}>
+            <Zap size={14} fill="currentColor" /> Join 10,000+ Kenyan Learners
+          </span>
+          <h2 style={{ color: '#fff', marginBottom: '1rem' }}>Ready to Transform Your Child&apos;s Learning?</h2>
+          <p style={{ color: 'rgba(255,255,255,0.8)', maxWidth: 520, margin: '0 auto 2rem', lineHeight: 1.7, fontSize: '1.05rem' }}>
+            Start free today. No credit card needed — just your M-Pesa when you&apos;re ready to subscribe.
+          </p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/signup" className="btn btn-lg" style={{ background: '#fff', color: 'var(--forest)', fontWeight: 700 }}>
+              Create Free Account <ArrowRight size={18} />
+            </Link>
+            <Link to="/games" className="btn btn-lg" style={{ background: 'rgba(255,255,255,0.12)', color: '#fff', border: '1.5px solid rgba(255,255,255,0.3)' }}>
+              Browse All Games
+            </Link>
           </div>
         </div>
       </section>

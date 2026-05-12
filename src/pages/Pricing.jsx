@@ -13,7 +13,7 @@ export default function Pricing() {
           <div className="container" style={{ textAlign: 'center' }}>
             <h1 style={{ color: '#fff', marginBottom: '1.5rem' }}>Simple, Transparent Pricing</h1>
             <p style={{ color: 'rgba(255,255,255,0.8)', maxWidth: 600, margin: '0 auto', fontSize: '1.2rem' }}>
-              Choose a plan that fits your family's needs. All plans include full access to our 50+ CBC games.
+              Choose a plan that fits your family&apos;s needs. All plans include full access to our 50+ CBC games.
             </p>
           </div>
         </section>

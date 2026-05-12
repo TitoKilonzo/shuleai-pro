@@ -25,7 +25,7 @@ export default function Plans() {
               Pricing Plans
             </span>
             <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
-              Invest in Your Child's Future
+              Invest in Your Child&apos;s Future
             </h1>
             <p className="text-forest-200 text-lg">
               Affordable CBC-aligned learning starting at just KES 200/week.
@@ -64,7 +64,7 @@ export default function Plans() {
         <div className="py-16 bg-gray-50">
           <div className="max-w-4xl mx-auto px-4">
             <h2 className="text-3xl font-extrabold text-forest-900 text-center mb-10" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
-              What's Included in Each Plan
+              What&apos;s Included in Each Plan
             </h2>
             <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-md">
               <div className="overflow-x-auto">

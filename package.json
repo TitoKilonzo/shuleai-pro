@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
+    "test:ci": "vitest run --passWithNoTests",
     "test:e2e": "playwright test"
   },
   "dependencies": {
@@ -34,9 +35,9 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.2.0",
     "jsdom": "^29.1.1",
-    "postcss": "^8.5.8",
+    "postcss": "^8.5.10",
     "tailwindcss": "^4.2.2",
-    "vite": "^6.3.5",
+    "vite": "6.4.2",
     "vite-plugin-pwa": "^1.3.0",
     "vitest": "^4.1.5"
   },

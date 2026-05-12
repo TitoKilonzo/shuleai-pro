@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BookOpen, Facebook, Twitter, Instagram, Youtube, Shield, Award, Mail, Phone } from 'lucide-react';
+import { BookOpen, Facebook, Twitter, Instagram, Youtube, Mail, Phone } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -16,11 +16,11 @@ export default function Footer() {
               </span>
             </div>
             <p style={{ fontSize: '0.9rem', lineHeight: 1.7, maxWidth: 280, marginBottom: '1.5rem' }}>
-              Kenya's most advanced AI-powered educational platform. Transforming learning through personalized, gamified education for CBC curriculum.
+              Kenya&apos;s most advanced AI-powered educational platform. Transforming learning through personalized, gamified education for CBC curriculum.
             </p>
 
             {/* Contact */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' }}>
                 <Mail size={14} />
                 <span>support@shuleaipro.co.ke</span>

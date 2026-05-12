@@ -33,7 +33,7 @@ export default function PricingSection() {
             </span>
           </div>
           <h2 style={{ color:'#fff', marginBottom:'0.75rem' }}>
-            Invest in Your Child's Future
+            Invest in Your Child&apos;s Future
           </h2>
           <p style={{ color:'rgba(255,255,255,0.72)', maxWidth:520, margin:'0 auto', fontSize:'1.05rem' }}>
             Flexible subscription plans designed for every family. Cancel anytime.
