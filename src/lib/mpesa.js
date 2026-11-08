@@ -4,6 +4,7 @@
  * Appwrite Functions or a secure server to protect your credentials.
  * This file handles the client-side STK Push initiation flow.
  */
+import { GAMES } from './games';
 
 // ─── Plan Definitions ─────────────────────────────────────────────
 export const SUBSCRIPTION_PLANS = {
@@ -15,7 +16,7 @@ export const SUBSCRIPTION_PLANS = {
     badge: null,
     color: '#52B788',
     features: [
-      'Access all 54+ games',
+      `Access all ${GAMES.length} games`,
       'All Learning Areas included',
       '7 days full access',
       'Progress tracking',
@@ -26,14 +27,13 @@ export const SUBSCRIPTION_PLANS = {
     name: 'Monthly Access',
     price: 600,
     days: 30,
-    badge: 'Most Popular',
+    badge: null,
     color: '#0B4F3C',
     features: [
-      'Access all 54+ games',
+      `Access all ${GAMES.length} games`,
       'All Subjects included',
       '30 days full access',
       'Progress tracking',
-      'Priority Support',
     ],
   },
   termly: {
@@ -41,15 +41,13 @@ export const SUBSCRIPTION_PLANS = {
     name: 'Termly Access',
     price: 1650,
     days: 90,
-    badge: 'Best Value',
+    badge: null,
     color: '#F59E0B',
     features: [
-      'Access all 54+ games',
+      `Access all ${GAMES.length} games`,
       'All Subjects included',
       '90 days full access',
       'Progress tracking',
-      'Priority Support',
-      'Achievement Certificates',
     ],
   },
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, MessageCircle } from 'lucide-react';
+import { X } from 'lucide-react';
 
 const WA_NUMBER = '254741563880';
 const WA_MESSAGE = encodeURIComponent(
@@ -81,7 +81,7 @@ export default function WhatsAppButton() {
             lineHeight: 1.5,
             color: '#333',
           }}>
-            👋 Hi there! Need help with ShuleAI Pro? We&apos;re here for you — reach us on WhatsApp now!
+            Need help with ShuleAI Pro? Reach us on WhatsApp.
           </div>
 
           {/* CTA */}

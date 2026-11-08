@@ -130,7 +130,7 @@ export default function GamePlay() {
           userId: user.$id,
           gameId,
           subject: game?.subject || 'mathematics',
-          score,
+          score: pct,
           timeSpent: totalTime,
           completedAt: new Date().toISOString(),
         });
@@ -388,7 +388,11 @@ export default function GamePlay() {
                   : <XCircle size={18} color="#EF4444" style={{ flexShrink: 0, marginTop: 2 }} />}
                 <div>
                   <p style={{ fontWeight: 700, fontSize: '0.88rem', margin: '0 0 0.2rem', color: selected === q.answer ? '#15803D' : '#B91C1C' }}>
-                    {selected === q.answer ? '🎉 Correct!' : selected === null ? '⏱ Time\'s up!' : '❌ Not quite!'}
+                    {selected === q.answer
+                      ? <><CheckCircle2 size={16} style={{ verticalAlign: 'text-bottom', marginRight: 5 }} />Correct!</>
+                      : selected === null
+                        ? <><Clock size={16} style={{ verticalAlign: 'text-bottom', marginRight: 5 }} />Time&apos;s up!</>
+                        : <><XCircle size={16} style={{ verticalAlign: 'text-bottom', marginRight: 5 }} />Not quite!</>}
                   </p>
                   <p style={{ fontSize: '0.82rem', color: 'var(--muted)', margin: 0 }}>{q.explanation}</p>
                 </div>

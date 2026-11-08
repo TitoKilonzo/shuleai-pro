@@ -1,51 +1,52 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { 
-  Zap, Star, Shield, Trophy, Users, 
-  Smartphone, BarChart3, Clock, Rocket 
+import {
+  Shield, Trophy, Users,
+  Smartphone, BarChart3, Rocket
 } from 'lucide-react';
 import SafeImage from '../components/SafeImage';
+import { GAMES, SUBJECTS } from '../lib/games';
 
 const FEATURES = [
   {
     icon: Rocket,
-    title: 'CBC Aligned',
-    desc: 'Every game is mapped to the Competency Based Curriculum (CBC) specific learning outcomes.',
+    title: 'CBC Learning Areas',
+    desc: 'Browse games organized by the learning areas and grade labels in the catalogue.',
     color: 'var(--forest)',
     bg: 'var(--forest-pale)'
   },
   {
     icon: BarChart3,
     title: 'Progress Analytics',
-    desc: 'Real-time performance tracking for parents and teachers to monitor child progress.',
+    desc: 'Review completed games, scores, and learning area progress in the dashboards.',
     color: 'var(--amber)',
     bg: 'var(--amber-light)'
   },
   {
     icon: Trophy,
-    title: 'Reward System',
-    desc: 'Gamified rewards and badges to keep children motivated and engaged in learning.',
+    title: 'Game Points',
+    desc: 'Each game lists the points available for completion and provides feedback on submitted answers.',
     color: 'var(--coral)',
     bg: 'var(--coral-light)'
   },
   {
     icon: Users,
-    title: 'Social Learning',
-    desc: 'Challenges and leaderboards that encourage healthy competition among peers.',
+    title: 'Parent Dashboard Preview',
+    desc: 'The demo account provides a clearly labeled sample parent view with learner scores and subject progress.',
     color: '#8B5CF6',
     bg: '#F5F3FF'
   },
   {
     icon: Shield,
-    title: 'Child Safe',
-    desc: '100% ad-free and moderated environment designed specifically for young learners.',
+    title: 'Focused Learning',
+    desc: 'The app provides access to its learning games and progress tools.',
     color: '#10B981',
     bg: '#ECFDF5'
   },
   {
     icon: Smartphone,
     title: 'Multi-Device',
-    desc: 'Learn on any device – mobile, tablet, or desktop – anywhere in Kenya.',
+    desc: 'Use the responsive web app on a phone, tablet, or desktop browser.',
     color: '#3B82F6',
     bg: '#EFF6FF'
   }
@@ -95,40 +96,32 @@ export default function Features() {
           </div>
         </section>
 
-        {/* Detailed Showcase */}
+        {/* Catalogue examples */}
         <section className="section-pad" style={{ background: 'var(--surface-alt)' }}>
           <div className="container">
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'center' }}>
-              <div>
-                <span className="badge badge-forest" style={{ marginBottom: '1rem' }}>Immersive Learning</span>
-                <h2 style={{ marginBottom: '1.5rem' }}>Gamified Curriculum Delivery</h2>
-                <p style={{ color: 'var(--muted)', marginBottom: '2rem' }}>
-                  We transform abstract concepts into interactive challenges. Instead of just reading about photosynthesis, 
-                  students build their own plants and manage their growth in our virtual labs.
-                </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {[
-                    'Instant feedback on every answer',
-                    'Interactive 3D models and simulations',
-                    'Contextual hints to support learning',
-                    'Aligned with latest KICD requirements'
-                  ].map(item => (
-                    <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                      <div style={{ width: 18, height: 18, borderRadius: '50%', background: 'var(--forest-pale)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Zap size={10} color="var(--forest)" fill="var(--forest)" />
-                      </div>
-                      <span style={{ fontWeight: 500, fontSize: '0.95rem' }}>{item}</span>
+            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+              <span className="badge badge-forest" style={{ marginBottom: '1rem' }}>Current Catalogue</span>
+              <h2 style={{ marginBottom: '0.75rem' }}>Games Available to Learners</h2>
+              <p style={{ color: 'var(--muted)', maxWidth: 620, margin: '0 auto' }}>
+                Each example below comes directly from the ShuleAI Pro game catalogue.
+              </p>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
+              {GAMES.slice(0, 3).map(game => {
+                const subject = Object.values(SUBJECTS).find(item => item.id === game.subject);
+                return (
+                  <article key={game.id} className="card-modern" style={{ overflow: 'hidden' }}>
+                    <SafeImage src={game.image} alt={game.title} style={{ width: '100%', height: 190 }} />
+                    <div style={{ padding: '1.25rem' }}>
+                      <p style={{ color: subject?.color || 'var(--forest)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', margin: '0 0 0.4rem' }}>
+                        {subject?.label || game.subject}
+                      </p>
+                      <h3 style={{ fontSize: '1.05rem', margin: '0 0 0.4rem' }}>{game.title}</h3>
+                      <p style={{ color: 'var(--muted)', fontSize: '0.88rem', margin: 0 }}>{game.description}</p>
                     </div>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <SafeImage 
-                  src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80" 
-                  alt="Learning Interface"
-                  style={{ borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-lg)', height: 400 }}
-                />
-              </div>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>

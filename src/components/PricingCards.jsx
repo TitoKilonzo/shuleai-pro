@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { Check, Zap, Star } from 'lucide-react'
+import { Check } from 'lucide-react'
+import { GAMES } from '../lib/games'
 
 const PLANS = [
   {
@@ -9,17 +10,15 @@ const PLANS = [
     period: '/ week',
     duration: '7 days full access',
     color: 'border-orange-800/30',
-    bgBadge: 'bg-orange-800 text-white',
     bgBtn: 'border-2 border-orange-200 text-orange-900 hover:border-orange-300 hover:bg-orange-50',
     highlight: false,
     features: [
-      'Access all 54+ games',
+      `Access all ${GAMES.length} games`,
       'All Learning Areas included',
       '7 days full access',
       'Progress tracking',
     ],
     cta: 'Start Bronze',
-    badge: null,
   },
   {
     id: 'silver',
@@ -28,18 +27,15 @@ const PLANS = [
     period: '/ month',
     duration: '30 days full access',
     color: 'border-slate-400',
-    bgBadge: 'bg-slate-700 text-white',
     bgBtn: 'bg-slate-800 text-white hover:bg-slate-700 shadow-lg shadow-slate-900/25',
     highlight: true,
     features: [
-      'Access all 54+ games',
+      `Access all ${GAMES.length} games`,
       'All Learning Areas included',
       '30 days full access',
       'Progress tracking',
-      'Priority Support',
     ],
     cta: 'Start Silver',
-    badge: 'Most Popular',
   },
   {
     id: 'gold',
@@ -48,19 +44,15 @@ const PLANS = [
     period: '/ term',
     duration: '90 days full access',
     color: 'border-amber-500',
-    bgBadge: 'bg-amber-500 text-amber-950',
     bgBtn: 'bg-amber-500 text-amber-950 hover:bg-amber-400 shadow-md',
     highlight: false,
     features: [
-      'Access all 54+ games',
+      `Access all ${GAMES.length} games`,
       'All Learning Areas included',
       '90 days full access',
       'Progress tracking',
-      'Priority Support',
-      'Achievement Certificates',
     ],
     cta: 'Start Gold',
-    badge: 'Best Value',
   },
 ]
 
@@ -77,7 +69,7 @@ export default function PricingCards({ showTitle = true }) {
             </span>
             <h2 className="section-title mb-4">Affordable Learning for Every Family</h2>
             <p className="text-gray-500 max-w-xl mx-auto">
-              Flexible subscription plans starting at just KES 200. No hidden charges, cancel anytime.
+              Choose a 7-day, 30-day, or 90-day plan and pay using M-Pesa.
             </p>
           </div>
         )}
@@ -92,13 +84,6 @@ export default function PricingCards({ showTitle = true }) {
                 ${plan.highlight ? 'pricing-popular shadow-2xl' : 'shadow-md hover:shadow-xl'}
               `}
             >
-              {/* Badge */}
-              {plan.badge && (
-                <div className={`absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-sm font-bold shadow-lg whitespace-nowrap ${plan.bgBadge}`}>
-                  <Star className="w-3.5 h-3.5 inline mr-1.5 fill-current" />{plan.badge}
-                </div>
-              )}
-
               {/* Plan name */}
               <div className="mb-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-1" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>

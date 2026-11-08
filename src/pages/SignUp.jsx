@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BookOpen, Eye, EyeOff, AlertCircle, ArrowLeft, User, Users } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { GAMES } from '../lib/games';
+import PwaInstallButton from '../components/PwaInstallButton';
 
 export default function SignUp() {
   const [role, setRole] = useState('student');
@@ -44,11 +46,14 @@ export default function SignUp() {
       {/* Left: Form */}
       <div style={{ display:'flex', flexDirection:'column', justifyContent:'center', padding:'3rem', background:'var(--surface)', overflowY:'auto' }}>
         <div style={{ maxWidth:420, margin:'0 auto', width:'100%' }}>
-          <Link to="/" style={{ display:'inline-flex', alignItems:'center', gap:'0.4rem', color:'var(--muted)', fontSize:'0.88rem', marginBottom:'1.5rem', transition:'color 0.18s' }}
-            onMouseEnter={e=>e.currentTarget.style.color='var(--forest)'}
-            onMouseLeave={e=>e.currentTarget.style.color='var(--muted)'}>
-            <ArrowLeft size={16} /> Back to Home
-          </Link>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'1.5rem' }}>
+            <Link to="/" style={{ display:'inline-flex', alignItems:'center', gap:'0.4rem', color:'var(--muted)', fontSize:'0.88rem', transition:'color 0.18s' }}
+              onMouseEnter={e=>e.currentTarget.style.color='var(--forest)'}
+              onMouseLeave={e=>e.currentTarget.style.color='var(--muted)'}>
+              <ArrowLeft size={16} /> Back to Home
+            </Link>
+            <PwaInstallButton />
+          </div>
 
           <Link to="/" style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem', textDecoration:'none', marginBottom:'2rem' }}>
             <div style={{ width:36, height:36, borderRadius:9, background:'var(--grad-forest)', display:'flex', alignItems:'center', justifyContent:'center' }}>
@@ -61,7 +66,7 @@ export default function SignUp() {
 
           <div style={{ marginBottom:'1.75rem' }}>
             <h2 style={{ marginBottom:'0.35rem' }}>Create your account</h2>
-            <p style={{ color:'var(--muted)', fontSize:'0.95rem' }}>Join thousands of Kenyan learners today.</p>
+            <p style={{ color:'var(--muted)', fontSize:'0.95rem' }}>Create an account to explore the learning catalogue.</p>
           </div>
 
           {/* Role Picker */}
@@ -156,10 +161,10 @@ export default function SignUp() {
         <div style={{ position:'absolute', inset:0, background:'linear-gradient(135deg, rgba(15,61,46,0.85) 0%, rgba(26,122,94,0.65) 100%)' }} />
         <div style={{ position:'absolute', inset:0, display:'flex', flexDirection:'column', justifyContent:'flex-end', padding:'3rem' }}>
           <h3 style={{ color:'#fff', marginBottom:'0.75rem', fontSize:'1.5rem' }}>
-            Start Learning with 56+ Interactive Games
+            Start Learning with {GAMES.length} Interactive Games
           </h3>
           <p style={{ color:'rgba(255,255,255,0.75)', fontSize:'0.95rem', lineHeight:1.7, marginBottom:'2rem' }}>
-            Mathematics, Science, Agriculture, CRE, CAAS and more — all aligned to Kenya&apos;s CBC curriculum for PP1–Grade 9.
+            Mathematics, Science, Agriculture, CRE, CAAS and more, with games listed by learning area and grade from PP1 to Grade 9.
           </p>
           <div style={{ display:'flex', flexWrap:'wrap', gap:'0.5rem' }}>
             {['Mathematics','Integrated Science','Agriculture','CRE','CAAS','Pre-Technical'].map(s=>(

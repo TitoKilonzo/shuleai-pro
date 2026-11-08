@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
-  BookOpen, Users, BarChart3, Trophy, Clock, Star,
-  LogOut, ChevronRight, TrendingUp, Award, Play,
-  Calendar, ShieldCheck, AlertCircle
+  BookOpen, Trophy, Clock, Star,
+  LogOut, TrendingUp, Award, Play, Target,
+  Calendar, ShieldCheck
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { SUBJECTS } from '../lib/games';
 import PaymentModal from '../components/PaymentModal';
 import NotificationDropdown from '../components/NotificationDropdown';
+import PwaInstallButton from '../components/PwaInstallButton';
 
 // Demo children data
 const DEMO_CHILDREN = [
@@ -71,14 +72,40 @@ const WEEKLY_ACTIVITY = [
 
 export default function ParentDashboard() {
   const { user, subscription, logout, isSubscribed } = useAuth();
-  const navigate = useNavigate();
-  const [selectedChild, setSelectedChild] = useState(DEMO_CHILDREN[0]);
+  const [selectedChildId, setSelectedChildId] = useState(DEMO_CHILDREN[0].id);
+  const availableChildren = user?.isDemo ? DEMO_CHILDREN : [];
+  const selectedChild = availableChildren.find(child => child.id === selectedChildId) || availableChildren[0] || null;
   const [payModal, setPayModal] = useState(false);
   const maxMinutes = Math.max(...WEEKLY_ACTIVITY.flatMap(d => [d.brian, d.mercy]));
 
   const daysLeft = subscription?.expiresAt
     ? Math.max(0, Math.ceil((new Date(subscription.expiresAt) - new Date()) / 86400000))
     : 0;
+  const getSubjectLabel = (subjectId) =>
+    Object.values(SUBJECTS).find(subject => subject.id === subjectId)?.label || subjectId;
+  const sortedProgress = selectedChild
+    ? [...selectedChild.progress].sort((a, b) => b.score - a.score)
+    : [];
+  const topProgress = sortedProgress[0];
+  const focusProgress = sortedProgress[sortedProgress.length - 1];
+  const learningInsights = selectedChild ? [
+    {
+      icon: Award,
+      text: `${selectedChild.name.split(' ')[0]}'s highest recorded score is ${topProgress.score}% in ${getSubjectLabel(topProgress.subject)}.`,
+    },
+    {
+      icon: Calendar,
+      text: `${selectedChild.streak}-day learning streak recorded.`,
+    },
+    {
+      icon: Target,
+      text: `${getSubjectLabel(focusProgress.subject)} has the lowest current score (${focusProgress.score}%). Consider another practice session in this area.`,
+    },
+    {
+      icon: BookOpen,
+      text: `${selectedChild.gamesPlayed} games played across ${selectedChild.progress.length} learning areas.`,
+    },
+  ] : [];
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
@@ -96,6 +123,7 @@ export default function ParentDashboard() {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <span className="badge badge-amber" style={{ fontSize: '0.72rem' }}>Parent View</span>
+            <PwaInstallButton />
             <NotificationDropdown />
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.4rem 0.75rem', background: 'var(--bg)', borderRadius: '100px' }}>
               <div style={{ width: 30, height: 30, borderRadius: '50%', background: 'var(--amber-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -135,12 +163,20 @@ export default function ParentDashboard() {
           )}
         </div>
 
+        {selectedChild ? (
+          <>
+        {user?.isDemo && (
+          <p style={{ color: 'var(--muted)', fontSize: '0.82rem', margin: '0 0 1rem' }}>
+            Demo account showing sample learner data.
+          </p>
+        )}
+
         {/* Children selector */}
         <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
-          {DEMO_CHILDREN.map(child => (
+          {availableChildren.map(child => (
             <button
               key={child.id}
-              onClick={() => setSelectedChild(child)}
+              onClick={() => setSelectedChildId(child.id)}
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.75rem',
                 padding: '0.85rem 1.25rem', borderRadius: 'var(--radius-lg)',
@@ -158,18 +194,6 @@ export default function ParentDashboard() {
               </div>
             </button>
           ))}
-          <button style={{
-            display: 'flex', alignItems: 'center', gap: '0.5rem',
-            padding: '0.85rem 1.25rem', borderRadius: 'var(--radius-lg)',
-            border: '2px dashed var(--border)', background: 'transparent',
-            cursor: 'pointer', color: 'var(--muted)', fontSize: '0.88rem', fontWeight: 600,
-            transition: 'all 0.2s',
-          }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--forest-light)'; e.currentTarget.style.color = 'var(--forest)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted)'; }}
-          >
-            <Users size={16} /> Add Child
-          </button>
         </div>
 
         {/* Selected child overview */}
@@ -258,7 +282,7 @@ export default function ParentDashboard() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
           {/* Recent Games */}
           <div style={{ background: 'var(--surface)', borderRadius: 'var(--radius-lg)', padding: '1.5rem', border: '1px solid var(--border)' }}>
-            <h4 style={{ marginBottom: '1rem' }}>Recent Games – {selectedChild.name.split(' ')[0]}</h4>
+            <h4 style={{ marginBottom: '1rem' }}>Recent Games: {selectedChild.name.split(' ')[0]}</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {selectedChild.recentGames.map((game, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem', background: 'var(--bg)', borderRadius: 'var(--radius)' }}>
@@ -288,14 +312,9 @@ export default function ParentDashboard() {
               <h4 style={{ margin: 0, color: '#fff' }}>Learning Insights</h4>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {[
-                { icon: '🌟', text: `${selectedChild.name.split(' ')[0]} is performing excellently in Mathematics (${selectedChild.progress.find(p=>p.subject==='mathematics')?.score||'—'}%).` },
-                { icon: '📈', text: `${selectedChild.streak}-day learning streak! Consistent daily practice boosts retention significantly.` },
-                { icon: '💡', text: `Consider encouraging more Integrated Science games to boost that learning area's score.` },
-                { icon: '🏆', text: `Top performer in class percentile based on current progress data.` },
-              ].map(({ icon, text }, i) => (
+              {learningInsights.map(({ icon: Icon, text }, i) => (
                 <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                  <span style={{ fontSize: '1rem', flexShrink: 0, marginTop: '0.1rem' }}>{icon}</span>
+                  <Icon size={16} color="var(--amber)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
                   <p style={{ color: 'rgba(255,255,255,0.82)', fontSize: '0.85rem', lineHeight: 1.6, margin: 0 }}>{text}</p>
                 </div>
               ))}
@@ -308,7 +327,17 @@ export default function ParentDashboard() {
             </div>
           </div>
         </div>
-      </div>
+            </>
+          ) : (
+            <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '2rem', textAlign: 'center' }}>
+              <BookOpen size={28} color="var(--forest)" style={{ margin: '0 auto 0.75rem' }} />
+              <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>No learner records linked</h3>
+              <p style={{ color: 'var(--muted)', margin: 0 }}>
+                Learner activity will appear here once records are linked to this parent account.
+              </p>
+            </div>
+          )}
+        </div>
 
       <PaymentModal isOpen={payModal} onClose={() => setPayModal(false)} />
 

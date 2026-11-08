@@ -1,102 +1,44 @@
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Play, Zap, Trophy, Users,
-  CheckCircle2, ChevronRight, Smartphone, BarChart3, Shield, Star,
-  Flame, Award, BookOpen, Target, TrendingUp, GraduationCap,
+  CheckCircle2, ChevronRight, Smartphone, BarChart3, Shield,
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { SUBJECTS } from '../lib/games';
+import SafeImage from '../components/SafeImage';
+import { GAMES, SUBJECTS } from '../lib/games';
 
 const STATS = [
-  { value: '100+', label: 'CBC Games' },
-  { value: '10K+', label: 'Active Learners' },
-  { value: '7', label: 'Learning Areas' },
-  { value: 'PP1–9', label: 'All Grades Covered' },
+  { value: GAMES.length, label: 'Learning Games' },
+  { value: Object.keys(SUBJECTS).length, label: 'Learning Areas' },
+  { value: 'PP1 to Grade 9', label: 'Grade Range' },
 ];
 
 const HOW_IT_WORKS = [
   {
     step: '01', title: 'Create Your Account',
-    desc: 'Sign up in seconds. Choose student or parent — we tailor the experience to your role.',
+    desc: 'Create a student or parent account to get started.',
     icon: Users, color: 'var(--forest)',
   },
   {
     step: '02', title: 'Pay via M-Pesa',
-    desc: 'Instant STK push — weekly, monthly, or termly plans built for Kenyan families.',
+    desc: 'Choose a subscription plan and pay using M-Pesa.',
     icon: Smartphone, color: 'var(--amber-dark)',
   },
   {
     step: '03', title: 'Play, Learn & Excel',
-    desc: 'Unlock 56+ interactive CBC games. Earn badges, track scores, and rise through performance bands.',
+    desc: 'Play CBC learning games and review your scores and progress.',
     icon: Trophy, color: 'var(--coral)',
   },
 ];
 
 const FEATURES = [
-  { icon: Play, title: '100+ Interactive CBC Games', color: 'var(--forest)', bg: 'var(--forest-pale)', desc: 'Every game maps directly to CBC competency — from Alphabet Adventure in PP1 to Algebra Arena in Grade 9.' },
-  { icon: BarChart3, title: 'Real-Time Progress Analytics', color: 'var(--amber-dark)', bg: 'var(--amber-light)', desc: 'See subject-level scores, streaks, and CBC performance bands (EE, ME, AE, BE) at a glance.' },
-  { icon: Trophy, title: 'Gamified Achievements', color: 'var(--coral)', bg: 'var(--coral-light)', desc: 'Badges, streaks, leaderboards, and points keep learners motivated every single day.' },
-  { icon: Smartphone, title: 'M-Pesa Native Payments', color: '#8B5CF6', bg: '#F5F3FF', desc: 'No credit cards. Subscribe instantly via M-Pesa STK push — built for Kenyan families.' },
-  { icon: Users, title: 'Parent Dashboard', color: '#10B981', bg: '#ECFDF5', desc: 'Monitor up to 5 children\'s progress, weekly activity charts, and subject mastery — all in one view.' },
-  { icon: Shield, title: 'Safe & Curriculum-Aligned', color: '#0EA5E9', bg: '#F0F9FF', desc: 'Content reviewed against KICD guidelines. No ads, no external links — fully focused learning.' },
-];
-
-const ACHIEVEMENTS = [
-  {
-    icon: Flame,
-    title: 'Daily Streaks',
-    desc: 'Earn streak badges for logging in and playing every day. Students with 7+ day streaks score 40% higher on average.',
-    stat: '21-day',
-    statLabel: 'Longest Streak',
-    color: '#F97316',
-    bg: '#FFF7ED',
-  },
-  {
-    icon: Award,
-    title: 'Performance Bands',
-    desc: 'Rise from BE → AE → ME → EE, mirroring real CBC report card bands. Every game session maps to your band progress.',
-    stat: 'EE',
-    statLabel: 'Top Band',
-    color: '#8B5CF6',
-    bg: '#F5F3FF',
-  },
-  {
-    icon: Trophy,
-    title: 'Subject Badges',
-    desc: 'Collect badges for mastering each of the 7 CBC learning areas. Badges unlock at 75%, 90% and 100% mastery.',
-    stat: '21+',
-    statLabel: 'Unique Badges',
-    color: '#F59E0B',
-    bg: '#FFFBEB',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Leaderboards',
-    desc: 'Weekly leaderboards rank students by score across each subject — healthy competition that keeps learners coming back.',
-    stat: 'Top 10',
-    statLabel: 'Weekly Ranks',
-    color: '#10B981',
-    bg: '#ECFDF5',
-  },
-  {
-    icon: GraduationCap,
-    title: 'Achievement Certificates',
-    desc: 'Termly subscribers unlock printable certificates for each subject mastered — great for school portfolios.',
-    stat: '7',
-    statLabel: 'Subjects to Master',
-    color: '#0EA5E9',
-    bg: '#F0F9FF',
-  },
-  {
-    icon: Target,
-    title: 'Competency Goals',
-    desc: 'Set weekly learning targets per subject. The AI tracks your pace and suggests which games to play next.',
-    stat: 'AI',
-    statLabel: 'Powered Goals',
-    color: 'var(--forest)',
-    bg: 'var(--forest-pale)',
-  },
+  { icon: Play, title: `${GAMES.length} CBC Learning Games`, color: 'var(--forest)', bg: 'var(--forest-pale)', desc: 'Explore the games currently in the ShuleAI Pro catalogue across early learning through Grade 9.' },
+  { icon: BarChart3, title: 'Progress Tracking', color: 'var(--amber-dark)', bg: 'var(--amber-light)', desc: 'Review game scores, learning area progress, and completed sessions.' },
+  { icon: Trophy, title: 'Game Points', color: 'var(--coral)', bg: 'var(--coral-light)', desc: 'Games list available points and provide feedback on submitted answers.' },
+  { icon: Smartphone, title: 'M-Pesa Payments', color: '#8B5CF6', bg: '#F5F3FF', desc: 'Subscribe using M-Pesa STK push. Available plan durations are shown before checkout.' },
+  { icon: Users, title: 'Parent Dashboard Preview', color: '#10B981', bg: '#ECFDF5', desc: 'The demo account includes a sample parent view with learner scores and learning area progress.' },
+  { icon: Shield, title: 'CBC Learning Areas', color: '#0EA5E9', bg: '#F0F9FF', desc: 'Browse games by subject and grade using the learning area catalogue.' },
 ];
 
 const PLANS = [
@@ -108,7 +50,7 @@ const PLANS = [
     bg: 'linear-gradient(135deg, #3D1F00 0%, #6B3A1F 100%)',
     badgeBg: 'rgba(205,127,50,0.25)',
     badgeColor: '#F0A050',
-    features: ['All 56+ games', 'Progress tracking', 'Parent dashboard'],
+    features: [`All ${GAMES.length} games`, 'Progress tracking', 'Parent dashboard'],
     highlight: false,
   },
   {
@@ -119,9 +61,8 @@ const PLANS = [
     bg: 'linear-gradient(135deg, #1E293B 0%, #334155 100%)',
     badgeBg: 'rgba(148,163,184,0.25)',
     badgeColor: '#CBD5E1',
-    features: ['All 56+ games', 'Progress tracking', 'Parent dashboard'],
+    features: [`All ${GAMES.length} games`, 'Progress tracking', 'Parent dashboard'],
     highlight: true,
-    badge: 'Most Popular',
   },
   {
     name: 'Gold',
@@ -131,9 +72,8 @@ const PLANS = [
     bg: 'linear-gradient(135deg, #78350F 0%, #B45309 100%)',
     badgeBg: 'rgba(251,191,36,0.25)',
     badgeColor: '#FCD34D',
-    features: ['All 56+ games', 'Progress tracking', 'Parent dashboard'],
+    features: [`All ${GAMES.length} games`, 'Progress tracking', 'Parent dashboard'],
     highlight: false,
-    badge: 'Best Value',
   },
 ];
 
@@ -161,14 +101,13 @@ export default function Landing() {
           <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
 
             <h1 style={{ color: '#fff', marginBottom: '1.25rem', lineHeight: 1.08, fontFamily: 'var(--font-head)', fontWeight: 900 }}>
-              Kenya&apos;s Most Advanced{' '}
-              <span style={{ color: 'var(--amber)' }}>CBC Learning</span>{' '}
-              Platform
+              <span style={{ color: 'var(--amber)' }}>CBC Learning Games</span>{' '}
+              for Kenyan Students
             </h1>
 
             <p style={{ fontSize: 'clamp(1rem, 2vw, 1.18rem)', color: 'rgba(255,255,255,0.88)', marginBottom: '2.5rem', lineHeight: 1.75, maxWidth: 640, margin: '0 auto 2.5rem' }}>
-              100+ interactive games covering all 7 CBC learning areas from PP1 through Grade 9.
-              Pay via M-Pesa. Track progress in real time. Watch your child excel.
+              Explore {GAMES.length} learning games across {Object.keys(SUBJECTS).length} CBC learning areas, from PP1 through Grade 9.
+              Subscribe using M-Pesa and review learning progress in one place.
             </p>
 
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3.5rem' }}>
@@ -176,7 +115,7 @@ export default function Landing() {
                 Start Learning Free <ArrowRight size={18} />
               </Link>
               <Link to="/games" className="btn btn-lg" style={{ background: 'rgba(255,255,255,0.12)', color: '#fff', border: '1.5px solid rgba(255,255,255,0.3)', backdropFilter: 'blur(8px)' }}>
-                <Play size={18} fill="currentColor" /> Browse 56+ Games
+                <Play size={18} fill="currentColor" /> Browse {GAMES.length} Games
               </Link>
             </div>
 
@@ -202,10 +141,10 @@ export default function Landing() {
       <section className="section-pad">
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span className="section-eyebrow">7 CBC Learning Areas</span>
+            <span className="section-eyebrow">{Object.keys(SUBJECTS).length} CBC Learning Areas</span>
             <h2>Every Subject. Every Grade. One Platform.</h2>
             <p style={{ color: 'var(--muted)', maxWidth: 540, margin: '0.75rem auto 0', lineHeight: 1.7 }}>
-              Games cover the full CBC framework from PP1 through Grade 9, mapped to competency expectations set by KICD.
+              Browse games by subject and grade, with content ranging from PP1 through Grade 9.
             </p>
           </div>
           <div className="subjects-grid">
@@ -278,7 +217,7 @@ export default function Landing() {
             <span className="section-eyebrow">Flexible Plans</span>
             <h2>Simple, Transparent Pricing</h2>
             <p style={{ color: 'var(--muted)', maxWidth: 480, margin: '0.75rem auto 0', lineHeight: 1.7 }}>
-              All plans include unlimited access to all 56+ games. Pay via M-Pesa — no credit card needed.
+              All plans include access to the {GAMES.length} games in the catalogue. Pay via M-Pesa.
             </p>
           </div>
           <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'stretch' }}>
@@ -321,7 +260,7 @@ export default function Landing() {
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   marginBottom: '1.25rem', fontSize: '1.5rem',
                 }}>
-                  {name === 'Bronze' ? '🥉' : name === 'Silver' ? '🥈' : '🥇'}
+                  <Trophy size={22} color={accent} />
                 </div>
 
                 <p style={{ fontFamily: 'var(--font-head)', fontWeight: 700, fontSize: '0.9rem', color: badgeColor, textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 0.3rem' }}>{name}</p>
@@ -359,34 +298,37 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ── Achievements & Rewards ───────────────────────────────── */}
+      {/* ── Game Catalogue ──────────────────────────────────────── */}
       <section className="section-pad">
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span className="section-eyebrow">Gamified Learning</span>
-            <h2>Rewards That Keep Learners Coming Back</h2>
+            <span className="section-eyebrow">From the Catalogue</span>
+            <h2>Explore Learning Games</h2>
             <p style={{ color: 'var(--muted)', maxWidth: 520, margin: '0.75rem auto 0', lineHeight: 1.7 }}>
-              ShuleAI Pro turns every study session into a game. Students earn real rewards tied directly to CBC competency progress.
+              A sample of the games currently available in the ShuleAI Pro catalogue.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))', gap: '1.5rem' }}>
-            {ACHIEVEMENTS.map(({ icon: Icon, title, desc, stat, statLabel, color, bg }) => (
-              <div key={title} className="card-modern" style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                  <div style={{ width: 48, height: 48, borderRadius: 12, background: bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Icon size={22} color={color} />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
+            {GAMES.slice(0, 3).map(game => {
+              const subject = Object.values(SUBJECTS).find(item => item.id === game.subject);
+              return (
+                <article key={game.id} className="card-modern" style={{ overflow: 'hidden' }}>
+                  <SafeImage src={game.image} alt={game.title} style={{ width: '100%', height: 190 }} />
+                  <div style={{ padding: '1.25rem' }}>
+                    <p style={{ color: subject?.color || 'var(--forest)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 0.4rem' }}>
+                      {subject?.label || game.subject}
+                    </p>
+                    <h3 style={{ fontSize: '1.05rem', margin: '0 0 0.4rem' }}>{game.title}</h3>
+                    <p style={{ color: 'var(--muted)', fontSize: '0.88rem', margin: 0 }}>{game.description}</p>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <p style={{ fontFamily: 'var(--font-head)', fontSize: '1.6rem', fontWeight: 900, color, margin: 0, lineHeight: 1 }}>{stat}</p>
-                    <p style={{ fontSize: '0.7rem', color: 'var(--muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{statLabel}</p>
-                  </div>
-                </div>
-                <div>
-                  <h4 style={{ marginBottom: '0.4rem', fontSize: '1rem' }}>{title}</h4>
-                  <p style={{ color: 'var(--muted)', fontSize: '0.87rem', lineHeight: 1.7, margin: 0 }}>{desc}</p>
-                </div>
-              </div>
-            ))}
+                </article>
+              );
+            })}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+            <Link to="/signup" className="btn btn-primary">
+              Create an Account to Play <ArrowRight size={17} />
+            </Link>
           </div>
         </div>
       </section>
@@ -395,11 +337,11 @@ export default function Landing() {
       <section className="cta-modern section-pad">
         <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.9)', padding: '0.4rem 1rem', borderRadius: 'var(--radius-pill)', fontSize: '0.8rem', fontWeight: 600, marginBottom: '1.5rem' }}>
-            <Zap size={14} fill="currentColor" /> Join 10,000+ Kenyan Learners
+            <Zap size={14} fill="currentColor" />             CBC learning games for Kenyan students
           </span>
           <h2 style={{ color: '#fff', marginBottom: '1rem' }}>Ready to Transform Your Child&apos;s Learning?</h2>
           <p style={{ color: 'rgba(255,255,255,0.8)', maxWidth: 520, margin: '0 auto 2rem', lineHeight: 1.7, fontSize: '1.05rem' }}>
-            Start free today. No credit card needed — just your M-Pesa when you&apos;re ready to subscribe.
+            Create an account to explore the catalogue. Choose a subscription and pay with M-Pesa when you are ready.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link to="/signup" className="btn btn-lg" style={{ background: '#fff', color: 'var(--forest)', fontWeight: 700 }}>

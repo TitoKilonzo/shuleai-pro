@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  BookOpen, Trophy, Clock, Star, Play, BarChart3,
-  LogOut, ChevronRight, Award, Flame, Zap,
+  BookOpen, Clock, Star, Play, BarChart3,
+  LogOut, ChevronRight, Flame, Zap,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { getFeaturedGames, SUBJECTS, GAMES } from '../lib/games';
 import { progressService } from '../lib/appwrite';
 import PaymentModal from '../components/PaymentModal';
 import NotificationDropdown from '../components/NotificationDropdown';
+import PwaInstallButton from '../components/PwaInstallButton';
 
 const DEMO_PROGRESS = [
   { subject: 'mathematics',       score: 88, gamesPlayed: 12, timeSpent: 3600 },
@@ -17,17 +18,17 @@ const DEMO_PROGRESS = [
   { subject: 'caas',              score: 85, gamesPlayed: 7,  timeSpent: 2100 },
 ];
 
-const DEMO_RECENT = [
-  { id: 'g001', title: 'Number Quest',          subject: 'mathematics',       score: 95, completedAt: new Date(Date.now()-3600000).toISOString() },
-  { id: 'g016', title: 'Cell Explorer',         subject: 'integrated_science',score: 80, completedAt: new Date(Date.now()-86400000).toISOString() },
-  { id: 'g049', title: 'Crop Farmer Simulator', subject: 'agriculture',       score: 100,completedAt: new Date(Date.now()-172800000).toISOString() },
-];
+const DEMO_RECENT = GAMES.slice(0, 3).map((game, index) => ({
+  $id: `demo-progress-${game.id}`,
+  gameId: game.id,
+  score: [95, 80, 100][index],
+}));
 
 const CBC_BANDS = [
-  { lbl: 'Exceeding Expectation (EE)', range: '80–100%', color: 'var(--success)' },
-  { lbl: 'Meeting Expectation (ME)',   range: '50–79%',  color: '#2563EB' },
-  { lbl: 'Approaching Expectation (AE)',range: '40–49%', color: 'var(--warning)' },
-  { lbl: 'Below Expectation (BE)',     range: '0–39%',   color: 'var(--error)' },
+  { lbl: 'Exceeding Expectation (EE)', range: '80 to 100%', color: 'var(--success)' },
+  { lbl: 'Meeting Expectation (ME)',   range: '50 to 79%',  color: '#2563EB' },
+  { lbl: 'Approaching Expectation (AE)',range: '40 to 49%', color: 'var(--warning)' },
+  { lbl: 'Below Expectation (BE)',     range: '0 to 39%',   color: 'var(--error)' },
 ];
 
 const scoreColor = (s) => s >= 80 ? 'var(--success)' : s >= 50 ? '#2563EB' : s >= 40 ? 'var(--warning)' : 'var(--error)';
@@ -37,12 +38,81 @@ export default function Dashboard() {
   const { user, subscription, logout, isSubscribed } = useAuth();
   const navigate = useNavigate();
   const [stats, setStats] = useState({ totalGames: 0, avgScore: 0, subjects: 0, totalMinutes: 0 });
+  const [recentActivity, setRecentActivity] = useState([]);
+  const [subjectProgress, setSubjectProgress] = useState([]);
+  const [progressLoading, setProgressLoading] = useState(true);
+  const [progressError, setProgressError] = useState('');
   const [payModal, setPayModal] = useState(false);
   const featured = getFeaturedGames(8);
 
   useEffect(() => {
-    if (user?.isDemo) { setStats({ totalGames: 37, avgScore: 88, subjects: 5, totalMinutes: 184 }); return; }
-    if (user?.$id)    { progressService.getProgressStats(user.$id).then(setStats).catch(() => {}); }
+    let active = true;
+
+    const loadProgress = async () => {
+      setProgressLoading(true);
+      setProgressError('');
+
+      if (user?.isDemo) {
+        const totalGames = DEMO_PROGRESS.reduce((total, item) => total + item.gamesPlayed, 0);
+        const totalScore = DEMO_PROGRESS.reduce((total, item) => total + item.score * item.gamesPlayed, 0);
+        if (active) {
+          setStats({
+            totalGames,
+            avgScore: Math.round(totalScore / totalGames),
+            subjects: DEMO_PROGRESS.length,
+            totalMinutes: Math.round(DEMO_PROGRESS.reduce((total, item) => total + item.timeSpent, 0) / 60),
+          });
+          setRecentActivity(DEMO_RECENT);
+          setSubjectProgress(DEMO_PROGRESS);
+          setProgressLoading(false);
+        }
+        return;
+      }
+
+      if (!user?.$id) {
+        setStats({ totalGames: 0, avgScore: 0, subjects: 0, totalMinutes: 0 });
+        setRecentActivity([]);
+        setSubjectProgress([]);
+        setProgressLoading(false);
+        return;
+      }
+
+      try {
+        const records = await progressService.getUserProgress(user.$id, { limit: 500 });
+        if (!active) return;
+
+        const totalGames = records.length;
+        const totalScore = records.reduce((total, record) => total + (record.score || 0), 0);
+        const totalMinutes = Math.round(records.reduce((total, record) => total + (record.timeSpent || 0), 0) / 60);
+        const subjects = records.reduce((summary, record) => {
+          const item = summary[record.subject] || { subject: record.subject, scoreTotal: 0, gamesPlayed: 0 };
+          item.scoreTotal += record.score || 0;
+          item.gamesPlayed += 1;
+          summary[record.subject] = item;
+          return summary;
+        }, {});
+
+        setStats({
+          totalGames,
+          avgScore: totalGames ? Math.round(totalScore / totalGames) : 0,
+          subjects: Object.keys(subjects).length,
+          totalMinutes,
+        });
+        setRecentActivity(records.slice(0, 3));
+        setSubjectProgress(Object.values(subjects).map(item => ({
+          subject: item.subject,
+          score: Math.round(item.scoreTotal / item.gamesPlayed),
+        })));
+      } catch (error) {
+        console.error('Unable to load dashboard progress:', error);
+        if (active) setProgressError('Progress could not be loaded. Please try again later.');
+      } finally {
+        if (active) setProgressLoading(false);
+      }
+    };
+
+    loadProgress();
+    return () => { active = false; };
   }, [user]);
 
   const daysLeft = (() => {
@@ -74,6 +144,7 @@ export default function Dashboard() {
 
           <nav style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <Link to="/games" className="btn btn-ghost btn-sm" style={{ color: 'var(--ink)' }}>Games</Link>
+            <PwaInstallButton />
             <NotificationDropdown />
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 0.65rem', background: 'var(--bg)', borderRadius: '100px' }}>
               <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--forest-pale)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -93,9 +164,11 @@ export default function Dashboard() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', marginBottom: '1.75rem', flexWrap: 'wrap' }}>
           <div>
             <h2 style={{ marginBottom: '0.2rem', fontSize: 'clamp(1.3rem,3vw,1.7rem)' }}>
-              Welcome back, {user?.name?.split(' ')[0]}! 👋
+              Welcome back, {user?.name?.split(' ')[0]}
             </h2>
             <p style={{ color: 'var(--muted)', margin: 0 }}>Continue your CBC learning journey.</p>
+            {user?.isDemo && <p style={{ color: 'var(--muted)', fontSize: '0.78rem', margin: '0.25rem 0 0' }}>Demo account showing sample learning data.</p>}
+            {progressError && <p role="alert" style={{ color: 'var(--error)', fontSize: '0.82rem', margin: '0.35rem 0 0' }}>{progressError}</p>}
           </div>
 
           {isSubscribed() ? (
@@ -162,7 +235,7 @@ export default function Dashboard() {
                       <h4 style={{ fontSize: '0.86rem', margin: '0 0 0.3rem', lineHeight: 1.3, fontWeight: 700 }}>{game.title}</h4>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span style={{ fontSize: '0.72rem', color: 'var(--muted)' }}>{game.duration}</span>
-                        <span style={{ color: 'var(--amber)', fontSize: '0.75rem', fontWeight: 700 }}>★ {game.rating || '4.7'}</span>
+                        <span style={{ color: 'var(--amber-dark)', fontSize: '0.75rem', fontWeight: 700 }}>{game.points} points</span>
                       </div>
                     </div>
                   </div>
@@ -180,18 +253,23 @@ export default function Dashboard() {
                 <Flame size={15} color="var(--coral)" /> Recent Activity
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                {DEMO_RECENT.map(item => (
-                  <div key={item.id} style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', padding: '0.55rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg)' }}>
+                {progressLoading ? <p style={{ color: 'var(--muted)', fontSize: '0.82rem' }}>Loading activity...</p>
+                  : recentActivity.length === 0 ? <p style={{ color: 'var(--muted)', fontSize: '0.82rem' }}>Complete a game to see recent activity.</p>
+                    : recentActivity.map(item => {
+                      const game = GAMES.find(candidate => candidate.id === item.gameId);
+                      return (
+                  <div key={item.$id} style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', padding: '0.55rem', borderRadius: 'var(--radius-sm)', background: 'var(--bg)' }}>
                     <div style={{ width: 32, height: 32, borderRadius: 8, background: 'var(--forest-pale)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                       <Play size={13} color="var(--forest)" fill="var(--forest)" />
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <p style={{ fontWeight: 600, fontSize: '0.8rem', margin: '0 0 0.05rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.title}</p>
+                      <p style={{ fontWeight: 600, fontSize: '0.8rem', margin: '0 0 0.05rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{game?.title || 'Game no longer in catalogue'}</p>
                       <p style={{ color: 'var(--muted)', fontSize: '0.72rem', margin: 0 }}>Score: {item.score}%</p>
                     </div>
                     <span style={{ background: scoreBg(item.score), color: scoreColor(item.score), padding: '2px 8px', borderRadius: '100px', fontSize: '0.7rem', fontWeight: 700, flexShrink: 0 }}>{item.score}%</span>
                   </div>
-                ))}
+                      );
+                    })}
               </div>
             </div>
 
@@ -201,7 +279,9 @@ export default function Dashboard() {
                 <BarChart3 size={15} color="var(--forest)" /> Learning Area Progress
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
-                {DEMO_PROGRESS.map(({ subject, score }) => {
+                {progressLoading ? <p style={{ color: 'var(--muted)', fontSize: '0.82rem' }}>Loading progress...</p>
+                  : subjectProgress.length === 0 ? <p style={{ color: 'var(--muted)', fontSize: '0.82rem' }}>Progress will appear after your first completed game.</p>
+                    : subjectProgress.map(({ subject, score }) => {
                   const sub = Object.values(SUBJECTS).find(s => s.id === subject);
                   return (
                     <div key={subject}>
@@ -214,7 +294,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                   );
-                })}
+                    })}
               </div>
             </div>
 
@@ -231,18 +311,18 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Achievements */}
+            {/* Learning snapshot */}
             <div style={{ background: 'linear-gradient(135deg, #0B4F3C, #1A7A5E)', borderRadius: 'var(--radius-lg)', padding: '1.25rem', color: '#fff' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.85rem' }}>
-                <Award size={16} color="var(--amber)" />
-                <h4 style={{ margin: 0, color: '#fff', fontSize: '0.95rem' }}>Achievements</h4>
+                <BarChart3 size={16} color="var(--amber)" />
+                <h4 style={{ margin: 0, color: '#fff', fontSize: '0.95rem' }}>Learning Snapshot</h4>
               </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                {[{ label: 'First Game', icon: '🎮' }, { label: 'Math Star', icon: '⭐' }, { label: '7-Day Streak', icon: '🔥' }, { label: 'Top Scorer', icon: '🏆' }].map(({ label, icon }) => (
-                  <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', background: 'rgba(255,255,255,0.12)', borderRadius: '100px', padding: '4px 10px', fontSize: '0.73rem', fontWeight: 600 }}>
-                    <span>{icon}</span> {label}
-                  </div>
-                ))}
+              <p style={{ color: 'rgba(255,255,255,0.82)', fontSize: '0.85rem', margin: '0 0 1rem' }}>
+                {stats.totalGames} games completed across {stats.subjects} learning areas.
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.78rem', fontWeight: 600 }}>
+                <Clock size={14} color="var(--amber)" />
+                {stats.totalMinutes} minutes of learning
               </div>
             </div>
           </div>

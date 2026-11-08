@@ -16,7 +16,7 @@ export default function Footer() {
               </span>
             </div>
             <p style={{ fontSize: '0.9rem', lineHeight: 1.7, maxWidth: 280, marginBottom: '1.5rem' }}>
-              Kenya&apos;s most advanced AI-powered educational platform. Transforming learning through personalized, gamified education for CBC curriculum.
+              CBC learning games and progress tracking for Kenyan students.
             </p>
 
             {/* Contact */}
@@ -34,25 +34,16 @@ export default function Footer() {
 
           {[
             { heading: 'Platform', links: [
-              { label: 'AI Learning Assistant', to: '/features' },
+              { label: 'Features', to: '/features' },
               { label: 'Learning Areas', to: '/learning-areas' },
               { label: 'Interactive Games', to: '/games' },
               { label: 'Progress Analytics', to: '/dashboard' },
               { label: 'Pricing Plans', to: '/pricing' }
             ] },
-            { heading: 'Resources', links: [
-              { label: 'CBC Curriculum Guide', to: '#' },
-              { label: 'Parent Resources', to: '#' },
-              { label: 'Teacher Portal', to: '#' },
-              { label: 'Blog & Updates', to: '#' },
-              { label: 'API Documentation', to: '#' }
-            ] },
-            { heading: 'Support', links: [
-              { label: 'Help Center', to: '#' },
-              { label: 'Contact Support', to: '#' },
-              { label: 'System Status', to: '#' },
-              { label: 'Privacy Policy', to: '#' },
-              { label: 'Terms of Service', to: '#' }
+            { heading: 'Account', links: [
+              { label: 'Create Account', to: '/signup' },
+              { label: 'Sign In', to: '/signin' },
+              { label: 'Parent Dashboard', to: '/parent' },
             ] },
           ].map(({ heading, links }) => (
             <div key={heading}>
@@ -76,7 +67,7 @@ export default function Footer() {
         {/* Social Links & Copyright */}
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)', margin: 0 }}>
-            © 2026 ShuleAI Pro. All rights reserved. Made with ❤️ for Kenyan education.
+            © 2026 ShuleAI Pro. All rights reserved.
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>

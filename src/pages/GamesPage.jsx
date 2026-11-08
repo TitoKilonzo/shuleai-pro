@@ -1,18 +1,18 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
-  Search, SlidersHorizontal, X, BookOpen, LogOut, Gamepad2,
-  Star, Filter, ArrowLeft,
+  Search, SlidersHorizontal, X, BookOpen, LogOut, Lock,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import GameCard from '../components/GameCard';
 import { GAMES, SUBJECTS, DIFFICULTIES } from '../lib/games';
 import PaymentModal from '../components/PaymentModal';
+import PwaInstallButton from '../components/PwaInstallButton';
 
 const ALL_GRADES = ['PP1', 'PP2', 'Grade 1', 'Grade 2', 'Grade 3', 4, 5, 6, 7, 8, 9];
 
 export default function GamesPage() {
-  const { user, logout, isSubscribed } = useAuth();
+  const { logout, isSubscribed } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [search, setSearch] = useState('');
@@ -108,6 +108,7 @@ export default function GamesPage() {
 
             {/* Right actions */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+              <PwaInstallButton />
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className={`btn btn-sm ${showFilters ? 'btn-primary' : 'btn-outline'}`}
@@ -194,7 +195,7 @@ export default function GamesPage() {
           </div>
           {!isSubscribed() && (
             <button className="btn btn-amber btn-sm" onClick={() => setPayModal(true)}>
-              🔓 Subscribe to Play
+              <Lock size={15} /> Subscribe to Play
             </button>
           )}
         </div>

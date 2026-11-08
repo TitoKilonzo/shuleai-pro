@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PricingSection from '../components/PricingSection';
+import { GAMES } from '../lib/games';
 
 export default function Pricing() {
   return (
@@ -13,7 +14,7 @@ export default function Pricing() {
           <div className="container" style={{ textAlign: 'center' }}>
             <h1 style={{ color: '#fff', marginBottom: '1.5rem' }}>Simple, Transparent Pricing</h1>
             <p style={{ color: 'rgba(255,255,255,0.8)', maxWidth: 600, margin: '0 auto', fontSize: '1.2rem' }}>
-              Choose a plan that fits your family&apos;s needs. All plans include full access to our 50+ CBC games.
+              Choose a plan that fits your family&apos;s needs. All plans include access to the {GAMES.length} games in the catalogue.
             </p>
           </div>
         </section>
@@ -32,7 +33,7 @@ export default function Pricing() {
                 {[
                   { q: 'How do I pay for a subscription?', a: 'Payments are made securely via M-Pesa. Once you choose a plan, you\'ll receive a prompt on your phone to enter your PIN.' },
                   { q: 'Can I cancel my subscription?', a: 'Yes, our plans are non-recurring. You subscribe for a set period (7, 30, or 90 days), and it simply expires if not renewed.' },
-                  { q: 'Is there a limit to how many games I can play?', a: 'No, every active subscription provides unlimited access to all 56+ games on the platform.' },
+                  { q: 'Is there a limit to how many games I can play?', a: `Every active subscription provides access to all ${GAMES.length} games in the catalogue.` },
                   { q: 'Supported devices?', a: 'ShuleAI Pro works on all modern smartphones, tablets, and computers with an internet connection.' }
                 ].map(faq => (
                   <div key={faq.q} style={{ background: 'var(--surface)', padding: '2rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>

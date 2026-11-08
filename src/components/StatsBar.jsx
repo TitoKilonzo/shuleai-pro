@@ -1,17 +1,17 @@
-import { Users, Gamepad2, BookOpen, Award } from 'lucide-react'
+import { Gamepad2, BookOpen, School } from 'lucide-react'
+import { GAMES, SUBJECTS } from '../lib/games'
 
 const STATS = [
-  { icon: Users,     label: 'Active Learners',  value: '28,400+' },
-  { icon: Gamepad2,  label: 'Educational Games', value: '54+' },
-  { icon: BookOpen,  label: 'Learning Areas Covered',  value: '7' },
-  { icon: Award,     label: 'Certificates Issued',value: '5,200+' },
+  { icon: Gamepad2, label: 'Learning Games', value: GAMES.length },
+  { icon: BookOpen, label: 'Learning Areas', value: Object.keys(SUBJECTS).length },
+  { icon: School, label: 'Grade Range', value: 'PP1 to 9' },
 ]
 
 export default function StatsBar() {
   return (
     <div className="bg-white border-y border-gray-100 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           {STATS.map(({ icon: Icon, label, value }) => (
             <div key={label} className="flex flex-col items-center text-center">
               <div className="w-12 h-12 bg-forest-50 rounded-2xl flex items-center justify-center mb-3">

@@ -170,7 +170,7 @@ export default function PaymentModal({ isOpen, onClose, defaultPlan = 'monthly' 
                   >
                     {Object.values(SUBSCRIPTION_PLANS).map(p => (
                       <option key={p.id} value={p.id}>
-                        {p.name} – KES {p.price.toLocaleString()}
+                        {p.name} - KES {p.price.toLocaleString()}
                       </option>
                     ))}
                   </select>

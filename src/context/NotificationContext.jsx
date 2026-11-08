@@ -22,13 +22,13 @@ export const NotificationProvider = ({ children }) => {
     let type = 'success';
 
     if (percentage >= 90) {
-      message = `🎉 Excellent! You scored ${percentage}% on "${game.title}" and earned ${pointsEarned} points!`;
+      message = `Excellent! You scored ${percentage}% on "${game.title}" and earned ${pointsEarned} points.`;
     } else if (percentage >= 70) {
-      message = `👏 Great job! You scored ${percentage}% on "${game.title}" and earned ${pointsEarned} points!`;
+      message = `Great job! You scored ${percentage}% on "${game.title}" and earned ${pointsEarned} points.`;
     } else if (percentage >= 50) {
-      message = `👍 Good effort! You scored ${percentage}% on "${game.title}" and earned ${pointsEarned} points. Keep practicing!`;
+      message = `Good effort! You scored ${percentage}% on "${game.title}" and earned ${pointsEarned} points. Keep practicing!`;
     } else {
-      message = `💪 Keep trying! You scored ${percentage}% on "${game.title}". Practice makes perfect!`;
+      message = `Keep trying! You scored ${percentage}% on "${game.title}". Practice makes perfect!`;
       type = 'info';
     }
 
@@ -47,7 +47,7 @@ export const NotificationProvider = ({ children }) => {
   const addAchievementNotification = (achievement) => {
     store.addNotification({
       type: 'achievement',
-      title: '🏆 Achievement Unlocked!',
+      title: 'Achievement Unlocked',
       message: achievement.message,
       achievement: achievement,
     });
@@ -57,7 +57,7 @@ export const NotificationProvider = ({ children }) => {
   const addDailyChallengeNotification = (challenge) => {
     store.addNotification({
       type: 'challenge',
-      title: '🎯 Daily Challenge Available!',
+      title: 'Daily Challenge Available',
       message: `New challenge: ${challenge.title}`,
       challenge,
     });

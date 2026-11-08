@@ -1,50 +1,60 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-// import { VitePWA } from 'vite-plugin-pwa'
+import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
   plugins: [
     react(),
-    // VitePWA({
-    //   registerType: 'autoUpdate',
-    //   workbox: {
-    //     globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-    //     runtimeCaching: [
-    //       {
-    //         urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
-    //         handler: 'CacheFirst',
-    //         options: {
-    //           cacheName: 'unsplash-images',
-    //             expiration: {
-    //               maxEntries: 50,
-    //               maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
-    //             }
-    //           }
-    //         }
-    //       }
-    //     ],
-    //     includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'masked-icon.svg'],
-    //     manifest: {
-    //       name: 'ShuleAI Pro',
-    //       short_name: 'ShuleAI',
-    //       description: 'Interactive CBC Games for Kenyan Students',
-    //       theme_color: '#0B4F3C',
-    //       background_color: '#F4FBF7',
-    //       display: 'standalone',
-    //       icons: [
-    //         {
-    //           src: 'pwa-192x192.png',
-    //           sizes: '192x192',
-    //           type: 'image/png'
-    //         },
-    //         {
-    //           src: 'pwa-512x512.png',
-    //           sizes: '512x512',
-    //           type: 'image/png'
-    //         }
-    //       ]
-    //     }
-    //   })
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.svg', 'pwa-icon.svg', 'pwa-icon-192.png', 'pwa-icon-512.png', 'apple-touch-icon.png'],
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'unsplash-images',
+              expiration: {
+                maxEntries: 70,
+                maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
+            },
+          },
+        ],
+      },
+      manifest: {
+        name: 'ShuleAI Pro',
+        short_name: 'ShuleAI',
+        description: 'CBC learning games and progress tracking for Kenyan students.',
+        theme_color: '#125A9F',
+        background_color: '#F7FAFC',
+        display: 'standalone',
+        start_url: '/',
+        scope: '/',
+        icons: [
+          {
+            src: '/pwa-icon-192.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any',
+          },
+          {
+            src: '/pwa-icon-512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any',
+          },
+          {
+            src: '/pwa-icon.svg',
+            sizes: '512x512',
+            type: 'image/svg+xml',
+            purpose: 'any',
+          },
+        ],
+      },
+    }),
   ],
   server: {
     port: 5173,

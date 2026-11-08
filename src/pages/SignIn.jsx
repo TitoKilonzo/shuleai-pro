@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BookOpen, Eye, EyeOff, AlertCircle, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { GAMES, SUBJECTS } from '../lib/games';
+import PwaInstallButton from '../components/PwaInstallButton';
 
 export default function SignIn() {
   const [email,    setEmail]    = useState('');
@@ -39,9 +41,12 @@ export default function SignIn() {
       {/* Left: Form */}
       <div className="auth-form-side">
         <div style={{ maxWidth: 400, margin: '0 auto', width: '100%' }}>
-          <Link to="/" className="auth-back-link">
-            <ArrowLeft size={16} /> Back to Home
-          </Link>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+            <Link to="/" className="auth-back-link" style={{ marginBottom: 0 }}>
+              <ArrowLeft size={16} /> Back to Home
+            </Link>
+            <PwaInstallButton />
+          </div>
 
           <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', marginBottom: '2.5rem' }}>
             <div style={{ width: 38, height: 38, borderRadius: 10, background: 'var(--grad-forest)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -111,22 +116,13 @@ export default function SignIn() {
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(18,90,159,0.88) 0%, rgba(18,90,159,0.55) 100%)' }} />
         <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '3rem' }}>
           <div style={{ marginBottom: '2rem' }}>
-            <div style={{ display: 'flex', gap: 3, marginBottom: '1rem' }}>
-              {[1,2,3,4,5].map(s => <span key={s} style={{ color: 'var(--amber)', fontSize: '1.2rem' }}>★</span>)}
-            </div>
-            <blockquote style={{ color: '#fff', fontSize: '1.12rem', lineHeight: 1.7, fontStyle: 'italic', marginBottom: '1rem', fontFamily: 'var(--font-head)' }}>
-              &quot;ShuleAI Pro transformed how my children approach learning. Their CBC exam results are now outstanding!&quot;
-            </blockquote>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--grad-forest)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, color: '#fff', fontFamily: 'var(--font-head)', border: '2px solid rgba(255,255,255,0.35)' }}>GM</div>
-              <div>
-                <p style={{ color: '#fff', fontWeight: 700, margin: 0 }}>Grace Mwangi</p>
-                <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.82rem', margin: 0 }}>Parent of 2, Nairobi</p>
-              </div>
-            </div>
+            <h2 style={{ color: '#fff', fontSize: '1.8rem', marginBottom: '0.75rem' }}>CBC learning games for Kenyan students</h2>
+            <p style={{ color: 'rgba(255,255,255,0.82)', fontSize: '1rem', lineHeight: 1.7, margin: 0 }}>
+              Browse the current catalogue by learning area and grade, then track completed games and scores.
+            </p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.85rem' }}>
-            {[['56+','CBC Games'],['10K+','Active Learners'],['7','Learning Areas'],['4.9★','User Rating']].map(([v,l]) => (
+            {[[GAMES.length, 'Learning Games'], [Object.keys(SUBJECTS).length, 'Learning Areas'], ['PP1 to 9', 'Grade Range'], ['M-Pesa', 'Payments']].map(([v,l]) => (
               <div key={l} style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(8px)', borderRadius: 'var(--radius)', padding: '0.9rem', border: '1px solid rgba(255,255,255,0.15)' }}>
                 <p style={{ fontFamily: 'var(--font-head)', fontSize: '1.4rem', fontWeight: 900, color: '#fff', margin: '0 0 0.1rem' }}>{v}</p>
                 <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.75rem', margin: 0 }}>{l}</p>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, BookOpen } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import PwaInstallButton from './PwaInstallButton';
 
 const NAV_LINKS = [
   { label: 'Features',      to: '/features' },
@@ -91,6 +92,9 @@ export default function Navbar() {
               </>
             ) : (
               <>
+                <span className="nav-install-desktop">
+                  <PwaInstallButton transparent={transparent} />
+                </span>
                 <Link to="/signin" className="btn btn-sm nav-signin"
                   style={{ background: 'transparent', color: transparent ? '#fff' : 'var(--forest)', fontWeight: 600 }}>
                   Sign In
@@ -98,6 +102,9 @@ export default function Navbar() {
                 <Link to="/signup" className="btn btn-amber btn-sm">
                   Get Started
                 </Link>
+                <span className="nav-install-mobile">
+                  <PwaInstallButton compact />
+                </span>
               </>
             )}
 
@@ -157,6 +164,8 @@ export default function Navbar() {
           .nav-desktop-links { display: none !important; }
           .nav-toggle        { display: block !important; }
           .nav-signin        { display: none !important; }
+          .nav-install-desktop { display: none !important; }
+          .nav-install-mobile { display: inline-flex !important; }
         }
       `}</style>
     </>

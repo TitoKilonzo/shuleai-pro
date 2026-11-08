@@ -1,17 +1,15 @@
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import PricingCards from '../components/PricingCards'
-import { CheckCircle2, Shield, Headphones, Award, ArrowRight } from 'lucide-react'
+import { CheckCircle2, Smartphone, BookOpen, BarChart3, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const FAQ = [
-  { q: 'Can I cancel my subscription anytime?', a: 'Yes. You can cancel at any time. You\'ll retain access until your current period ends.' },
-  { q: 'How does the access code work?', a: 'When you subscribe, you receive a unique access code. Share it with your child to sign in and start playing.' },
-  { q: 'Is the content truly aligned with CBC?', a: 'Absolutely. Every game maps to specific KICD strands and sub-strands for PP1–Grade 9.' },
-  { q: 'Can parents monitor their child\'s progress?', a: 'Yes. The parent dashboard gives full visibility into scores, time spent, learning areas covered and badges earned.' },
-  { q: 'What payment methods are accepted?', a: 'We accept M-Pesa, credit/debit cards and bank transfers.' },
-  { q: 'Can one subscription be used by multiple children?', a: 'Each subscription covers one learner. For multiple children, each needs their own plan.' },
-]
+  { q: 'How long does each plan last?', a: 'Plans provide access for 7, 30, or 90 days, depending on the option selected.' },
+  { q: 'How is the content organized?', a: 'Games are grouped by CBC learning area and grade in the catalogue.' },
+  { q: 'Can parents monitor their child\'s progress?', a: 'The parent dashboard displays learner activity, game scores, and learning area progress.' },
+  { q: 'What payment methods are accepted?', a: 'Subscriptions are paid using M-Pesa.' },
+];
 
 export default function Plans() {
   return (
@@ -29,7 +27,7 @@ export default function Plans() {
             </h1>
             <p className="text-forest-200 text-lg">
               Affordable CBC-aligned learning starting at just KES 200/week.
-              No hidden fees. Cancel anytime.
+              Choose a 7-day, 30-day, or 90-day subscription.
             </p>
           </div>
         </div>
@@ -42,9 +40,9 @@ export default function Plans() {
           <div className="max-w-5xl mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
-                { icon: Shield, title: 'Safe & Secure', desc: 'Child-safe platform with COPPA compliance. No ads, no tracking.', color: 'text-blue-600 bg-blue-50' },
-                { icon: Headphones, title: 'Priority Support', desc: 'Monthly & Termly subscribers get dedicated support via WhatsApp and email.', color: 'text-forest-700 bg-forest-50' },
-                { icon: Award, title: 'Certificates', desc: 'Termly subscribers earn official ShuleAI Pro completion certificates.', color: 'text-gold-600 bg-gold-50' },
+                { icon: Smartphone, title: 'M-Pesa Payments', desc: 'Pay for a subscription through the M-Pesa STK push flow.', color: 'text-blue-600 bg-blue-50' },
+                { icon: BookOpen, title: 'Full Game Catalogue', desc: 'Every plan provides access to the games and learning areas in the catalogue.', color: 'text-forest-700 bg-forest-50' },
+                { icon: BarChart3, title: 'Progress Tracking', desc: 'Review game scores and learning area activity in the dashboards.', color: 'text-gold-600 bg-gold-50' },
               ].map(({ icon: Icon, title, desc, color }) => (
                 <div key={title} className="flex items-start gap-4 p-6 rounded-2xl border border-gray-100">
                   <div className={`w-12 h-12 ${color} rounded-xl flex items-center justify-center flex-shrink-0`}>
@@ -79,26 +77,21 @@ export default function Plans() {
                   </thead>
                   <tbody>
                     {[
-                      { feature: 'Access to all 54+ games', weekly: true, monthly: true, termly: true },
+                      { feature: 'Access to all games', weekly: true, monthly: true, termly: true },
                       { feature: 'All learning areas', weekly: true, monthly: true, termly: true },
                       { feature: 'Progress tracking', weekly: true, monthly: true, termly: true },
-                      { feature: 'Achievement badges', weekly: true, monthly: true, termly: true },
                       { feature: 'Parent dashboard access', weekly: true, monthly: true, termly: true },
-                      { feature: 'Priority support', weekly: false, monthly: true, termly: true },
-                      { feature: 'Achievement certificates', weekly: false, monthly: false, termly: true },
-                      { feature: 'Leaderboard participation', weekly: false, monthly: true, termly: true },
-                      { feature: 'Offline game cache', weekly: false, monthly: false, termly: true },
                     ].map(({ feature, weekly, monthly, termly }, i) => (
                       <tr key={feature} className={`border-b border-gray-50 ${i % 2 === 0 ? '' : 'bg-gray-50/50'}`}>
                         <td className="py-3.5 px-6 text-sm text-gray-600">{feature}</td>
                         <td className="py-3.5 px-4 text-center">
-                          {weekly ? <CheckCircle2 className="w-5 h-5 text-green-500 mx-auto" /> : <span className="text-gray-200 text-lg">—</span>}
+                          {weekly ? <CheckCircle2 className="w-5 h-5 text-green-500 mx-auto" /> : null}
                         </td>
                         <td className="py-3.5 px-4 text-center bg-forest-50/50">
-                          {monthly ? <CheckCircle2 className="w-5 h-5 text-forest-600 mx-auto" /> : <span className="text-gray-200 text-lg">—</span>}
+                          {monthly ? <CheckCircle2 className="w-5 h-5 text-forest-600 mx-auto" /> : null}
                         </td>
                         <td className="py-3.5 px-4 text-center">
-                          {termly ? <CheckCircle2 className="w-5 h-5 text-gold-600 mx-auto" /> : <span className="text-gray-200 text-lg">—</span>}
+                          {termly ? <CheckCircle2 className="w-5 h-5 text-gold-600 mx-auto" /> : null}
                         </td>
                       </tr>
                     ))}

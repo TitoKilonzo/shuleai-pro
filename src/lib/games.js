@@ -1,15 +1,15 @@
-// ─── ShuleAI Pro: 100+ CBC-Aligned Educational Games ───────────────
+// ShuleAI Pro CBC learning game catalogue
 
 export const SUBJECTS = {
-  EARLY_MATH: { id: 'early_math', label: 'Early Mathematics', color: '#F97316', grades: 'PP1–Grade 3' },
-  LITERACY:   { id: 'literacy',   label: 'Literacy & Language', color: '#EC4899', grades: 'PP1–Grade 3' },
-  MATHEMATICS: { id: 'mathematics', label: 'Mathematics', color: '#3B82F6', grades: 'Grade 4–9' },
-  INT_SCIENCE: { id: 'integrated_science', label: 'Integrated Science', color: '#10B981', grades: 'Grade 7–9' },
-  SCI_TECH: { id: 'science_technology', label: 'Science & Technology', color: '#06B6D4', grades: 'Grade 4–6' },
-  PRETECH: { id: 'pre_technical', label: 'Pre-Technical Studies', color: '#8B5CF6', grades: 'Grade 7–9' },
+  EARLY_MATH: { id: 'early_math', label: 'Early Mathematics', color: '#F97316', grades: 'PP1 to Grade 3' },
+  LITERACY:   { id: 'literacy',   label: 'Literacy & Language', color: '#EC4899', grades: 'PP1 to Grade 3' },
+  MATHEMATICS: { id: 'mathematics', label: 'Mathematics', color: '#3B82F6', grades: 'Grade 4 to 9' },
+  INT_SCIENCE: { id: 'integrated_science', label: 'Integrated Science', color: '#10B981', grades: 'Grade 7 to 9' },
+  SCI_TECH: { id: 'science_technology', label: 'Science & Technology', color: '#06B6D4', grades: 'Grade 4 to 6' },
+  PRETECH: { id: 'pre_technical', label: 'Pre-Technical Studies', color: '#8B5CF6', grades: 'Grade 7 to 9' },
   CRE: { id: 'cre', label: 'CRE', color: '#EC4899', grades: 'All Grades' },
   CAAS: { id: 'caas', label: 'Creative Arts & Social Studies', color: '#F59E0B', grades: 'All Grades' },
-  AGRICULTURE: { id: 'agriculture', label: 'Agriculture', color: '#84CC16', grades: 'Grade 4–9' },
+  AGRICULTURE: { id: 'agriculture', label: 'Agriculture', color: '#84CC16', grades: 'Grade 4 to 9' },
 };
 
 export const DIFFICULTIES = {
